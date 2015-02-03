@@ -12,6 +12,28 @@ output: html_document
     - Ga naar `Tools` -> `Global options`
     - Open het tabblad `Git/SVN`
     - Zorg dat hier verwijzing naar de git executable correct staat
+- Typografie
+    - `RStudio namen, knoppen, opties, items in menubalken, ...`
+    - `shell commando's`
+    - _git gerelateerde termen_
+    - **namen van git branches**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Eenvoudig nieuw project enkel lokaal
 
@@ -76,6 +98,25 @@ summary(lm.D9)
 - _Stage_ `script1.R` en _commit_.
 - _Stage_ `script2.R` en _commit_ met de `Amend previous commit` optie aangevinkt.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Bestaande bestanden wijzigen
 
 - Van zodra een bestand na een commit gewijzigd wordt, zal git het terug automatisch in het `Git` tabblad tonen.
@@ -111,6 +152,25 @@ ggsave(p, file = "script1.png")
 - Kijk naar de _Diff_ van `.gitignore`, `script1.jpg` en `script1.R`
 - _Commit_ de wijzigingen. 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Bestanden wissen en terug zetten naar de laatste commit
 
 - Voer `script1.R` opnieuw uit. Merk op dat er nu niets gebeurd in het `Git` tabblad. Hoewel `script1.png` gewijzigd is, is de inhoud dezelfde gebleven. Een nieuwe versie opslaan is daarom overbodig.
@@ -132,6 +192,24 @@ ggsave(p, file = "script1.png")
     - _Stage_ en _commit_ `script1.png`
 - Voer `script1.R` opnieuw uit. `script1.png` wordt opnieuw aangemaakt en is nu terug _untracked_.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Een bestaand project onder enkel lokaal onder versiebeheer plaatsen
 
 - Open het project in RStudio
@@ -142,7 +220,133 @@ ggsave(p, file = "script1.png")
 - Herstart RStudio
 - Van nu kan je alle bewerkingen uit voorgaande (en komende) secties toepassen.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Branches
+
+- In een eenvoudige git repository staan alle _commits_ achter elkaar in een lange rij.
+- git laat toe om op een eenvoudige manier met meerdere _branches_ te werken. Een _branch_ is een vertakking vanaf een bepaald _commit_. Beide _branches_ hebben tot de _commit_ waar ze vertakken dezelfde voorgeschiedenis. Na deze _commit_ kunnen ze elk een andere weg op gaan.
+    - Ze gaan elk aan een eigen 'snelheid' verder gaan.
+    - Ze zullen een andere inhoud hebben.
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Eenvoudig branching model
+
+- Standaard is er enkel een **master** _branch_.
+- Een vaak gebruikte tweede _branch_ is **develop**.
+- In dergelijke configuratie bevat **master** de laatste 'officiële' versie.
+    - een rapport onder de vorm dat het naar de stuugroep gaat
+    - documenten van een les zoals het naar de cursisten gaat
+    - een bepaalde versie van een R package
+- **develop** bevat dan de versie waar je effectief in werkt.
+    - Wanneer de versie in **develop** voldoende uitgekristaliseerd is zullen we die terug invoegen in **master**.
+- git laat toe om vlot om te schakelen tussen _branches_.
+    - Bij het overschakelen tussen _branches_ worden alle bestanden van de huidige _branch_ vervangen door de bestanden van de (laatste _commit_ van de) nieuwe _branch_.
+    - _untracked_ en _ignored_ bestanden blijven behouden.
+- je kan met de GUI in het `Git` tabblad enkel wisselen tussen _branches_. Andere bewerking moet je vanaf de command line doen. Klik op het tandwiel icoontje in het `Git` tabblad en kies `Shell...`. Dan krijg je een command line waar je `git` commando's kan ingeven. Alle `git` commando's beginen met `git`.
+- We maken een **develop** _branch_ vanaf de huidige _commit_ met `git branch develop`
+- Vervolgens maken we **develop** actief met `git checkout develop`
+- Met `exit` sluiten we de shell terug.
+
+- Zorg dat de **develop** _branch_ actief is
+    - De actieve _branch_ staat rechtsboven aan het `Git` tabblad
+- Voeg onderstaande code toe onderaan `script2.R`
+
+```{r script2_1}
+library(ggplot2)
+ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()
+```
+
+- (_Stage_ en ) _commit_ de wijzigingen aan `script2.R`
+- _checkout_ **master**
+    - ofwel: in de git shell `git checkout master`
+    - ofwel: in het `Git` tabblad klikken op de naam van het huidige _branch_. Kies vervolgens de **master** _brnach_ uit de dropdown lijst
+    - Merk op dat de inhoud van `script2.R` terug de vorige versie bevat.
+- Ga terug naar de **develop** _branch_
+- Voeg in `script2.R` de onderstaande regel toe
+
+```{r script2_2}
+ggplot(lm.D9, aes(sample = .stdresid)) + stat_qq() + geom_abline()
+```
+
+- _Commit_ deze wijzigingen
+- Nu gaan we de wijzigingen in **develop** als een blok toepassen op **master**
+    - Ga naar de git shell
+    - _Checkout_ de _branch_ naar waar je wenst te _mergen_
+        - `git checkout master`
+    - _Merge_ **develop** naar **master** zonder _fast-forward_
+        - `git merge --no-ff develop`
+    - Je krijgt een editor venster waarin je een aangepaste _commit message_ schrijft. Hier beschijft je beknopt de belangrijkste wijzigingen sinds de vorige merge tussen **master** en **develop**
+        - Daarom kijk je best EERST naar de _history_ van de **develop** _branch_
+- Klik op het uurwerk icoon in het `Git` tabblad. Dit geeft een overzicht van de _history_ van de _repository_.
+    - Het bovenste deel toont alle _commits_
+        - Je ziet enkel de _commit message_. Vandaar dat het belangrijk is dat de _commit message_ reeds een ruw idee geeft van wat er aangepast is.
+        - Tip:  Vaak _committen_ heeft als voordeel dat een beknoptere _commit messages_ volstaat op de wijzigingen te beschrijven.
+        - Bij elke _commit_ zie je ook de auteur, date en SHA. Deze laatste is de id van de _commit_
+    - Het verband tussen de _commits_ wordt grafisch voorgesteld. 
+        - De cirkels zijn de _commits_
+        - De lijnen geven het verband tussen de _commits_
+        - De oudste _commits_ staan onderaan
+        - _Commits_ waaruit twee (of meer) lijnen naar boven vertrekken geven aan dat daar twee _branches_ splitsen.
+        - _Commits_ waarin twee lijnen samenkomen geven aan dat de twee _branches_ daar weer _gemerged_ werden.
+        - De lijnen en nodes van elke _branch_wordt met een andere kleur weergegeven.
+    - Voor sommige _commit messages_ staat de naam van een _branch_. Hiermee wordt de laatste _commit_ van elke _branch_ aangegeven. _HEAD_ is geen _branch_ maar geeft aan welke _commit_ op dit ogenblik actief is. Dit valt in principe samen met de actieve _branch_.
+    - Het onderste deel van het scherm geeft aan welke bestanden gewijzigd zijn en wat de _diffs_ weer van de geselecteerde _commit_ ten opzichte van zijn voorgaande _commit_ (de _parent commit_).
+
+
+[http://nvie.com/posts/a-successful-git-branching-model/](http://nvie.com/posts/a-successful-git-branching-model/)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Een nieuw project op de Stash server plaatsen
 
