@@ -1,0 +1,155 @@
+---
+title: "Starten met git"
+author: "Thierry Onkelinx"
+date: "03-02-2015"
+output: html_document
+---
+
+# Starten met git
+
+- Ga na of git geïnstalleerd is. Volgens de BMK instructies moet dat in `c:\R\git`
+- Ga na op git geconfigureerd is in RStudio. 
+    - Ga naar `Tools` -> `Global options`
+    - Open het tabblad `Git/SVN`
+    - Zorg dat hier verwijzing naar de git executable correct staat
+
+## Eenvoudig nieuw project enkel lokaal
+
+### Een project starten
+
+- Kies in RStudio voor `File` -> `New project` -> `Empty project`.
+    - Vul de gewenste naam van het project in en de gewenste directory waarin het project moet komen.
+    - Vink `create a git repository` aan.
+    - Klik  `Create repository`
+    - Het nieuwe project wordt nu geopent
+- RStudio voegt een tabblad `Git` toe aan de editor. In dit tabblad doe je alle bewerkingen gerelateerd aan het versiebeheer
+    - Je vindt er steeds een overzicht van de status van alle bestanden m.b.t. versiebeheer
+    - Op dit moment zal je er twee bestanden vinden: `.gitignore` en `jouw_project.Rproj`
+    - In de kolom `Status` zie je twee keer een vraagteken in een geel veld. Dat wijst op een _untracked_ bestand. Dergelijke bestanden worden genegeerd door het versiebeheer. Merk op dat geen enkel bestand automatisch wordt opgenomen in het versiebeheer.
+- Klik rechts op `jouw_project.Rproj` en kies `ignore`. Nu open een beknopte editor met de inhoud van `.gitignore`. Hier geef je de namen van de bestanden of mappen weer die git standaard moet genegeren. Een _ignored_ bestand wordt, net zoals een _untracked_ bestand niet opgenomen in het versiebeheer. Het verschil tussen beide is dat _ignored_ bestanden niet zichtbaar zullen zijn in het `Git` tabblad.
+    - Wijzig `jouw_project.Rproj` in `*.Proj` en klik op `Save` Vanaf nu zullen alle bestanden die eindigen met `.Proj` de _ignored_ status krijgen. Merk op dat `jouw_project.Rproj` nu uit het `Git` tabblad verdwenen is.
+    - Regel uit `.gitignore` wissen = _ignore_ ongedaan maken.
+- Wanneer _ignore_ gebruiken
+    - Vuistregel: telkens je het bestand in kwestie makkelijk kan aanmaken met de gegevens in de repository
+    - Bijvoorbeeld: figuren, pdf, md en tex bestanden die ontstaan na het compileren van een RMarkdown (.Rmd) bestand
+    - RStudio vult standaard `.Rproj.user`, `.Rhistory` en `.RData`. `.Rproj.user` is de map met alle tijdelijke bestanden van het project. `.Rhistory` bevat een lijst van alle commando's die je uitvoert. `.RData` zijn de objecten in de workspace. Deze bestanden zijn niet relevant om onder versiebeheer te plaatsen.
+    - Best ook `*.Rproj`. Je krijgt anders problemen wanneer het project vanop meerdere computers gebruikt wordt.
+- `.gitignore` plaats je best onder versiebeheer. Op die manier zal iedereen dezelfde bestanden _ignoren_.
+- Nu maken we een eerste _commit_. Een _commit_ is een snapshot van de versie van de bestanden op dat ogenblik. De eerste stap bij het maken van een _commit_ is bepalen welke gewijzigde bestanden relevant zijn om op te nemen in de _commit_. Merk op dat het niet noodzakelijk is om alle gewijzigde bestanden op te nemen in een _commit_.
+    - Je moet eerst de gewenste bestanden _stagen_ = klaarzetten om op te nemen in de snapshot. Dat doe je door `Staged` aan te vinken voor de naam van het bestand. Doe dit met `.gitignore`. Door te _stagen_ verandert de status van _untracked_ bestanden naar _added_, aangegeven door een "A" op een turkoois veld in de linkerhelft van de `Status` kolom.
+    - Door `Staged` terug uit te vinken herstel je de status van het bestand naar de vorige status.
+- Eens alle gewenste bestanden _gestaged_ zijn, kan je _committen_ door op de knop _commit_ te klikken.
+    - Nu opent een venster met heel wat informatie over de wijzigingen.
+    - Je krijgt een venster met de betrokken bestanden. Hier kan je nog wijzigingen aanbrengen zoals in het `Git tabblad` (_stage_, _unstage_, _ignore_)
+    - Onderaan krijg je de _diff_ te zien van het bestand. Groene regels zijn toegevoegd, rode regels zijn gewist, witte regels zijn ongewijzigd.
+        - In de _diff_ worden standaard enkel de 5 ongewijzigde regels voor en naar een wijziging getoond. Ook een enkel wijziging aan het einde van een lang bestand zie je op die manier dadelijk.
+        - De hoeveelheid context kan je aanpassen via de dropdrop `Context` (5, 10, 25, 50 of alle lijnen)
+        - De _Diff_ is deze van het geselecteerd bestand. Klik op de bestandsnaam om een ander bestand te selecteren.
+        - Een _Diff_ werkt enkel bij bestanden met platte tekst. Niet met binaire bestanden (pdf, docx, jpg, Rdata, ...)
+    - Naast de lijst met bestanden staat een tekstveld `Commit message`. Hierin moet je een tekst schrijven. Deze tekst beschrijft de wijzigingen in deze _commit_.
+        - Een goede _commit message_ is cruciaal. Het is de enige manier om later te weten waarom je een bepaalde wijzigingen aanbracht.
+    - `Amend previous commit` kan je gebruiken indien je een bestand vergeten te _stagen_ en je wilt het alsnog toevoegen aan de vorige _commit_.
+    - Als je klaar bent (= alle gewenste bestanden _gestaged_ en een goede _commit message_ geschreven), dan kan je op `Commit` klikken. Je krijgt dan een nieuw venster met een beknopt overzicht van de wijzigingen. Klik op `Close` om het af te sluiten. Je kan vervolgens het `Commit` venster sluiten.
+    - De _gestagede_ bestanden zijn nu verdwenen uit het `Git` tabblad.
+
+- Maak bovenstaand RStudio project
+- Plak onderstaande code in `script1.R`
+
+```{r script1}
+library(ggplot2)
+ggplot(mtcars, aes(wt, mpg)) + geom_point()
+```
+
+- Plak onderstaande code in `script2.R`
+
+```{r script2}
+ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
+trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
+group <- gl(2, 10, 20, labels = c("Ctl","Trt"))
+weight <- c(ctl, trt)
+lm.D9 <- lm(weight ~ group)
+
+anova(lm.D9)
+summary(lm.D9)
+```
+
+- _Stage_ `script1.R` en _commit_.
+- _Stage_ `script2.R` en _commit_ met de `Amend previous commit` optie aangevinkt.
+
+### Bestaande bestanden wijzigen
+
+- Van zodra een bestand na een commit gewijzigd wordt, zal git het terug automatisch in het `Git` tabblad tonen.
+    - De status van dergelijke bestanden is _unstaged modified_ aangegeven door een "M" op een blauw veld in de rechter kolom van `Status`.
+- Wanneer we nu een snapshot willen maken van de de huidige versie, moeten we de gewijzigde bestanden opnieuw _stagen_.
+    - Behalve het vinkje in `Staged` zal ook de "M" in `Status` verplaatsen naar de linker kolom (_staged modified_).
+    - Het bestand is nu gewijzigd én de wijzigingen zijn klaar voor een _commit_. OOk nu worden de wijzigingen past toegevoegd aan het versiebeheer na een _commit_!
+
+- Wijzig `script1.R` naar
+
+```{r script1_1, eval = FALSE}
+library(ggplot2)
+p <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
+ggsave(p, file = "script1.jpg")
+```
+- Voer `script1.R` uit
+- _Stage_ `script1.R`
+- Wijzig `script1.R` naar
+
+```{r script1_2, eval = FALSE}
+library(ggplot2)
+p <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
+ggsave(p, file = "script1.png")
+```
+
+- Merk dat we `script1.R` gewijzigd hebben, vervolgens _gestaged_ en dan weer gewijzigd terwijl we nog geen _commit_ gedaan hebben.
+    - Het vinkje in `Staged` wordt nu een vierkant en `Status` toont zowel links als rechts "M" (_staged and unstaged modified_).
+    - Deze meer complexe situatie leggen we later in detail uit.
+    - Voorlopig passen we dit aan door `script1.R` opnieuw te _stagen_. Nu krijgen we terug een vinkje en de linker "M" (_staged modified_)
+- _Ignore_ `script1.jpg`
+- _Stage_ `script1.png`
+- _Stage_ `.gitignore`
+- Kijk naar de _Diff_ van `.gitignore`, `script1.jpg` en `script1.R`
+- _Commit_ de wijzigingen. 
+
+### Bestanden wissen en terug zetten naar de laatste commit
+
+- Voer `script1.R` opnieuw uit. Merk op dat er nu niets gebeurd in het `Git` tabblad. Hoewel `script1.png` gewijzigd is, is de inhoud dezelfde gebleven. Een nieuwe versie opslaan is daarom overbodig.
+- Wijzig `script1.R` naar onderstaande code, sla het op en voer opnieuw uit
+
+```{r script1_3, eval = FALSE}
+library(ggplot2)
+p <- ggplot(mtcars, aes(wt, mpg)) + geom_jitter()
+ggsave(p, file = "script1.png")
+```
+
+- Zowel `script1.R` als `script1.png` zijn nu _unstaged modified_
+- Stel dat we `script1.png` niet langer onder versiebeheer wensen.
+    - Wis `script1.R` van de harde schijf
+    - `script1.R` blijft staan in het `Git` tabblad. De `Status` is nu _unstaged deleted_, aangezien door "D" in een rood veld in de rechter kolom van `Status`.
+    - Oeps, we wensten `script1.png` te wissen in plaats van `script1.R`
+    - Rechts klik op `script1.R` in het `Git` tabblad en klik op `Revert`. Je krijgt nu een waarschuwing dat eventuele wijzingen verloren gaan. Klik op `Yes`. Git zal nu de versie van `script1.R` uit de laatste commit terug plaatsen. Alle wijzigingen sinds de laatste commit zijn verloren.
+    - Wis `script1.png` van de harde schijf.
+    - _Stage_ en _commit_ `script1.png`
+- Voer `script1.R` opnieuw uit. `script1.png` wordt opnieuw aangemaakt en is nu terug _untracked_.
+
+## Een bestaand project onder enkel lokaal onder versiebeheer plaatsen
+
+- Open het project in RStudio
+- Ga in het menu naar `Tools` -> `Project options`
+- Kies het tabblad `Git/SVN`
+- Kies `Git` bij `Version control system`
+- Bevestig jouw keuze
+- Herstart RStudio
+- Van nu kan je alle bewerkingen uit voorgaande (en komende) secties toepassen.
+
+## Branches
+
+## Een nieuw project op de Stash server plaatsen
+
+## Een bestaand lokaal project op de Stash server plaatsen
+
+## Een project van de Stash server _forken_
+
+## _staged and unstaged modified_
+
+- Twee keer "M" bij `Status`
