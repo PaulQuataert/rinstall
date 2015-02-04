@@ -80,7 +80,7 @@ img {
 <li>Typografie
 <ul>
 <li><code>RStudio namen, knoppen, opties, items in menubalken, ...</code></li>
-<li><code>shell commando's</code></li>
+<li><code>shell commando's of bestandsnamen</code></li>
 <li><em>git gerelateerde termen</em></li>
 <li><strong>namen van git branches</strong></li>
 </ul></li>
@@ -272,7 +272,7 @@ ggsave(p, file = &quot;script1.png&quot;)</code></pre>
 </ul></li>
 </ul>
 <div id="eenvoudig-branching-model" class="section level3">
-<h3>Eenvoudig branching model</h3>
+<h3>Eenvoudig <em>branching</em> model</h3>
 <ul>
 <li>Standaard is er enkel een <strong>master</strong> <em>branch</em>.</li>
 <li>Een vaak gebruikte tweede <em>branch</em> is <strong>develop</strong>.</li>
@@ -357,6 +357,90 @@ ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()</code></pre>
 </ul></li>
 </ul>
 </div>
+<div id="meer-uitgebreid-branching-model" class="section level3">
+<h3>Meer uitgebreid <em>branching</em> model</h3>
+<p>Het eenvoudige <em>branching</em> model zorgt er voor dat de <strong>master</strong> behoorlijk clean blijft. <strong>develop</strong> bevat echter alle sequentele wijzigingen. Dat is prima voor een beperkt project waar slechts een persoon aan werkt. Voor complexere projecten waar je met meerdere mensen aan werkt of dat uit verschillende facetten bestaat, is dat minder praktisch. In dergelijke situaties is het handig om zogenaamde <strong>feature</strong> <em>branches</em> te maken.</p>
+<div id="project-met-permanent-scheidbare-features" class="section level4">
+<h4>Project met permanent scheidbare features</h4>
+<p>Voorbeeld: een project van een lessenreeks die uit verschillende lessen bestaat. Elke les heeft zijn eigen broncode en datasets.</p>
+<p>Praktisch voorbeeld:</p>
+<ul>
+<li>Maak een nieuw project “Lessenreeks” met git versie controle</li>
+<li><em>Ignore</em> <code>*.Rproj</code>, <em>stage</em> <code>.gitignore</code> en <em>commit</em></li>
+<li>Maak een <strong>develop</strong> <em>branch</em> en doe een <em>checkout</em> van <strong>develop</strong></li>
+<li>Maak een <strong>les1</strong> <em>branch</em> en een <strong>les2</strong> <em>branch</em></li>
+<li><em>Checkout</em> <strong>les1</strong></li>
+<li>Maak een bestand, <em>stage</em> en <em>commit</em> het</li>
+<li>Maak een nog bestand, <em>stage</em> en <em>commit</em> het</li>
+<li><em>Checkout</em> <strong>les2</strong></li>
+<li>Maak een bestand, <em>stage</em> en <em>commit</em> het</li>
+<li><em>Checkout</em> <strong>les1</strong></li>
+<li><p>Pas een bestand aan, <em>stage</em> en <em>commit</em> het</p></li>
+<li>Op dit ogenblik hebben we vier <em>branches</em>: <strong>master</strong>, <strong>develop</strong>, <strong>les1</strong> en <strong>les2</strong>. <strong>master</strong> en <strong>develop</strong> staan nog aan het beginpunt, <strong>les1</strong> en <strong>les2</strong> zijn onafhankelijk van elkaar gegroeid.</li>
+<li>Veronderstel dat de draft van <strong>les1</strong> nu klaar is. Dat is een goed moment om <strong>les1</strong> aan <strong>develop</strong> toe te voegen.
+<ul>
+<li><em>Checkout</em> <strong>develop</strong></li>
+<li><em>Merge</em> <strong>les1</strong> naar <strong>develop</strong> met <code>git merge --no-ff les1</code></li>
+</ul></li>
+<li>Vervolgens werken we verder aan <strong>les2</strong>
+<ul>
+<li>Voor de eenvoud zullen we voor zorgen dat de bestandsnamen tussen <strong>les1</strong> en <strong>les2</strong> verschillen. De eenvoudigste manier om dit te garanderen is elke les een andere subdirectory te plaatsen.</li>
+<li><em>Checkout</em> <strong>les2</strong></li>
+<li>Pas een bestand aan, <em>stage</em> en <em>commit</em> het</li>
+</ul></li>
+<li>De draft van <strong>les2</strong> is nu eveneens klaar en we kunnen <strong>les2</strong> toevoegen aan <strong>develop</strong>
+<ul>
+<li><em>Checkout</em> <strong>develop</strong></li>
+<li><em>Merge</em> <strong>les2</strong> naar <strong>develop</strong> met <code>git merge --no-ff les2</code></li>
+</ul></li>
+<li>We krijgen feedback. <strong>les2</strong> is in orde, <strong>les1</strong> vergt een aantal aanpassingen
+<ul>
+<li><em>Checkout</em> <strong>les1</strong></li>
+<li>Pas een bestand aan, <em>stage</em> en <em>commit</em> het</li>
+<li>Stuur de aanpassingen terug naar <strong>develop</strong>
+<ul>
+<li><em>Checkout</em> <strong>develop</strong></li>
+<li><em>Merge</em> <strong>les1</strong> naar <strong>develop</strong> met <code>git merge --no-ff les1</code></li>
+</ul></li>
+</ul></li>
+<li>De lessen zijn nu klaar voor de studenten. Dus sturen we de wijzigingen van <strong>develop</strong> naar <strong>master</strong>
+<ul>
+<li><em>Checkout</em> <strong>master</strong></li>
+<li><em>Merge</em> <strong>develop</strong> naar <strong>master</strong> met <code>git merge --no-ff develop</code></li>
+</ul></li>
+<li>Tijdens het geven van de les botsen we op een onduidelijkheid in <strong>les2</strong>. We plaatsen een reminder in de code.
+<ul>
+<li><em>Checkout</em> <strong>les2</strong></li>
+<li>Pas een bestand aan, <em>stage</em> en <em>commit</em> het</li>
+</ul></li>
+<li>Kijk nu naar de <em>history</em> van de <em>repository</em> (klik op het uurwerk icoon in het <code>Git</code> tabblad)
+<ul>
+<li>Standaard krijgen we enkel de <em>commits</em> van de actieve <em>branch</em> te zien. In dit geval <strong>les2</strong>.</li>
+<li>De <em>history</em> van <strong>les2</strong> is zeer clean. Ze bevat enkel <em>commits</em> die betrekking hebben op <strong>les2</strong>.</li>
+<li>Om de <em>history</em> van een andere <em>branch</em> te zien, moet je op de dropbox lijst rechts van de <code>history</code> knop klikken. Doe dit en selecteer <strong>les1</strong>.
+<ul>
+<li>De <em>history</em> van <strong>les1</strong> is even clean als deze van <strong>les2</strong>. Uiteraard bevat ze allemaal andere <em>commits</em>. Enkel de allereerste <em>commit</em> waarmee we de <em>repository</em> gestart hebben is gemeenschappelijk (tussen alle <em>branches</em>).</li>
+</ul></li>
+<li>Kijk nu naar de <em>history</em> van <strong>develop</strong>.
+<ul>
+<li>Deze <em>history</em> is complexer omdat we op een aantal momenten <strong>les1</strong> en <strong>les2</strong> toegevoegd hebben.</li>
+<li>Niet tegenstaande de complexe structuur kunnen we vlot terugvinden wanneer <strong>develop</strong> aangepast was en welke <em>branch</em> toegevoegd werd.</li>
+<li>Het aantal <em>commits</em> in <strong>develop</strong> blijft beperkt omdat elke <em>commit</em> van <strong>develop</strong> meerdere <em>commits</em> van <strong>les1</strong> of <strong>les2</strong> kan bevatten.</li>
+</ul></li>
+<li>De <em>history</em> van <strong>master</strong> lijkt nog een tikje complexer. Tot je enkel kijkt naar welke <em>commits</em> in <strong>master</strong> zitten. Het zijn er weinig én ze komen enkel van <strong>develop</strong>. Bovendien bundelen ze meerdere <em>commits</em> van <strong>develop</strong>.</li>
+<li>Kijk tenslotte naar de <em>history</em> van <strong>all branches</strong>.
+<ul>
+<li>Nu zie je duidelijk dat <strong>les2</strong> 1 <em>commit</em> voorloopt op <strong>master</strong> en <strong>develop</strong>.</li>
+<li><strong>les2</strong> is tevens duidelijk gescheiden van <strong>les1</strong> sinds de eerste <em>commit</em>.</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Hoewel dit <em>branching model</em> complexer is, heeft het als grote voordeel dat de verschillende onderdelen (lessen in bovenstaand voorbeeld) duidelijk gescheiden blijven. Bovendien kunnen ze aan een verschillende snelheid verder uitgewerkt worden.</p>
+</div>
+<div id="project-met-onderling-verweven-features" class="section level4">
+<h4>Project met onderling verweven features</h4>
+</div>
+</div>
 </div>
 <div id="een-nieuw-project-op-de-stash-server-plaatsen" class="section level2">
 <h2>Een nieuw project op de Stash server plaatsen</h2>
@@ -376,6 +460,18 @@ ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()</code></pre>
 <p><span class="citation">Günther (2014)</span> schreef een beknopt boek dat de basis van git op een beknopte manier uitlegt. Het is beschikbaar via de INBO account op Kindle.</p>
 <p><span class="citation">Cottle (2014)</span> bied een handige oneline tool om <em>branching</em> onder de knie te kijken. Het is een interactieve website waar je zelf met git commando’s aan de slag gaat en dadelijk ziet wat het effect van de commando’s op de structuur van de repository is. Elk stapje start met een beknopte uitleg gevolg door een oefening. Er staan veel oefeningen. De website detecteert wanneer je de oefening correct opgelost hebt. Je krijgt dan te zien hoeveel commando’s je nodig had en hoeveel commando’s hadden kunnen volstaan. Je kan de oefeningen meermaals opnieuw proberen. Als je vastloopt kan je de oplossing vragen. De website is een aanrader als je een beperkte voorkennis hebt. Daarom best eerst <span class="citation">Günther (2014)</span> lezen of de git cursus volgen.</p>
 <p>Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te schrijven. Op dat vlak is <span class="citation">Boswell and Foucher (2011)</span> verplichte lectuur. Hoewel geschreven vanuit een C achtergrond, is het prima toepasbaar op R. Ook dit boek is beschikbaar via de INBO account op Kindle.</p>
+</div>
+</div>
+<div id="extra" class="section level1">
+<h1>Extra</h1>
+<div id="merge-conflicten" class="section level2">
+<h2>Merge conflicten</h2>
+</div>
+<div id="een-specifieke-commit-terug-zetten" class="section level2">
+<h2>Een specifieke commit terug zetten</h2>
+</div>
+<div id="tags" class="section level2">
+<h2>Tags</h2>
 </div>
 <div id="staged-and-unstaged-modified" class="section level2">
 <h2><em>staged and unstaged modified</em></h2>

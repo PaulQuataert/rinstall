@@ -15,7 +15,7 @@ output: html_document
     - Zorg dat hier verwijzing naar de git executable correct staat
 - Typografie
     - `RStudio namen, knoppen, opties, items in menubalken, ...`
-    - `shell commando's`
+    - `shell commando's of bestandsnamen`
     - _git gerelateerde termen_
     - **namen van git branches**
 
@@ -265,7 +265,7 @@ ggsave(p, file = "script1.png")
 
 
 
-### Eenvoudig branching model
+### Eenvoudig _branching_ model
 
 - Standaard is er enkel een **master** _branch_.
 - Een vaak gebruikte tweede _branch_ is **develop**.
@@ -346,6 +346,102 @@ ggplot(lm.D9, aes(sample = .stdresid)) + stat_qq() + geom_abline()
 
 
 
+### Meer uitgebreid _branching_ model
+
+Het eenvoudige _branching_ model zorgt er voor dat de **master** behoorlijk clean blijft. **develop** bevat echter alle sequentele wijzigingen. Dat is prima voor een beperkt project waar slechts een persoon aan werkt. Voor complexere projecten waar je met meerdere mensen aan werkt of dat uit verschillende facetten bestaat, is dat minder praktisch. In dergelijke situaties is het handig om zogenaamde **feature** _branches_ te maken.
+
+#### Project met permanent scheidbare features
+
+Voorbeeld: een project van een lessenreeks die uit verschillende lessen bestaat. Elke les heeft zijn eigen broncode en datasets.
+
+Praktisch voorbeeld:
+
+- Maak een nieuw project "Lessenreeks" met git versie controle
+- _Ignore_ `*.Rproj`, _stage_ `.gitignore` en _commit_
+- Maak een **develop** _branch_ en doe een _checkout_ van **develop**
+- Maak een **les1** _branch_ en een **les2** _branch_
+- _Checkout_ **les1**
+- Maak een bestand, _stage_ en _commit_ het
+- Maak een nog bestand, _stage_ en _commit_ het
+- _Checkout_ **les2**
+- Maak een bestand, _stage_ en _commit_ het
+- _Checkout_ **les1**
+- Pas een bestand aan, _stage_ en _commit_ het
+
+- Op dit ogenblik hebben we vier _branches_: **master**, **develop**, **les1** en **les2**. **master** en **develop** staan nog aan het beginpunt, **les1** en **les2** zijn onafhankelijk van elkaar gegroeid.
+- Veronderstel dat de draft van **les1** nu klaar is. Dat is een goed moment om **les1** aan **develop** toe te voegen.
+    - _Checkout_ **develop**
+    - _Merge_ **les1** naar **develop** met `git merge --no-ff les1`
+- Vervolgens werken we verder aan **les2**
+    - Voor de eenvoud zullen we voor zorgen dat de bestandsnamen tussen **les1** en **les2** verschillen. De eenvoudigste manier om dit te garanderen is elke les een andere subdirectory te plaatsen.
+    - _Checkout_ **les2**
+    - Pas een bestand aan, _stage_ en _commit_ het
+- De draft van **les2** is nu eveneens klaar en we kunnen **les2** toevoegen aan **develop**
+    - _Checkout_ **develop**
+    - _Merge_ **les2** naar **develop** met `git merge --no-ff les2`
+- We krijgen feedback. **les2** is in orde,  **les1** vergt een aantal aanpassingen
+    - _Checkout_ **les1**
+    - Pas een bestand aan, _stage_ en _commit_ het
+    - Stuur de aanpassingen terug naar **develop**
+        - _Checkout_ **develop**
+        - _Merge_ **les1** naar **develop** met `git merge --no-ff les1`
+- De lessen zijn nu klaar voor de studenten. Dus sturen we de wijzigingen van **develop** naar **master**
+    - _Checkout_ **master**
+    - _Merge_ **develop** naar **master** met `git merge --no-ff develop`
+- Tijdens het geven van de les botsen we op een onduidelijkheid in **les2**. We plaatsen een reminder in de code.
+    - _Checkout_ **les2**
+    - Pas een bestand aan, _stage_ en _commit_ het
+
+- Kijk nu naar de _history_ van de _repository_ (klik op het uurwerk icoon in het `Git` tabblad)
+    - Standaard krijgen we enkel de _commits_ van de actieve _branch_ te zien. In dit geval **les2**.
+    - De _history_ van **les2** is zeer clean. Ze bevat enkel _commits_ die betrekking hebben op **les2**.
+    - Om de _history_ van een andere _branch_ te zien, moet je op de dropbox lijst rechts van de `history` knop klikken. Doe dit en selecteer **les1**. 
+        - De _history_ van **les1** is even clean als deze van **les2**. Uiteraard bevat ze allemaal andere _commits_. Enkel de allereerste _commit_ waarmee we de _repository_ gestart hebben is gemeenschappelijk (tussen alle _branches_).
+    - Kijk nu naar de _history_ van **develop**.
+        - Deze _history_ is complexer omdat we op een aantal momenten **les1** en **les2** toegevoegd hebben.
+        - Niet tegenstaande de complexe structuur kunnen we vlot terugvinden wanneer **develop** aangepast was en welke _branch_ toegevoegd werd.
+        - Het aantal _commits_ in **develop** blijft beperkt omdat elke _commit_ van **develop** meerdere _commits_ van **les1** of **les2** kan bevatten.
+    - De _history_ van **master** lijkt nog een tikje complexer. Tot je enkel kijkt naar welke _commits_ in **master** zitten. Het zijn er weinig én ze komen enkel van **develop**. Bovendien bundelen ze meerdere _commits_ van **develop**.
+    - Kijk tenslotte naar de _history_ van **all branches**.
+        - Nu zie je duidelijk dat **les2** 1 _commit_ voorloopt op **master** en **develop**.
+        - **les2** is tevens duidelijk gescheiden van **les1** sinds de eerste _commit_.
+
+Hoewel dit _branching model_ complexer is, heeft het als grote voordeel dat de verschillende onderdelen (lessen in bovenstaand voorbeeld) duidelijk gescheiden blijven. Bovendien kunnen ze aan een verschillende snelheid verder uitgewerkt worden.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### Project met onderling verweven features
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## Een nieuw project op de Stash server plaatsen
@@ -365,6 +461,14 @@ ggplot(lm.D9, aes(sample = .stdresid)) + stat_qq() + geom_abline()
 @Cottle2014 bied een handige oneline tool om _branching_ onder de knie te kijken. Het is een interactieve website waar je zelf met git commando's aan de slag gaat en dadelijk ziet wat het effect van de commando's op de structuur van de repository is. Elk stapje start met een beknopte uitleg gevolg door een oefening. Er staan veel oefeningen. De website detecteert wanneer je de oefening correct opgelost hebt. Je krijgt dan te zien hoeveel commando's je nodig had en hoeveel commando's hadden kunnen volstaan. Je kan de oefeningen meermaals opnieuw proberen. Als je vastloopt kan je de oplossing vragen. De website is een aanrader als je een beperkte voorkennis hebt. Daarom best eerst @Gunther2014 lezen of de git cursus volgen.
 
 Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te schrijven. Op dat vlak is @Boswell2011 verplichte lectuur. Hoewel geschreven vanuit een C achtergrond, is het prima toepasbaar op R. Ook dit boek is beschikbaar via de INBO account op Kindle.
+
+# Extra
+
+## Merge conflicten
+
+## Een specifieke commit terug zetten
+
+## Tags
 
 ## _staged and unstaged modified_
 
