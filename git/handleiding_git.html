@@ -350,10 +350,12 @@ ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()</code></pre>
 <li>De oudste <em>commits</em> staan onderaan</li>
 <li><em>Commits</em> waaruit twee (of meer) lijnen naar boven vertrekken geven aan dat daar twee <em>branches</em> splitsen.</li>
 <li><em>Commits</em> waarin twee lijnen samenkomen geven aan dat de twee <em>branches</em> daar weer <em>gemerged</em> werden.</li>
+<li>De lijnen en nodes van elke <em>branch</em>wordt met een andere kleur weergegeven.</li>
 </ul></li>
+<li>Voor sommige <em>commit messages</em> staat de naam van een <em>branch</em>. Hiermee wordt de laatste <em>commit</em> van elke <em>branch</em> aangegeven. <em>HEAD</em> is geen <em>branch</em> maar geeft aan welke <em>commit</em> op dit ogenblik actief is. Dit valt in principe samen met de actieve <em>branch</em>.</li>
+<li>Het onderste deel van het scherm geeft aan welke bestanden gewijzigd zijn en wat de <em>diffs</em> weer van de geselecteerde <em>commit</em> ten opzichte van zijn voorgaande <em>commit</em> (de <em>parent commit</em>).</li>
 </ul></li>
 </ul>
-<p><a href="http://nvie.com/posts/a-successful-git-branching-model/"><a href="http://nvie.com/posts/a-successful-git-branching-model/">http://nvie.com/posts/a-successful-git-branching-model/</a></a></p>
 </div>
 </div>
 <div id="een-nieuw-project-op-de-stash-server-plaatsen" class="section level2">
@@ -362,14 +364,31 @@ ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()</code></pre>
 <div id="een-bestaand-lokaal-project-op-de-stash-server-plaatsen" class="section level2">
 <h2>Een bestaand lokaal project op de Stash server plaatsen</h2>
 </div>
+<div id="een-repository-delen-via-stash" class="section level2">
+<h2>Een repository delen via Stash</h2>
+</div>
 <div id="een-project-van-de-stash-server-forken" class="section level2">
 <h2>Een project van de Stash server <em>forken</em></h2>
+</div>
+<div id="verplichte-lectuur" class="section level2">
+<h2>Verplichte lectuur</h2>
+<p><span class="citation">Driesen (2014)</span> schreef een goede blog post die dieper in gaat over het <em>branches</em>.</p>
+<p><span class="citation">Günther (2014)</span> schreef een beknopt boek dat de basis van git op een beknopte manier uitlegt. Het is beschikbaar via de INBO account op Kindle.</p>
+<p><span class="citation">Cottle (2014)</span> bied een handige oneline tool om <em>branching</em> onder de knie te kijken. Het is een interactieve website waar je zelf met git commando’s aan de slag gaat en dadelijk ziet wat het effect van de commando’s op de structuur van de repository is. Elk stapje start met een beknopte uitleg gevolg door een oefening. Er staan veel oefeningen. De website detecteert wanneer je de oefening correct opgelost hebt. Je krijgt dan te zien hoeveel commando’s je nodig had en hoeveel commando’s hadden kunnen volstaan. Je kan de oefeningen meermaals opnieuw proberen. Als je vastloopt kan je de oplossing vragen. De website is een aanrader als je een beperkte voorkennis hebt. Daarom best eerst <span class="citation">Günther (2014)</span> lezen of de git cursus volgen.</p>
+<p>Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te schrijven. Op dat vlak is <span class="citation">Boswell and Foucher (2011)</span> verplichte lectuur. Hoewel geschreven vanuit een C achtergrond, is het prima toepasbaar op R. Ook dit boek is beschikbaar via de INBO account op Kindle.</p>
 </div>
 <div id="staged-and-unstaged-modified" class="section level2">
 <h2><em>staged and unstaged modified</em></h2>
 <ul>
 <li>Twee keer “M” bij <code>Status</code></li>
 </ul>
+<div class="references">
+<h1>Referenties</h1>
+<p>Boswell, Dustin, and Trevor Foucher. 2011. <em>The Art of Readable Code. Simple and Practical Techniques for Writing Better Code</em>. Edited by Treseler. Sebastopol: O’Reilly.</p>
+<p>Cottle, Peter. 2014. “learn Git Branching.” <a href="http://pcottle.github.com/learnGitBranching/?demo">http://pcottle.github.com/learnGitBranching/?demo</a>.</p>
+<p>Driesen, Vincent. 2014. “A Successful Git Branching Model.” <a href="http://nvie.com/posts/a-successful-git-branching-model/">http://nvie.com/posts/a-successful-git-branching-model/</a>.</p>
+<p>Günther, Tobias. 2014. <em>Learn Version Control with Git. A Step-by-Step Course for the Complete Beginner</em>. Edited by Alexander Rinaß.</p>
+</div>
 </div>
 </div>
 

@@ -2,6 +2,7 @@
 title: "Starten met git"
 author: "Thierry Onkelinx"
 date: "03-02-2015"
+bibliography: "~/local_tex/bibtex/bib/git.bib"
 output: html_document
 ---
 
@@ -328,7 +329,6 @@ ggplot(lm.D9, aes(sample = .stdresid)) + stat_qq() + geom_abline()
     - Het onderste deel van het scherm geeft aan welke bestanden gewijzigd zijn en wat de _diffs_ weer van de geselecteerde _commit_ ten opzichte van zijn voorgaande _commit_ (de _parent commit_).
 
 
-[http://nvie.com/posts/a-successful-git-branching-model/](http://nvie.com/posts/a-successful-git-branching-model/)
 
 
 
@@ -352,8 +352,22 @@ ggplot(lm.D9, aes(sample = .stdresid)) + stat_qq() + geom_abline()
 
 ## Een bestaand lokaal project op de Stash server plaatsen
 
+## Een repository delen via Stash
+
 ## Een project van de Stash server _forken_
+
+## Verplichte lectuur
+
+@Driesen2014 schreef een goede blog post die dieper in gaat over het _branches_.
+
+@Gunther2014 schreef een beknopt boek dat de basis van git op een beknopte manier uitlegt. Het is beschikbaar via de INBO account op Kindle.
+
+@Cottle2014 bied een handige oneline tool om _branching_ onder de knie te kijken. Het is een interactieve website waar je zelf met git commando's aan de slag gaat en dadelijk ziet wat het effect van de commando's op de structuur van de repository is. Elk stapje start met een beknopte uitleg gevolg door een oefening. Er staan veel oefeningen. De website detecteert wanneer je de oefening correct opgelost hebt. Je krijgt dan te zien hoeveel commando's je nodig had en hoeveel commando's hadden kunnen volstaan. Je kan de oefeningen meermaals opnieuw proberen. Als je vastloopt kan je de oplossing vragen. De website is een aanrader als je een beperkte voorkennis hebt. Daarom best eerst @Gunther2014 lezen of de git cursus volgen.
+
+Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te schrijven. Op dat vlak is @Boswell2011 verplichte lectuur. Hoewel geschreven vanuit een C achtergrond, is het prima toepasbaar op R. Ook dit boek is beschikbaar via de INBO account op Kindle.
 
 ## _staged and unstaged modified_
 
 - Twee keer "M" bij `Status`
+
+# Referenties
