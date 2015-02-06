@@ -262,7 +262,7 @@ ggsave(p, file = &quot;script1.png&quot;)</code></pre>
 </ul>
 </div>
 <div id="branches" class="section level2">
-<h2>Branches</h2>
+<h2><em>Branches</em></h2>
 <ul>
 <li>In een eenvoudige git repository staan alle <em>commits</em> achter elkaar in een lange rij.</li>
 <li>git laat toe om op een eenvoudige manier met meerdere <em>branches</em> te werken. Een <em>branch</em> is een vertakking vanaf een bepaald <em>commit</em>. Beide <em>branches</em> hebben tot de <em>commit</em> waar ze vertakken dezelfde voorgeschiedenis. Na deze <em>commit</em> kunnen ze elk een andere weg op gaan.
@@ -439,6 +439,134 @@ ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()</code></pre>
 </div>
 <div id="project-met-onderling-verweven-features" class="section level4">
 <h4>Project met onderling verweven features</h4>
+<p>In veel gevallen zal een project uit verschillende features bestaat die van elkaar afhankelijk zijn. In dat geval is het bovenstaande <em>branching model</em> niet meer mogelijk en moeten we het aanpassen. In dergelijk geval zullen we een nieuwe <em>branch</em> maken als we aan een nieuw feature beginnen. Eens het feature afgewerkt is, <em>merge</em> we het terug in <strong>develop</strong>. Op dat ogenblik hebben we de <strong>feature</strong> <em>branch</em> niet meer nodig en kunnen we die wissen.</p>
+<p>Laat ons het voorbeeld nemen van een R package met drie features A, B en C. We werken eerst A uit, nadien B en C parallel. Zowel in B als C zullen we een aanpassing doen van eenzelfde element uit A.</p>
+<p>Praktisch voorbeeld:</p>
+<ul>
+<li>Maak een nieuw project “dummypackage” met git versie controle
+<ul>
+<li><em>Ignore</em> <code>*.Rproj</code>, <em>stage</em> <code>.gitignore</code> en <em>commit</em></li>
+<li>Maak een <strong>develop</strong> <em>branch</em> en doe een <em>checkout</em> van <strong>develop</strong></li>
+</ul></li>
+<li>We werken eerst aan het inlezen van de gegevens
+<ul>
+<li>Maak een <strong>featureA</strong> <em>branch</em></li>
+<li><em>Checkout</em> <strong>featureA</strong></li>
+<li><p>Zet onderstaande code een bestand <code>readData.R</code>, <em>stage</em> en <em>commit</em> het</p>
+<pre class="r"><code>readData &lt;- function(n = 10){
+  rnorm(n)
+}</code></pre></li>
+<li><p>Zet onderstaande code een bestand <code>featureA.R</code>, <em>stage</em> en <em>commit</em> het</p>
+<pre class="r"><code>featureA &lt;- function(n = 20){
+  mean(readData(n))
+}</code></pre></li>
+</ul></li>
+<li><strong>featureA</strong> is nu klaar. We <em>merge</em> het terug in <strong>develop</strong>
+<ul>
+<li><em>checkout</em> <strong>develop</strong></li>
+<li><code>git merge --no-ff featureA</code></li>
+<li>we wissen <strong>featureA</strong> met <code>git branch -d featureA</code></li>
+<li>Kijk nu naar de <em>history</em>. Er is geen <em>branch</em> meer met de naam <strong>featureA</strong> maar het blijft zichtbaar als een ‘zijsprong’ van <strong>develop</strong></li>
+</ul></li>
+<li>We maken twee nieuwe <em>branches</em> <strong>featureB</strong> en <strong>featureC</strong> vanaf <strong>develop</strong></li>
+<li>Eerste passen we <strong>featureB</strong> aan
+<ul>
+<li><em>checkout</em> <strong>featureB</strong></li>
+<li><p>Pas <code>readData.R</code> aan zoals hieronder en <em>stage</em></p>
+<pre class="r"><code>readData &lt;- function(n = 10, sd = 1){
+  rnorm(n, sd = sd)
+}</code></pre></li>
+<li><p>Pas <code>featureA.R</code> aan zoals hieronder en <em>stage</em></p>
+<pre class="r"><code>featureA &lt;- function(n = 20){
+  mean(readData(n = n, sd = 1))
+}</code></pre></li>
+<li><em>Commit</em> de wijzigingen</li>
+<li><p>Zet onderstaande code een bestand <code>featureB.R</code>, <em>stage</em> en <em>commit</em> het</p>
+<pre class="r"><code>featureB &lt;- function(n = 20, sd = 5){
+  max(readData(n = n, sd = sd))
+}</code></pre></li>
+</ul></li>
+<li>We werken we eerst <strong>featureC</strong> uit
+<ul>
+<li><em>checkout</em> <strong>featureC</strong></li>
+<li><p>Pas <code>readData.R</code> aan zoals hieronder en <em>stage</em></p>
+<pre class="r"><code>readData &lt;- function(n = 10, mean = 0){
+  rnorm(n = n, mean = mean)
+}</code></pre></li>
+<li><p>Pas <code>featureA.R</code> aan zoals hieronder en <em>stage</em></p>
+<pre class="r"><code>featureA &lt;- function(n = 20){
+  mean(readData(n = n, mean = 0))
+}</code></pre></li>
+<li><em>Commit</em> de wijzigingen</li>
+<li><p>Zet onderstaande code een bestand <code>featureC.R</code>, <em>stage</em> en <em>commit</em> het</p>
+<pre class="r"><code>featureC &lt;- function(n = 20, mean = 10){
+  min(readData(n = n, mean = mean))
+}</code></pre></li>
+</ul></li>
+<li>Nu gaan we <strong>featureB</strong> en <strong>featureC</strong> <em>mergen</em> in <strong>develop</strong></li>
+<li>Eerst <strong>featureB</strong>
+<ul>
+<li><em>Checkout</em> <strong>develop</strong></li>
+<li><code>git merge --no-ff featureB</code></li>
+<li><code>git branch -d featureB</code></li>
+<li>Kijk naar de <em>history</em>. Je kan zowel <strong>featureA</strong> als <strong>featureB</strong> nog onderscheiden, hoewel ze niet meer als <em>branch</em> beschikbaar zijn.</li>
+</ul></li>
+<li>Vervolgens <strong>featureC</strong>
+<ul>
+<li>Dit zal een <em>merge conflict</em> opleveren. Immers <code>readData.R</code> en <code>featureA.R</code> zijn zowel in <strong>featureB</strong> als <strong>featureC</strong> gewijzigd.</li>
+<li>We proberen eerst de naïeve manier.</li>
+<li><code>git merge --no-ff featureC</code> geeft een foutmelding: “Automatic merge failed; fix conflicts and then commit the result.”</li>
+<li>De wijzigingen die geen probleem opleverden zijn reeds uitgevoerd en <em>gestaged</em>.</li>
+<li>De bestanden met conflicteren wijzigingen (wijzigingen in dezelfde regel!) hebben de <code>status</code> <em>unmerged</em>. Dit wordt aangegeven voor een “U” op een oranje veld.</li>
+<li><p><code>featureA.R</code> ziet er nu als volgt uit:</p>
+<pre class="r"><code>featureA &lt;- function(n = 20){
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+  mean(readData(n = n, sd = 1))
+=======
+  mean(readData(n = n, mean = 0))
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; featureC
+}</code></pre></li>
+<li>Op de plaats van het conflict zie je dat beide versies worden weergegeven. Eerst die van de <em>HEAD</em> (<em>HEAD</em> = de huidige <em>checkout</em>). Dan de versie van de <em>branch</em> die we probeerden te mergen.</li>
+<li><strong><em>Waarschuwing</em></strong>: als we dit nu zouden <em>stagen</em> dan zal <code>git</code> de <em>merge conflicten</em> overnemen as is.</li>
+<li>We moeten dus manueel de conflicten oplossen in de code. Vervolgens kunnen we <em>stagen</em>, <em>committen</em> en <strong>featureC</strong> wissen.</li>
+<li>Negeren even de wijzigen van de huidige onafgewerkte <em>merge</em> met <code>git reset --hard</code>. Dit command zet <strong><em>alle</em></strong> wijzigingen terug naar de toestand van de laatste <em>commit</em>. <code>featureC.R</code> zat nog niet in <strong>develop</strong> en wordt daarom <em>untracked</em>.</li>
+</ul></li>
+<li>Veiligere manier om met <em>merge conflicten</em> om te gaan:
+<ol style="list-style-type: decimal">
+<li><em>Merge</em> de wijzigingen van <strong>develop</strong> in <strong>featureC</strong></li>
+<li>Los de <em>merge conflicten</em> op in <strong>featureC</strong> (in plaats van in <strong>develop</strong>)</li>
+<li><em>Merge</em> de wijzigingen van <strong>featureC</strong> in <strong>develop</strong>. Dit geeft geen problemen omdat we de <em>merge conflicten</em> reeds opgelost hebben in <strong>featureC</strong>.</li>
+</ol></li>
+<li>Werkwijze
+<ul>
+<li><em>Checkout</em> <strong>featureC</strong>
+<ul>
+<li>Dit kan nu een foutmelding geven omdat <code>featureC.R</code> als <em>untracked</em> bestaat én als <em>tracked</em> in <strong>featureC.R</strong>. Oplossingen: de <em>untracked</em> <code>featureC.R</code> wissen, hernoemen of <em>stagen</em> en <em>commiten</em></li>
+<li>We kiezen in dit geval voor wissen omdat het een restant is van de mislukte <em>merge</em>.</li>
+</ul></li>
+<li><code>git merge --no-ff develop</code></li>
+<li><p>Pas <code>readData.R</code> aan naar</p>
+<pre class="r"><code>readData &lt;- function(n = 10, mean = 0, sd = 1){
+  rnorm(n = n, mean = mean, sd = sd)
+}</code></pre></li>
+<li><p>Pas <code>featureA.R</code> aan naar</p>
+<pre class="r"><code>featureA &lt;- function(n = 20){
+  mean(readData(n = n, mean = 0, sd = 1))
+}</code></pre></li>
+<li><p>Hoewel <code>featureB.R</code> geeft <em>merge conflict</em> geeft, wordt het wel beïnvloed door de wijzigingen in <code>readData.R</code>. Pas <code>featureB.R</code> aan naar</p>
+<pre class="r"><code>featureB &lt;- function(n = 20, sd = 5){
+  max(readData(n = n, mean = 1, sd = sd))
+}</code></pre></li>
+<li><p>Idem voor <code>featureC.R</code>. Pas <code>featureC.R</code> aan naar</p>
+<pre class="r"><code>featureC &lt;- function(n = 20, mean = 10){
+  min(readData(n = n, mean = mean, sd = 0))
+}</code></pre></li>
+<li><em>Stage</em> en <em>commit</em> alle wijzigingen</li>
+<li><em>Checkout</em> <strong>develop</strong></li>
+<li><code>git merge --no-ff featureC</code></li>
+<li><p><code>git branch -d featureC</code></p></li>
+</ul></li>
+</ul>
 </div>
 </div>
 </div>
@@ -456,9 +584,9 @@ ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()</code></pre>
 </div>
 <div id="verplichte-lectuur" class="section level2">
 <h2>Verplichte lectuur</h2>
-<p><span class="citation">Driesen (2014)</span> schreef een goede blog post die dieper in gaat over het <em>branches</em>.</p>
+<p><span class="citation">Driesen (2014)</span> schreef een goede blog post die dieper in gaat over <em>branches</em>.</p>
 <p><span class="citation">Günther (2014)</span> schreef een beknopt boek dat de basis van git op een beknopte manier uitlegt. Het is beschikbaar via de INBO account op Kindle.</p>
-<p><span class="citation">Cottle (2014)</span> bied een handige oneline tool om <em>branching</em> onder de knie te kijken. Het is een interactieve website waar je zelf met git commando’s aan de slag gaat en dadelijk ziet wat het effect van de commando’s op de structuur van de repository is. Elk stapje start met een beknopte uitleg gevolg door een oefening. Er staan veel oefeningen. De website detecteert wanneer je de oefening correct opgelost hebt. Je krijgt dan te zien hoeveel commando’s je nodig had en hoeveel commando’s hadden kunnen volstaan. Je kan de oefeningen meermaals opnieuw proberen. Als je vastloopt kan je de oplossing vragen. De website is een aanrader als je een beperkte voorkennis hebt. Daarom best eerst <span class="citation">Günther (2014)</span> lezen of de git cursus volgen.</p>
+<p><span class="citation">Cottle (2014)</span> bied een handige oneline tool om <em>branching</em> onder de knie te kijken. Het is een interactieve website waar je zelf met git commando’s aan de slag gaat en dadelijk ziet wat het effect van de commando’s op de structuur van de repository is. Elk stapje start met een beknopte uitleg gevolg door een oefening. Er staan veel oefeningen. De website detecteert wanneer je de oefening correct opgelost hebt. Je krijgt dan te zien hoeveel commando’s je nodig had en hoeveel commando’s hadden kunnen volstaan. Je kan de oefeningen meermaals opnieuw proberen. Als je vastloopt kan je de oplossing vragen. De website is een aanrader als je een beperkte voorkennis hebt. Daarom best eerst <span class="citation">Günther (2014)</span> lezen of de git cursus volgen. Reken op 2 à 3 uur om de volledige set oefeningen te doorlopen. Je hoeft de oefeningen niet in een sessie te maken.</p>
 <p>Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te schrijven. Op dat vlak is <span class="citation">Boswell and Foucher (2011)</span> verplichte lectuur. Hoewel geschreven vanuit een C achtergrond, is het prima toepasbaar op R. Ook dit boek is beschikbaar via de INBO account op Kindle.</p>
 </div>
 </div>

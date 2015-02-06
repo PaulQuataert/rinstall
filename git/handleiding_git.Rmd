@@ -239,7 +239,7 @@ ggsave(p, file = "script1.png")
 
 
 
-## Branches
+## _Branches_
 
 - In een eenvoudige git repository staan alle _commits_ achter elkaar in een lange rij.
 - git laat toe om op een eenvoudige manier met meerdere _branches_ te werken. Een _branch_ is een vertakking vanaf een bepaald _commit_. Beide _branches_ hebben tot de _commit_ waar ze vertakken dezelfde voorgeschiedenis. Na deze _commit_ kunnen ze elk een andere weg op gaan.
@@ -350,6 +350,24 @@ ggplot(lm.D9, aes(sample = .stdresid)) + stat_qq() + geom_abline()
 
 Het eenvoudige _branching_ model zorgt er voor dat de **master** behoorlijk clean blijft. **develop** bevat echter alle sequentele wijzigingen. Dat is prima voor een beperkt project waar slechts een persoon aan werkt. Voor complexere projecten waar je met meerdere mensen aan werkt of dat uit verschillende facetten bestaat, is dat minder praktisch. In dergelijke situaties is het handig om zogenaamde **feature** _branches_ te maken.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #### Project met permanent scheidbare features
 
 Voorbeeld: een project van een lessenreeks die uit verschillende lessen bestaat. Elke les heeft zijn eigen broncode en datasets.
@@ -424,7 +442,149 @@ Hoewel dit _branching model_ complexer is, heeft het als grote voordeel dat de v
 
 
 
+
+
 #### Project met onderling verweven features
+
+In veel gevallen zal een project uit verschillende features bestaat die van elkaar afhankelijk zijn. In dat geval is het bovenstaande _branching model_ niet meer mogelijk en moeten we het aanpassen. In dergelijk geval zullen we een nieuwe _branch_ maken als we aan een nieuw feature beginnen. Eens het feature afgewerkt is, _merge_ we het terug in **develop**. Op dat ogenblik hebben we de **feature** _branch_ niet meer nodig en kunnen we die wissen.
+
+Laat ons het voorbeeld nemen van een R package met drie features A, B en C. We werken eerst A uit, nadien B en C parallel. Zowel in B als C zullen we een aanpassing doen van eenzelfde element uit A.
+
+Praktisch voorbeeld:
+
+- Maak een nieuw project "dummypackage" met git versie controle
+    - _Ignore_ `*.Rproj`, _stage_ `.gitignore` en _commit_
+    - Maak een **develop** _branch_ en doe een _checkout_ van **develop**
+- We werken eerst aan het inlezen van de gegevens
+    - Maak een **featureA** _branch_
+    - _Checkout_ **featureA**
+    - Zet onderstaande code een bestand `readData.R`, _stage_ en _commit_ het
+        ```{r readData}
+        readData <- function(n = 10){
+          rnorm(n)
+        }
+        ```
+    - Zet onderstaande code een bestand `featureA.R`, _stage_ en _commit_ het
+        ```{r featureA}
+        featureA <- function(n = 20){
+          mean(readData(n))
+        }
+        ```
+- **featureA** is nu klaar. We _merge_ het terug in **develop**
+    - _checkout_ **develop**
+    - `git merge --no-ff featureA`
+    - we wissen **featureA** met `git branch -d featureA`
+    - Kijk nu naar de _history_. Er is geen _branch_ meer met de naam **featureA** maar het blijft zichtbaar als een 'zijsprong' van **develop**
+- We maken twee nieuwe _branches_ **featureB** en **featureC** vanaf **develop**
+- Eerste passen we **featureB** aan
+    - _checkout_ **featureB**
+    - Pas `readData.R` aan zoals hieronder en _stage_
+        ```{r readDataB}
+        readData <- function(n = 10, sd = 1){
+          rnorm(n, sd = sd)
+        }
+        ```
+
+    - Pas `featureA.R` aan zoals hieronder en _stage_
+        ```{r featureA1}
+        featureA <- function(n = 20){
+          mean(readData(n = n, sd = 1))
+        }
+        ```
+
+    - _Commit_ de wijzigingen
+    - Zet onderstaande code een bestand `featureB.R`, _stage_ en _commit_ het
+        ```{r featureB}
+        featureB <- function(n = 20, sd = 5){
+          max(readData(n = n, sd = sd))
+        }
+        ```
+
+- We werken we eerst **featureC** uit
+    - _checkout_ **featureC**
+    - Pas `readData.R` aan zoals hieronder en _stage_
+        ```{r readDataC}
+        readData <- function(n = 10, mean = 0){
+          rnorm(n = n, mean = mean)
+        }
+        ```
+
+    - Pas `featureA.R` aan zoals hieronder en _stage_
+        ```{r featureA2}
+        featureA <- function(n = 20){
+          mean(readData(n = n, mean = 0))
+        }
+        ```
+    - _Commit_ de wijzigingen
+    - Zet onderstaande code een bestand `featureC.R`, _stage_ en _commit_ het
+        ```{r featureC}
+        featureC <- function(n = 20, mean = 10){
+          min(readData(n = n, mean = mean))
+        }
+        ```
+- Nu gaan we **featureB** en **featureC** _mergen_ in **develop**
+- Eerst **featureB**
+    - _Checkout_ **develop**
+    - `git merge --no-ff featureB`
+    - `git branch -d featureB`
+    - Kijk naar de _history_. Je kan zowel **featureA** als **featureB** nog onderscheiden, hoewel ze niet meer als _branch_ beschikbaar zijn.
+- Vervolgens **featureC**
+    - Dit zal een _merge conflict_ opleveren. Immers `readData.R` en `featureA.R` zijn zowel in **featureB** als **featureC** gewijzigd.
+    - We proberen eerst de naïeve manier.
+    - `git merge --no-ff featureC` geeft een foutmelding: "Automatic merge failed; fix conflicts and then commit the result."
+    - De wijzigingen die geen probleem opleverden zijn reeds uitgevoerd en _gestaged_.
+    - De bestanden met conflicteren wijzigingen (wijzigingen in dezelfde regel!) hebben de `status` _unmerged_. Dit wordt aangegeven voor een "U" op een oranje veld.
+    - `featureA.R` ziet er nu als volgt uit:
+        ```{r featureAconflict, eval = FALSE}
+        featureA <- function(n = 20){
+        <<<<<<< HEAD
+          mean(readData(n = n, sd = 1))
+        =======
+          mean(readData(n = n, mean = 0))
+        >>>>>>> featureC
+        }
+        ```
+    - Op de plaats van het conflict zie je dat beide versies worden weergegeven. Eerst die van de _HEAD_ (_HEAD_ = de huidige _checkout_). Dan de versie van de _branch_ die we probeerden te mergen.
+    - **_Waarschuwing_**: als we dit nu zouden _stagen_ dan zal `git` de _merge conflicten_ overnemen as is.
+    - We moeten dus manueel de conflicten oplossen in de code. Vervolgens kunnen we _stagen_, _committen_ en **featureC** wissen.
+    - Negeren even de wijzigen van de huidige onafgewerkte _merge_ met `git reset --hard`. Dit command zet **_alle_** wijzigingen terug naar de toestand van de laatste _commit_. `featureC.R` zat nog niet in **develop** en wordt daarom _untracked_.
+- Veiligere manier om met _merge conflicten_ om te gaan:
+    1. _Merge_ de wijzigingen van **develop** in **featureC**
+    1. Los de _merge conflicten_ op in **featureC** (in plaats van in **develop**)
+    1. _Merge_ de wijzigingen van **featureC** in **develop**. Dit geeft geen problemen omdat we de _merge conflicten_ reeds opgelost hebben in **featureC**.
+- Werkwijze
+    - _Checkout_ **featureC**
+        - Dit kan nu een foutmelding geven omdat `featureC.R` als _untracked_ bestaat én als _tracked_ in **featureC.R**. Oplossingen: de _untracked_ `featureC.R` wissen, hernoemen of _stagen_ en _commiten_
+        - We kiezen in dit geval voor wissen omdat het een restant is van de mislukte _merge_.
+    - `git merge --no-ff develop`
+    - Pas `readData.R` aan naar
+        ```{r readData_merge}
+        readData <- function(n = 10, mean = 0, sd = 1){
+          rnorm(n = n, mean = mean, sd = sd)
+        }
+        ```
+    - Pas `featureA.R` aan naar
+        ```{r featureA_merge}
+        featureA <- function(n = 20){
+          mean(readData(n = n, mean = 0, sd = 1))
+        }
+        ```
+    - Hoewel `featureB.R` geeft _merge conflict_ geeft, wordt het wel beïnvloed door de wijzigingen in `readData.R`. Pas `featureB.R` aan naar
+        ```{r featureB_merge}
+        featureB <- function(n = 20, sd = 5){
+          max(readData(n = n, mean = 1, sd = sd))
+        }
+        ```
+    - Idem voor `featureC.R`. Pas `featureC.R` aan naar
+        ```{r featurec_merge}
+        featureC <- function(n = 20, mean = 10){
+          min(readData(n = n, mean = mean, sd = 0))
+        }
+        ```
+    - _Stage_ en _commit_ alle wijzigingen
+    - _Checkout_ **develop**
+    - `git merge --no-ff featureC`
+    - `git branch -d featureC`
 
 
 
@@ -454,11 +614,11 @@ Hoewel dit _branching model_ complexer is, heeft het als grote voordeel dat de v
 
 ## Verplichte lectuur
 
-@Driesen2014 schreef een goede blog post die dieper in gaat over het _branches_.
+@Driesen2014 schreef een goede blog post die dieper in gaat over _branches_.
 
 @Gunther2014 schreef een beknopt boek dat de basis van git op een beknopte manier uitlegt. Het is beschikbaar via de INBO account op Kindle.
 
-@Cottle2014 bied een handige oneline tool om _branching_ onder de knie te kijken. Het is een interactieve website waar je zelf met git commando's aan de slag gaat en dadelijk ziet wat het effect van de commando's op de structuur van de repository is. Elk stapje start met een beknopte uitleg gevolg door een oefening. Er staan veel oefeningen. De website detecteert wanneer je de oefening correct opgelost hebt. Je krijgt dan te zien hoeveel commando's je nodig had en hoeveel commando's hadden kunnen volstaan. Je kan de oefeningen meermaals opnieuw proberen. Als je vastloopt kan je de oplossing vragen. De website is een aanrader als je een beperkte voorkennis hebt. Daarom best eerst @Gunther2014 lezen of de git cursus volgen.
+@Cottle2014 bied een handige oneline tool om _branching_ onder de knie te kijken. Het is een interactieve website waar je zelf met git commando's aan de slag gaat en dadelijk ziet wat het effect van de commando's op de structuur van de repository is. Elk stapje start met een beknopte uitleg gevolg door een oefening. Er staan veel oefeningen. De website detecteert wanneer je de oefening correct opgelost hebt. Je krijgt dan te zien hoeveel commando's je nodig had en hoeveel commando's hadden kunnen volstaan. Je kan de oefeningen meermaals opnieuw proberen. Als je vastloopt kan je de oplossing vragen. De website is een aanrader als je een beperkte voorkennis hebt. Daarom best eerst @Gunther2014 lezen of de git cursus volgen. Reken op 2 à 3 uur om de volledige set oefeningen te doorlopen. Je hoeft de oefeningen niet in een sessie te maken.
 
 Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te schrijven. Op dat vlak is @Boswell2011 verplichte lectuur. Hoewel geschreven vanuit een C achtergrond, is het prima toepasbaar op R. Ook dit boek is beschikbaar via de INBO account op Kindle.
 
