@@ -663,6 +663,51 @@ ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()</code></pre>
 </div>
 <div id="beknopt-overzicht-git-commandos" class="section level1">
 <h1>Beknopt overzicht git commando’s</h1>
+<dl>
+<dt><code>git add bestandsnaam</code></dt>
+<dd><em>stage</em> <code>bestandsnaam</code>
+</dd>
+<dd>equivalent met het aanvinken van <code>bestandsnaam</code> in het <code>Git</code> tabblad van RStudio.
+</dd>
+<dt><code>git add -all</code></dt>
+<dd><em>stage</em> alle gewijzigde bestanden die door <code>Git</code> beheerd worden
+</dd>
+<dt><code>git reset bestandsnaam</code></dt>
+<dd><em>unstagen</em> <code>bestandsnaam</code>
+</dd>
+<dd>equivalent met het aanvinken van <code>bestandsnaam</code> in het <code>Git</code> tabblad van RStudio.
+</dd>
+<dt><code>git reset</code></dt>
+<dd><em>unstagen</em> van alle <em>gestagde</em> bestanden. De wijzigingen blijven behouden.
+</dd>
+<dt><code>git reset --hard</code></dt>
+<dd>Terugzetten van alle bestanden naar de versie van laatste <em>commit</em>. Alle wijzigingen sinds de laatste <em>commit</em> gaan onherroepelijk verloren!!!<br />
+</dd>
+<dt><code>git rm bestandsnaam</code></dt>
+<dd>wis <code>bestandsnaam</code> en <em>stage</em> die wijziging
+</dd>
+<dd>equivalent met het wissen van <code>bestandsnaam</code> en vervolgens het aanvinken van <code>bestandsnaam</code> in het <code>Git</code> tabblad van RStudio.
+</dd>
+<dt><code>git commit -m &quot;Commit message&quot;</code></dt>
+<dd><em>commit</em> de <em>gestagede</em> bestanden met als boodschap “Commit message”
+</dd>
+<dd>equivalent met het klikken op de <code>Commit</code> knop in het <code>Git</code> tabblad van RStudio.
+</dd>
+<dt><code>git status</code></dt>
+<dd>geeft een overzicht van de bestanden in de working directory
+</dd>
+<dd>equivalent met het overzicht in het <code>Git</code> tabblad van RStudio.
+</dd>
+<dt><code>git checkout naam</code></dt>
+<dd>zet de inhoud van de huidige werking directory naar de toestand van ‘naam’ - ‘naam’ is een <em>commit</em>. Gebruik deze <em>commit</em> - ‘naam’ is een <em>branch</em>. Gebruik de laatste <em>commit</em> van deze <em>branch</em>. - ‘naam’ is een <em>tag</em>. Gebruik de <em>commit</em> waarnaar de <em>tag</em> verwijst.
+</dd>
+<dt><code>git branch naam</code></dt>
+<dd>maakt een nieuwe <em>branch</em> vanaf de <em>commit</em> die op dit ogenblik <em>uitgechecked</em> is.
+</dd>
+<dt><code>git branch -d naam</code></dt>
+<dd>verwijder de <em>branch</em> <strong>naam</strong>
+</dd>
+</dl>
 </div>
 <div id="extra" class="section level1">
 <h1>Extra</h1>

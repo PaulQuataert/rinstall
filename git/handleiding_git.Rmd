@@ -749,7 +749,68 @@ De andere _repositories_ wanneer een lokale _repository_ verbonden is noemen we 
 
 Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te schrijven. Op dat vlak is @Boswell2011 verplichte lectuur. Hoewel geschreven vanuit een C achtergrond, is het prima toepasbaar op R. Ook dit boek is beschikbaar via de INBO account op Kindle.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Beknopt overzicht git commando's
+
+`git add bestandsnaam`
+  ~ _stage_ `bestandsnaam`
+  ~ equivalent met het aanvinken van `bestandsnaam` in het `Git` tabblad van RStudio.
+`git add -all`
+  ~ _stage_ alle gewijzigde bestanden die door `Git` beheerd worden
+`git reset bestandsnaam`
+  ~ _unstagen_ `bestandsnaam`
+  ~ equivalent met het aanvinken van `bestandsnaam` in het `Git` tabblad van RStudio.
+`git reset`
+  ~ _unstagen_ van alle _gestagde_ bestanden. De wijzigingen blijven behouden.
+`git reset --hard`
+  ~ Terugzetten van alle bestanden naar de versie van laatste _commit_. Alle wijzigingen sinds de laatste _commit_ gaan onherroepelijk verloren!!!  
+`git rm bestandsnaam`
+  ~ wis `bestandsnaam` en _stage_  die wijziging
+  ~ equivalent met het wissen van `bestandsnaam` en vervolgens het aanvinken van `bestandsnaam` in het `Git` tabblad van RStudio.
+`git commit -m "Commit message"`
+  ~ _commit_ de _gestagede_ bestanden met als boodschap "Commit message"
+  ~ equivalent met het klikken op de `Commit` knop in het `Git` tabblad van RStudio.
+`git status`
+  ~ geeft een overzicht van de bestanden in de working directory
+  ~ equivalent met het overzicht in het `Git` tabblad van RStudio.
+`git checkout naam`
+  ~ zet de inhoud van de huidige werking directory naar de toestand van 'naam'
+    - 'naam' is een _commit_. Gebruik deze _commit_
+    - 'naam' is een _branch_. Gebruik de laatste _commit_ van deze _branch_.
+    - 'naam' is een _tag_. Gebruik de _commit_ waarnaar de _tag_ verwijst.
+`git branch naam`
+  ~ maakt een nieuwe _branch_ vanaf de _commit_ die op dit ogenblik _uitgechecked_ is.
+`git branch -d naam`
+  ~ verwijder de _branch_ **naam**
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Extra
 
