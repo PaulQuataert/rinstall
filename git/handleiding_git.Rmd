@@ -35,8 +35,11 @@ output: html_document
 
 
 
+# Lokale projecten
 
-## Eenvoudig nieuw project enkel lokaal
+Een lokaal project staat enkel op jouw computer. Je hebt dus geen servers of andere computers nodig om versiebeheer te gebruiken! Een eigen lokaal project is prima om te leren werken met git. Je kan alle doen, behalve de stappen die verband houden met het synchroniseren tussen computers / servers.
+
+## Eenvoudig nieuw project
 
 ### Een project starten
 
@@ -602,7 +605,7 @@ Praktisch voorbeeld:
 
 
 
-
+# Projecten op de Stash server
 
 ## Een nieuw project op de Stash server plaatsen
 
