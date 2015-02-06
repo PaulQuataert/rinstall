@@ -607,15 +607,96 @@ Praktisch voorbeeld:
 
 # Projecten op de Stash server
 
+Via ACD heeft het INBO een Stash server ter beschikking. Je vindt deze server via [https://git.milieuinfo.be](https://git.milieuinfo.be). Inloggen doe je met behulp van je JIRA gebruikersnaam en wachtwoord. De toegang is niet automatisch. Je moet ze aanvragen via IDC (Kevin Azijn). 
+
+Persoonlijke _repositories_ kan je vrij en onbeperkt zelf aanmaken. Meer generieke projecten dienen door IDC (Kevin Azijn) aangemaakt te worden.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Een nieuw project op de Stash server plaatsen
 
+Dit is de werkwijze die je best volgt als je een nieuw project wilt starten en er dadelijk ook een kopie van op Stash wenst. Dat is handig als je de optie wilt hebben om de inhoud vlot te delen met anderen. Dit is overigens geen verplichting!
+
+- Maak de _repository_ op Stash
+    - Login op [https://git.milieuinfo.be](https://git.milieuinfo.be)
+    - Rechtsbovenaan vind je een dropbox lijst. Kies `View profile`
+    - Nu krijg je een overzicht van al jouw _repositories_
+    - Klik op `Create repository`
+    - Geef de gewenste naam en klik op `Create repository`
+    - Nu krijg je de melding dat je lege repository beschikbaar is. Bovendien krijg je een aantal suggesties om verder te werken.
+    - Hou dit venster in de browser open.
+- Werkwijze voor Windows: 
+    - Open RStudio
+    - Maak een nieuw project. Kies nu dadelijk voor `Version control` en vervolgens voor `Git`. 
+    - Ga terug naar je browser en klik linksboven op `Clone`. Selecteer `HTTP` en kopiëer de URL die je daar vindt. Deze heeft de vorm [https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git](https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git)
+    - Plak deze URL in het vak `Repository URL`
+    - RStudio zal automatisch de naam van de _repository_ voorstellen als projectnaam. Je kan dit, indien gewenst, aanpassen. De voorgestelde naam behouden heeft als voordeel dat je minder verwarring krijgt.
+    - Geef de gewenste map waarin het project moet komen en klik op `Create project`
+    - Jouw project wordt nu gesynchoniseerd met de (lege) _repository_ op Stash
+- Werkwijze voor Linux (wegens bug in RStudio):
+    - Maak in RStudio een eenvoudig nieuw project aan
+    - Volg de richtlijnen voor het synchroniseren van een bestaand project
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Een bestaand lokaal project op de Stash server plaatsen
+
+- Maak een nieuwe _repository_ op Stash zoals hierboven beschreven
+- Open het project dat je wenst te synchroniseren met RStudio
+- Ga terug naar je browser en klik linksboven op `Clone`. Selecteer `HTTP` en kopiëer de URL die je daar vindt. Deze heeft de vorm [https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git](https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git)
+- Ga naar de `shell` en voer het commando `git remote add origin STASHURL` uit. Hierbij moet je `STASHURL` vervangen door de URL die je op de Stash website gekopieerd hebt.
+- `git push origin --all` en geef je JIRA wachtwoord wanneer daarom gevraagd wordt.
+    - Nu worden al je lokale _branches_ naar Stash _gepusht_.
+    - Je kan ook selectief _branches_ _pushen_. Dat doe je dan _branch_ per _branch_
+    - `git push origin master`
+    - `git push origin develop`
+- Ga terug naar de browser en klik op "Refresh". Nu krijg je een overzicht van alle bestanden in de _repository_ op Stash.
+
+## Project synchroniseren met de Stash server
+
+# Samenwerken via Stash
 
 ## Een repository delen via Stash
 
 ## Een project van de Stash server _forken_
 
-## Verplichte lectuur
+## Een _pull request_ maken
+
+# Verplichte lectuur
 
 @Driesen2014 schreef een goede blog post die dieper in gaat over _branches_.
 
@@ -625,9 +706,9 @@ Praktisch voorbeeld:
 
 Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te schrijven. Op dat vlak is @Boswell2011 verplichte lectuur. Hoewel geschreven vanuit een C achtergrond, is het prima toepasbaar op R. Ook dit boek is beschikbaar via de INBO account op Kindle.
 
-# Extra
+# Beknopt overzicht git commando's
 
-## Merge conflicten
+# Extra
 
 ## Een specifieke commit terug zetten
 
@@ -636,5 +717,7 @@ Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te sc
 ## _staged and unstaged modified_
 
 - Twee keer "M" bij `Status`
+
+## SSH
 
 # Referenties

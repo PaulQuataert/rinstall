@@ -577,31 +577,84 @@ ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()</code></pre>
 </div>
 <div id="projecten-op-de-stash-server" class="section level1">
 <h1>Projecten op de Stash server</h1>
+<p>Via ACD heeft het INBO een Stash server ter beschikking. Je vindt deze server via <a href="https://git.milieuinfo.be"><a href="https://git.milieuinfo.be">https://git.milieuinfo.be</a></a>. Inloggen doe je met behulp van je JIRA gebruikersnaam en wachtwoord. De toegang is niet automatisch. Je moet ze aanvragen via IDC (Kevin Azijn).</p>
+<p>Persoonlijke <em>repositories</em> kan je vrij en onbeperkt zelf aanmaken. Meer generieke projecten dienen door IDC (Kevin Azijn) aangemaakt te worden.</p>
 <div id="een-nieuw-project-op-de-stash-server-plaatsen" class="section level2">
 <h2>Een nieuw project op de Stash server plaatsen</h2>
+<p>Dit is de werkwijze die je best volgt als je een nieuw project wilt starten en er dadelijk ook een kopie van op Stash wenst. Dat is handig als je de optie wilt hebben om de inhoud vlot te delen met anderen. Dit is overigens geen verplichting!</p>
+<ul>
+<li>Maak de <em>repository</em> op Stash
+<ul>
+<li>Login op <a href="https://git.milieuinfo.be"><a href="https://git.milieuinfo.be">https://git.milieuinfo.be</a></a></li>
+<li>Rechtsbovenaan vind je een dropbox lijst. Kies <code>View profile</code></li>
+<li>Nu krijg je een overzicht van al jouw <em>repositories</em></li>
+<li>Klik op <code>Create repository</code></li>
+<li>Geef de gewenste naam en klik op <code>Create repository</code></li>
+<li>Nu krijg je de melding dat je lege repository beschikbaar is. Bovendien krijg je een aantal suggesties om verder te werken.</li>
+<li>Hou dit venster in de browser open.</li>
+</ul></li>
+<li>Werkwijze voor Windows:
+<ul>
+<li>Open RStudio</li>
+<li>Maak een nieuw project. Kies nu dadelijk voor <code>Version control</code> en vervolgens voor <code>Git</code>.</li>
+<li>Ga terug naar je browser en klik linksboven op <code>Clone</code>. Selecteer <code>HTTP</code> en kopiëer de URL die je daar vindt. Deze heeft de vorm <a href="https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git"><a href="https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git">https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git</a></a></li>
+<li>Plak deze URL in het vak <code>Repository URL</code></li>
+<li>RStudio zal automatisch de naam van de <em>repository</em> voorstellen als projectnaam. Je kan dit, indien gewenst, aanpassen. De voorgestelde naam behouden heeft als voordeel dat je minder verwarring krijgt.</li>
+<li>Geef de gewenste map waarin het project moet komen en klik op <code>Create project</code></li>
+<li>Jouw project wordt nu gesynchoniseerd met de (lege) <em>repository</em> op Stash</li>
+</ul></li>
+<li>Werkwijze voor Linux (wegens bug in RStudio):
+<ul>
+<li>Maak in RStudio een eenvoudig nieuw project aan</li>
+<li>Volg de richtlijnen voor het synchroniseren van een bestaand project</li>
+</ul></li>
+</ul>
 </div>
 <div id="een-bestaand-lokaal-project-op-de-stash-server-plaatsen" class="section level2">
 <h2>Een bestaand lokaal project op de Stash server plaatsen</h2>
+<ul>
+<li>Maak een nieuwe <em>repository</em> op Stash zoals hierboven beschreven</li>
+<li>Open het project dat je wenst te synchroniseren met RStudio</li>
+<li>Ga terug naar je browser en klik linksboven op <code>Clone</code>. Selecteer <code>HTTP</code> en kopiëer de URL die je daar vindt. Deze heeft de vorm <a href="https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git"><a href="https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git">https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git</a></a></li>
+<li>Ga naar de <code>shell</code> en voer het commando <code>git remote add origin STASHURL</code> uit. Hierbij moet je <code>STASHURL</code> vervangen door de URL die je op de Stash website gekopieerd hebt.</li>
+<li><code>git push origin --all</code> en geef je JIRA wachtwoord wanneer daarom gevraagd wordt.
+<ul>
+<li>Nu worden al je lokale <em>branches</em> naar Stash <em>gepusht</em>.</li>
+<li>Je kan ook selectief <em>branches</em> <em>pushen</em>. Dat doe je dan <em>branch</em> per <em>branch</em></li>
+<li><code>git push origin master</code></li>
+<li><code>git push origin develop</code></li>
+</ul></li>
+<li>Ga terug naar de browser en klik op “Refresh”. Nu krijg je een overzicht van alle bestanden in de <em>repository</em> op Stash.</li>
+</ul>
 </div>
+<div id="project-synchroniseren-met-de-stash-server" class="section level2">
+<h2>Project synchroniseren met de Stash server</h2>
+</div>
+</div>
+<div id="samenwerken-via-stash" class="section level1">
+<h1>Samenwerken via Stash</h1>
 <div id="een-repository-delen-via-stash" class="section level2">
 <h2>Een repository delen via Stash</h2>
 </div>
 <div id="een-project-van-de-stash-server-forken" class="section level2">
 <h2>Een project van de Stash server <em>forken</em></h2>
 </div>
-<div id="verplichte-lectuur" class="section level2">
-<h2>Verplichte lectuur</h2>
+<div id="een-pull-request-maken" class="section level2">
+<h2>Een <em>pull request</em> maken</h2>
+</div>
+</div>
+<div id="verplichte-lectuur" class="section level1">
+<h1>Verplichte lectuur</h1>
 <p><span class="citation">Driesen (2014)</span> schreef een goede blog post die dieper in gaat over <em>branches</em>.</p>
 <p><span class="citation">Günther (2014)</span> schreef een beknopt boek dat de basis van git op een beknopte manier uitlegt. Het is beschikbaar via de INBO account op Kindle.</p>
 <p><span class="citation">Cottle (2014)</span> bied een handige oneline tool om <em>branching</em> onder de knie te kijken. Het is een interactieve website waar je zelf met git commando’s aan de slag gaat en dadelijk ziet wat het effect van de commando’s op de structuur van de repository is. Elk stapje start met een beknopte uitleg gevolg door een oefening. Er staan veel oefeningen. De website detecteert wanneer je de oefening correct opgelost hebt. Je krijgt dan te zien hoeveel commando’s je nodig had en hoeveel commando’s hadden kunnen volstaan. Je kan de oefeningen meermaals opnieuw proberen. Als je vastloopt kan je de oplossing vragen. De website is een aanrader als je een beperkte voorkennis hebt. Daarom best eerst <span class="citation">Günther (2014)</span> lezen of de git cursus volgen. Reken op 2 à 3 uur om de volledige set oefeningen te doorlopen. Je hoeft de oefeningen niet in een sessie te maken.</p>
 <p>Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te schrijven. Op dat vlak is <span class="citation">Boswell and Foucher (2011)</span> verplichte lectuur. Hoewel geschreven vanuit een C achtergrond, is het prima toepasbaar op R. Ook dit boek is beschikbaar via de INBO account op Kindle.</p>
 </div>
+<div id="beknopt-overzicht-git-commandos" class="section level1">
+<h1>Beknopt overzicht git commando’s</h1>
 </div>
 <div id="extra" class="section level1">
 <h1>Extra</h1>
-<div id="merge-conflicten" class="section level2">
-<h2>Merge conflicten</h2>
-</div>
 <div id="een-specifieke-commit-terug-zetten" class="section level2">
 <h2>Een specifieke commit terug zetten</h2>
 </div>
@@ -613,6 +666,9 @@ ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()</code></pre>
 <ul>
 <li>Twee keer “M” bij <code>Status</code></li>
 </ul>
+</div>
+<div id="ssh" class="section level2">
+<h2>SSH</h2>
 <div class="references">
 <h1>Referenties</h1>
 <p>Boswell, Dustin, and Trevor Foucher. 2011. <em>The Art of Readable Code. Simple and Practical Techniques for Writing Better Code</em>. Edited by Treseler. Sebastopol: O’Reilly.</p>
