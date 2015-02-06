@@ -686,7 +686,50 @@ Dit is de werkwijze die je best volgt als je een nieuw project wilt starten en e
     - `git push origin develop`
 - Ga terug naar de browser en klik op "Refresh". Nu krijg je een overzicht van alle bestanden in de _repository_ op Stash.
 
-## Project synchroniseren met de Stash server
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Wijziging in lokaal project uploaden naar de Stash server
+
+De andere _repositories_ wanneer een lokale _repository_ verbonden is noemen we de _remotes_. Een _remote_ wordt gedefinieerd door een naam en een URL. Meestal is er slechts één _remote_. De belangrijkste _remote_ krijgt klassiek de naam `origin`. Wanneer we de gegevens van de _remote_ gesynchoniseerd hebben, dan krijgen we ook de _branches_ van die _remote_ te zien. Bijvoorbeeld **origin/master** en **origin/develop** zijn de **master** en **origin** _branch_ op de _remote_ genaamd `origin`.
+
+- lokale wijzingen naar een _remote_ sturen, noemen we _pushen_.
+- `git push naam_remote naam_branch` _pusht_ **naam_branch** naar `naam_remote`.
+- `git push origin master` _pusht_ bijgevolg **master** naar `origin`
+- `git push origin --all` _pusht_ alle lokale _branches_ naar `origin`
+    - Indien een _branch_ zowel lokaal als op de _remote_ staat, wordt deze _gemerged_.
+    - Indien een _branch_ niet bestaat op de _remote_, dan wordt deze aangemaakt.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Samenwerken via Stash
 

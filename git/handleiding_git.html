@@ -627,8 +627,19 @@ ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()</code></pre>
 <li>Ga terug naar de browser en klik op “Refresh”. Nu krijg je een overzicht van alle bestanden in de <em>repository</em> op Stash.</li>
 </ul>
 </div>
-<div id="project-synchroniseren-met-de-stash-server" class="section level2">
-<h2>Project synchroniseren met de Stash server</h2>
+<div id="wijziging-in-lokaal-project-uploaden-naar-de-stash-server" class="section level2">
+<h2>Wijziging in lokaal project uploaden naar de Stash server</h2>
+<p>De andere <em>repositories</em> wanneer een lokale <em>repository</em> verbonden is noemen we de <em>remotes</em>. Een <em>remote</em> wordt gedefinieerd door een naam en een URL. Meestal is er slechts één <em>remote</em>. De belangrijkste <em>remote</em> krijgt klassiek de naam <code>origin</code>. Wanneer we de gegevens van de <em>remote</em> gesynchoniseerd hebben, dan krijgen we ook de <em>branches</em> van die <em>remote</em> te zien. Bijvoorbeeld <strong>origin/master</strong> en <strong>origin/develop</strong> zijn de <strong>master</strong> en <strong>origin</strong> <em>branch</em> op de <em>remote</em> genaamd <code>origin</code>.</p>
+<ul>
+<li>lokale wijzingen naar een <em>remote</em> sturen, noemen we <em>pushen</em>.</li>
+<li><code>git push naam_remote naam_branch</code> <em>pusht</em> <strong>naam_branch</strong> naar <code>naam_remote</code>.</li>
+<li><code>git push origin master</code> <em>pusht</em> bijgevolg <strong>master</strong> naar <code>origin</code></li>
+<li><code>git push origin --all</code> <em>pusht</em> alle lokale <em>branches</em> naar <code>origin</code>
+<ul>
+<li>Indien een <em>branch</em> zowel lokaal als op de <em>remote</em> staat, wordt deze <em>gemerged</em>.</li>
+<li>Indien een <em>branch</em> niet bestaat op de <em>remote</em>, dan wordt deze aangemaakt.</li>
+</ul></li>
+</ul>
 </div>
 </div>
 <div id="samenwerken-via-stash" class="section level1">
