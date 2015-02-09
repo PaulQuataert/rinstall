@@ -747,6 +747,7 @@ De andere _repositories_ wanneer een lokale _repository_ verbonden is noemen we 
         - Lokale kopies en _forks_ blijven bestaan!
     - Zorg dat 'Allow forks' aangevinkt is. Later meer info over _forken_
 - Ga naar `Repository permissions` in het linker submenu
+
     Public access
       ~ Iedereen met de URL kan de _repository_ _clonen_ (= een lokale kopie maken). Deze personen hebben enkel leesrechten.
     User access
@@ -780,15 +781,40 @@ De andere _repositories_ wanneer een lokale _repository_ verbonden is noemen we 
 
 ## Een project van de Stash server _forken_
 
-Een _fork_ is een flexibele en proper manier om samen te werken. Flexibel in de zin dat iedereen de volledige vrijheid heeft binnen zijn _fork_ van de _repository_. Je kan onbeperkt wijzigen, _branches_ maken, _mergen_, ... Proper in de zin dat die wijzigingen geen rechtstreekse invloed hebben op de bron van de _fork_ of andere _forks_ van dezelfde bron.
+Een _fork_ is een flexibele en proper manier om samen te werken. Flexibel in de zin dat iedereen de volledige vrijheid heeft binnen zijn _fork_ van de _repository_. Je kan onbeperkt wijzigen, _branches_ maken, _mergen_, ... Proper in de zin dat die wijzigingen geen rechtstreekse invloed hebben op de bron van de _fork_ of andere _forks_ van dezelfde bron. Hoe kan je samenwerken als je geen rechtstreekse invloed kan hebben? Door onrechtstreekse invloed uit te oefenen. In plaats van rechtstreeks andermans _repository_ aan te passen, stuur je een _pull request_: het verzoek om wijzigingen die jij aangebracht hebt over te nemen. Hierover later meer.
+
+Werkwijze:
+
+- Log in op [Stash](https://git.milieuinfo.be)
+- Zoek de _repository_ van de collega via het zoekveld rechtsbovenaan. Je moet de naam van de _repository_ kennen en je moet leestoegang hebben.
+- Selecteer de gewenste _repository_
+- Klik in het linkermenu op `Fork`
+    - Nu geeft je de naam van jouw kopie van deze _repository_. Standaard wordt de naam van de bron overgenomen.
+    - `Enable fork syncing geactivieerd` is standaard geactivieerd. Hiermee blijft jouw kopie op Stash automatisch gesynchroniseerd met de bron.
+        - _branches_ waarin jij geen wijzigingen aanbracht worden automatisch bijgewerkt naar de laatste versie van de bron
+        - _branches_ waarin zowel jij als de bron wijzigingen aanbracht moeten manueel worden gesynchoniseerd
+        - Daarom is het aan te raden eerst een nieuwe _branch_ te maken indien je aanpassingen wilt doen in een _fork_. Op dier manier blijft de automatische synchronisatie werken.
+    - Klik op `Fork repository` om af te werken.
+- Nu opent Stash jouw kopie van de _repository_.
+    - Klik op `Clone` en kopieer de URL.
+- Open RStudio
+- Onder Windows
+    - Maak een nieuw project en kies voor versiebeheer en Git 
+    - Plak de URL die je in Stash kopieerde in het vak `Repository URL`
+    - RStudio zal automatisch de naam van de _repository_ voorstellen als projectnaam. Je kan dit, indien gewenst, aanpassen. De voorgestelde naam behouden heeft als voordeel dat je minder verwarring krijgt.
+    - Geef de gewenste map waarin het project moet komen en klik op `Create project`
+    - Jouw project wordt nu gesynchoniseerd met de _repository_ op Stash
+- Onder Linux
+    - Maak een project in een nieuwe directory. Kies een leeg project en vink Git aan. Geef het voor het gemak dezelfde naam als jouw _fork_ van de _repository_.
+    - Ga naar de `shell` en voer het commando `git remote add origin STASHURL` uit. Hierbij moet je `STASHURL` vervangen door de URL die je op de Stash website gekopieerd hebt.
+    - `git fetch origin`
 
 
+De laatste stap is het maken van de gewenste lokale _branches_. Hieronder de code voor de **master** _branch_ doe dat voor alle _branches_ waar je lokaal mee verder wilt werken.
+- `git checkout --track origin/master`
 
 
-
-
-
-
+Nu beschik je over een lokale kopie. De versie op Stash zal automatisch bijgewerkt worden als de bron _repository_ aangepast wordt. Die wijzingen worden echter niet automatisch naar jouw lokale versie doorgestuurd. Die wijzigingen moet je manueel binnenhalen met `git fetch origin`
 
 
 

@@ -664,13 +664,69 @@ ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()</code></pre>
 </ul></li>
 <li>Zorg dat ‘Allow forks’ aangevinkt is. Later meer info over <em>forken</em></li>
 </ul></li>
-<li>Ga naar <code>Repository permissions</code> in het linker submenu Public access ~ Iedereen met de URL kan de <em>repository</em> <em>clonen</em> (= een lokale kopie maken). Deze personen hebben enkel leesrechten. User access ~ Hier kan je per gebruiker toegangsrechten bepalen. ~ Van zodra je een naam tikt, krijg je suggesties ~ Werkt dus enkel de voorgedefinieerde accounts. Nog na te vragen of die personen ook toegang tot Stash moeten hebben. ~ Na het selecteren van de naam moet je rechts de toegangsrechten kiezen (<code>Read</code>, <code>Write</code> of <code>Admin</code>). Vervolgens klik je op <code>Add</code> Group access ~ Werkt zoals User acces, maar dan voor groepen. ~ Er zijn verschillende INBO groepen gedefinieerd (oa BMK).</li>
-<li><code>Read</code> toegang volstaat om samen te werken via <em>forks</em>.</li>
+<li><p>Ga naar <code>Repository permissions</code> in het linker submenu</p>
+<dl>
+<dt>Public access</dt>
+<dd>Iedereen met de URL kan de <em>repository</em> <em>clonen</em> (= een lokale kopie maken). Deze personen hebben enkel leesrechten.
+</dd>
+<dt>User access</dt>
+<dd>Hier kan je per gebruiker toegangsrechten bepalen.
+</dd>
+<dd>Van zodra je een naam tikt, krijg je suggesties
+</dd>
+<dd>Werkt dus enkel de voorgedefinieerde accounts. Nog na te vragen of die personen ook toegang tot Stash moeten hebben.
+</dd>
+<dd>Na het selecteren van de naam moet je rechts de toegangsrechten kiezen (<code>Read</code>, <code>Write</code> of <code>Admin</code>). Vervolgens klik je op <code>Add</code>
+</dd>
+<dt>Group access</dt>
+<dd>Werkt zoals User acces, maar dan voor groepen.
+</dd>
+<dd>Er zijn verschillende INBO groepen gedefinieerd (oa BMK).
+</dd>
+</dl></li>
+<li><p><code>Read</code> toegang volstaat om samen te werken via <em>forks</em>.</p></li>
 </ul>
 </div>
 <div id="een-project-van-de-stash-server-forken" class="section level2">
 <h2>Een project van de Stash server <em>forken</em></h2>
-<p>Een <em>fork</em> is een flexibele en proper manier om samen te werken. Flexibel in de zin dat iedereen de volledige vrijheid heeft binnen zijn <em>fork</em> van de <em>repository</em>. Je kan onbeperkt wijzigen, <em>branches</em> maken, <em>mergen</em>, … Proper in de zin dat die wijzigingen geen rechtstreekse invloed hebben op de bron van de <em>fork</em> of andere <em>forks</em> van dezelfde bron.</p>
+<p>Een <em>fork</em> is een flexibele en proper manier om samen te werken. Flexibel in de zin dat iedereen de volledige vrijheid heeft binnen zijn <em>fork</em> van de <em>repository</em>. Je kan onbeperkt wijzigen, <em>branches</em> maken, <em>mergen</em>, … Proper in de zin dat die wijzigingen geen rechtstreekse invloed hebben op de bron van de <em>fork</em> of andere <em>forks</em> van dezelfde bron. Hoe kan je samenwerken als je geen rechtstreekse invloed kan hebben? Door onrechtstreekse invloed uit te oefenen. In plaats van rechtstreeks andermans <em>repository</em> aan te passen, stuur je een <em>pull request</em>: het verzoek om wijzigingen die jij aangebracht hebt over te nemen. Hierover later meer.</p>
+<p>Werkwijze:</p>
+<ul>
+<li>Log in op <a href="https://git.milieuinfo.be">Stash</a></li>
+<li>Zoek de <em>repository</em> van de collega via het zoekveld rechtsbovenaan. Je moet de naam van de <em>repository</em> kennen en je moet leestoegang hebben.</li>
+<li>Selecteer de gewenste <em>repository</em></li>
+<li>Klik in het linkermenu op <code>Fork</code>
+<ul>
+<li>Nu geeft je de naam van jouw kopie van deze <em>repository</em>. Standaard wordt de naam van de bron overgenomen.</li>
+<li><code>Enable fork syncing geactivieerd</code> is standaard geactivieerd. Hiermee blijft jouw kopie op Stash automatisch gesynchroniseerd met de bron.
+<ul>
+<li><em>branches</em> waarin jij geen wijzigingen aanbracht worden automatisch bijgewerkt naar de laatste versie van de bron</li>
+<li><em>branches</em> waarin zowel jij als de bron wijzigingen aanbracht moeten manueel worden gesynchoniseerd</li>
+<li>Daarom is het aan te raden eerst een nieuwe <em>branch</em> te maken indien je aanpassingen wilt doen in een <em>fork</em>. Op dier manier blijft de automatische synchronisatie werken.</li>
+</ul></li>
+<li>Klik op <code>Fork repository</code> om af te werken.</li>
+</ul></li>
+<li>Nu opent Stash jouw kopie van de <em>repository</em>.
+<ul>
+<li>Klik op <code>Clone</code> en kopieer de URL.</li>
+</ul></li>
+<li>Open RStudio</li>
+<li>Onder Windows
+<ul>
+<li>Maak een nieuw project en kies voor versiebeheer en Git</li>
+<li>Plak de URL die je in Stash kopieerde in het vak <code>Repository URL</code></li>
+<li>RStudio zal automatisch de naam van de <em>repository</em> voorstellen als projectnaam. Je kan dit, indien gewenst, aanpassen. De voorgestelde naam behouden heeft als voordeel dat je minder verwarring krijgt.</li>
+<li>Geef de gewenste map waarin het project moet komen en klik op <code>Create project</code></li>
+<li>Jouw project wordt nu gesynchoniseerd met de <em>repository</em> op Stash</li>
+</ul></li>
+<li>Onder Linux
+<ul>
+<li>Maak een project in een nieuwe directory. Kies een leeg project en vink Git aan. Geef het voor het gemak dezelfde naam als jouw <em>fork</em> van de <em>repository</em>.</li>
+<li>Ga naar de <code>shell</code> en voer het commando <code>git remote add origin STASHURL</code> uit. Hierbij moet je <code>STASHURL</code> vervangen door de URL die je op de Stash website gekopieerd hebt.</li>
+<li><code>git fetch origin</code></li>
+</ul></li>
+</ul>
+<p>Nu beschik je over een lokale kopie. De versie op Stash zal automatisch bijgewerkt worden als de bron <em>repository</em> aangepast wordt. Die wijzingen worden echter niet automatisch naar jouw lokale versie doorgestuurd. Die wijzigingen moet je manueel binnenhalen met <code>git fetch origin</code></p>
 </div>
 <div id="een-pull-request-maken" class="section level2">
 <h2>Een <em>pull request</em> maken</h2>
