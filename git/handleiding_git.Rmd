@@ -780,6 +780,26 @@ De andere _repositories_ wanneer een lokale _repository_ verbonden is noemen we 
 
 ## Een project van de Stash server _forken_
 
+Een _fork_ is een flexibele en proper manier om samen te werken. Flexibel in de zin dat iedereen de volledige vrijheid heeft binnen zijn _fork_ van de _repository_. Je kan onbeperkt wijzigen, _branches_ maken, _mergen_, ... Proper in de zin dat die wijzigingen geen rechtstreekse invloed hebben op de bron van de _fork_ of andere _forks_ van dezelfde bron.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Een _pull request_ maken
 
 # Verplichte lectuur
