@@ -735,6 +735,49 @@ De andere _repositories_ wanneer een lokale _repository_ verbonden is noemen we 
 
 ## Een repository delen via Stash
 
+- Log in op [Stash](https://git.milieuinfo.be)
+- Ga naar de _repository_ die je wenst te delen.
+    - Dropdown lijst rechts boven en dan `View profile`
+    - Via dropdown lijst `Repositories` linksboven, vind je de _repositories_ die je recent gebruikt hebt
+- Kies `Settings` in de linkerbalk
+- Nu krijg je een overzicht van de _repository_
+    - Je kan hier de naam wijzigingen. Dat is af te raden omdat iedereen die werkt met deze _repository_ dan de nodige instellingen moeten aanpassen.
+    - Je kan hier ook de _repository_ op Stash wissen.
+        - Na de bevestiging is dit onherroepelijk!
+        - Lokale kopies en _forks_ blijven bestaan!
+    - Zorg dat 'Allow forks' aangevinkt is. Later meer info over _forken_
+- Ga naar `Repository permissions` in het linker submenu
+    Public access
+      ~ Iedereen met de URL kan de _repository_ _clonen_ (= een lokale kopie maken). Deze personen hebben enkel leesrechten.
+    User access
+      ~ Hier kan je per gebruiker toegangsrechten bepalen.
+      ~ Van zodra je een naam tikt, krijg je suggesties
+      ~ Werkt dus enkel de voorgedefinieerde accounts. Nog na te vragen of die personen ook toegang tot Stash moeten hebben.
+      ~ Na het selecteren van de naam moet je rechts de toegangsrechten kiezen (`Read`, `Write` of `Admin`). Vervolgens klik je op `Add`
+    Group access
+      ~ Werkt zoals User acces, maar dan voor groepen.
+      ~ Er zijn verschillende INBO groepen gedefinieerd (oa BMK).
+- `Read` toegang volstaat om samen te werken via _forks_.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Een project van de Stash server _forken_
 
 ## Een _pull request_ maken

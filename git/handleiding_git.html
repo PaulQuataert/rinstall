@@ -646,6 +646,27 @@ ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()</code></pre>
 <h1>Samenwerken via Stash</h1>
 <div id="een-repository-delen-via-stash" class="section level2">
 <h2>Een repository delen via Stash</h2>
+<ul>
+<li>Log in op <a href="https://git.milieuinfo.be">Stash</a></li>
+<li>Ga naar de <em>repository</em> die je wenst te delen.
+<ul>
+<li>Dropdown lijst rechts boven en dan <code>View profile</code></li>
+<li>Via dropdown lijst <code>Repositories</code> linksboven, vind je de <em>repositories</em> die je recent gebruikt hebt</li>
+</ul></li>
+<li>Kies <code>Settings</code> in de linkerbalk</li>
+<li>Nu krijg je een overzicht van de <em>repository</em>
+<ul>
+<li>Je kan hier de naam wijzigingen. Dat is af te raden omdat iedereen die werkt met deze <em>repository</em> dan de nodige instellingen moeten aanpassen.</li>
+<li>Je kan hier ook de <em>repository</em> op Stash wissen.
+<ul>
+<li>Na de bevestiging is dit onherroepelijk!</li>
+<li>Lokale kopies en <em>forks</em> blijven bestaan!</li>
+</ul></li>
+<li>Zorg dat ‘Allow forks’ aangevinkt is. Later meer info over <em>forken</em></li>
+</ul></li>
+<li>Ga naar <code>Repository permissions</code> in het linker submenu Public access ~ Iedereen met de URL kan de <em>repository</em> <em>clonen</em> (= een lokale kopie maken). Deze personen hebben enkel leesrechten. User access ~ Hier kan je per gebruiker toegangsrechten bepalen. ~ Van zodra je een naam tikt, krijg je suggesties ~ Werkt dus enkel de voorgedefinieerde accounts. Nog na te vragen of die personen ook toegang tot Stash moeten hebben. ~ Na het selecteren van de naam moet je rechts de toegangsrechten kiezen (<code>Read</code>, <code>Write</code> of <code>Admin</code>). Vervolgens klik je op <code>Add</code> Group access ~ Werkt zoals User acces, maar dan voor groepen. ~ Er zijn verschillende INBO groepen gedefinieerd (oa BMK).</li>
+<li><code>Read</code> toegang volstaat om samen te werken via <em>forks</em>.</li>
+</ul>
 </div>
 <div id="een-project-van-de-stash-server-forken" class="section level2">
 <h2>Een project van de Stash server <em>forken</em></h2>
