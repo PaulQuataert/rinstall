@@ -605,8 +605,11 @@ ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()</code></pre>
 </ul></li>
 <li>Werkwijze voor Linux (wegens bug in RStudio):
 <ul>
-<li>Maak in RStudio een eenvoudig nieuw project aan</li>
-<li>Volg de richtlijnen voor het synchroniseren van een bestaand project</li>
+<li>Ga terug naar je browser en klik linksboven op <code>Clone</code>. Selecteer <code>HTTP</code> en kopiëer de URL die je daar vindt, we noemen deze <code>STASHURL</code>. Deze heeft de vorm <a href="https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git"><a href="https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git">https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git</a></a></li>
+<li>Ga in de terminal naar de locatie waar je je project wilt bewaren</li>
+<li><code>git clone STASHURL</code></li>
+<li>Open RStudio</li>
+<li>Maak een nieuw project op basis van een bestaande directory</li>
 </ul></li>
 </ul>
 </div>
@@ -617,13 +620,14 @@ ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()</code></pre>
 <li>Open het project dat je wenst te synchroniseren met RStudio</li>
 <li>Ga terug naar je browser en klik linksboven op <code>Clone</code>. Selecteer <code>HTTP</code> en kopiëer de URL die je daar vindt. Deze heeft de vorm <a href="https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git"><a href="https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git">https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git</a></a></li>
 <li>Ga naar de <code>shell</code> en voer het commando <code>git remote add origin STASHURL</code> uit. Hierbij moet je <code>STASHURL</code> vervangen door de URL die je op de Stash website gekopieerd hebt.</li>
-<li><code>git push origin --all</code> en geef je JIRA wachtwoord wanneer daarom gevraagd wordt.
+<li><code>git push origin -u --all</code> en geef je JIRA wachtwoord wanneer daarom gevraagd wordt.
 <ul>
 <li>Nu worden al je lokale <em>branches</em> naar Stash <em>gepusht</em>.</li>
 <li>Je kan ook selectief <em>branches</em> <em>pushen</em>. Dat doe je dan <em>branch</em> per <em>branch</em></li>
-<li><code>git push origin master</code></li>
-<li><code>git push origin develop</code></li>
+<li><code>git push origin -u master</code></li>
+<li><code>git push origin -u develop</code></li>
 </ul></li>
+<li>Vanaf dit moment worden in het <code>git</code> tabblad de knoppen <code>Pull</code> en <code>Push</code> actief.</li>
 <li>Ga terug naar de browser en klik op “Refresh”. Nu krijg je een overzicht van alle bestanden in de <em>repository</em> op Stash.</li>
 </ul>
 </div>
@@ -632,6 +636,7 @@ ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()</code></pre>
 <p>De andere <em>repositories</em> wanneer een lokale <em>repository</em> verbonden is noemen we de <em>remotes</em>. Een <em>remote</em> wordt gedefinieerd door een naam en een URL. Meestal is er slechts één <em>remote</em>. De belangrijkste <em>remote</em> krijgt klassiek de naam <code>origin</code>. Wanneer we de gegevens van de <em>remote</em> gesynchoniseerd hebben, dan krijgen we ook de <em>branches</em> van die <em>remote</em> te zien. Bijvoorbeeld <strong>origin/master</strong> en <strong>origin/develop</strong> zijn de <strong>master</strong> en <strong>origin</strong> <em>branch</em> op de <em>remote</em> genaamd <code>origin</code>.</p>
 <ul>
 <li>lokale wijzingen naar een <em>remote</em> sturen, noemen we <em>pushen</em>.</li>
+<li>van het <code>git</code> tabblad kan je op de <code>Push</code> knop duwen.</li>
 <li><code>git push naam_remote naam_branch</code> <em>pusht</em> <strong>naam_branch</strong> naar <code>naam_remote</code>.</li>
 <li><code>git push origin master</code> <em>pusht</em> bijgevolg <strong>master</strong> naar <code>origin</code></li>
 <li><code>git push origin --all</code> <em>pusht</em> alle lokale <em>branches</em> naar <code>origin</code>
@@ -706,27 +711,9 @@ ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()</code></pre>
 </ul></li>
 <li>Klik op <code>Fork repository</code> om af te werken.</li>
 </ul></li>
-<li>Nu opent Stash jouw kopie van de <em>repository</em>.
-<ul>
-<li>Klik op <code>Clone</code> en kopieer de URL.</li>
-</ul></li>
-<li>Open RStudio</li>
-<li>Onder Windows
-<ul>
-<li>Maak een nieuw project en kies voor versiebeheer en Git</li>
-<li>Plak de URL die je in Stash kopieerde in het vak <code>Repository URL</code></li>
-<li>RStudio zal automatisch de naam van de <em>repository</em> voorstellen als projectnaam. Je kan dit, indien gewenst, aanpassen. De voorgestelde naam behouden heeft als voordeel dat je minder verwarring krijgt.</li>
-<li>Geef de gewenste map waarin het project moet komen en klik op <code>Create project</code></li>
-<li>Jouw project wordt nu gesynchoniseerd met de <em>repository</em> op Stash</li>
-</ul></li>
-<li>Onder Linux
-<ul>
-<li>Maak een project in een nieuwe directory. Kies een leeg project en vink Git aan. Geef het voor het gemak dezelfde naam als jouw <em>fork</em> van de <em>repository</em>.</li>
-<li>Ga naar de <code>shell</code> en voer het commando <code>git remote add origin STASHURL</code> uit. Hierbij moet je <code>STASHURL</code> vervangen door de URL die je op de Stash website gekopieerd hebt.</li>
-<li><code>git fetch origin</code></li>
-</ul></li>
+<li>Nu opent Stash jouw kopie van de <em>repository</em>.</li>
+<li>Tenslotte moeten we nog een lokale kopie in een RStudio project maken. Hiervoor volg je deze instructies als een nieuw project op de Stash server plaatsen. Uiteraard gebruik je hierbij de <em>fork</em> in plaats van een nieuwe <em>repository</em> aan te maken.</li>
 </ul>
-<p>Nu beschik je over een lokale kopie. De versie op Stash zal automatisch bijgewerkt worden als de bron <em>repository</em> aangepast wordt. Die wijzingen worden echter niet automatisch naar jouw lokale versie doorgestuurd. Die wijzigingen moet je manueel binnenhalen met <code>git fetch origin</code></p>
 </div>
 <div id="een-pull-request-maken" class="section level2">
 <h2>Een <em>pull request</em> maken</h2>
@@ -784,6 +771,12 @@ ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()</code></pre>
 </dd>
 <dt><code>git branch -d naam</code></dt>
 <dd>verwijder de <em>branch</em> <strong>naam</strong>
+</dd>
+<dt><code>git push origin -u --all</code></dt>
+<dd>update alle <em>branches</em> naar <code>origin</code>. Maak <em>branches</em> aan als ze niet op <code>origin</code> bestaan. De -u optie linkt de lokale <em>branch</em> aan deze met de overeenkomstige naam op <code>origin</code>.
+</dd>
+<dt><code>git push origin -u master</code></dt>
+<dd>stuur updates van <strong>master</strong> naar <strong>origin/master</strong>
 </dd>
 </dl>
 </div>

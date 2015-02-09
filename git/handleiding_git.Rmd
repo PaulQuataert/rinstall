@@ -650,8 +650,11 @@ Dit is de werkwijze die je best volgt als je een nieuw project wilt starten en e
     - Geef de gewenste map waarin het project moet komen en klik op `Create project`
     - Jouw project wordt nu gesynchoniseerd met de (lege) _repository_ op Stash
 - Werkwijze voor Linux (wegens bug in RStudio):
-    - Maak in RStudio een eenvoudig nieuw project aan
-    - Volg de richtlijnen voor het synchroniseren van een bestaand project
+    - Ga terug naar je browser en klik linksboven op `Clone`. Selecteer `HTTP` en kopiëer de URL die je daar vindt, we noemen deze `STASHURL`. Deze heeft de vorm [https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git](https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git)
+    - Ga in de terminal naar de locatie waar je je project wilt bewaren
+    - `git clone STASHURL`
+    - Open RStudio
+    - Maak een nieuw project op basis van een bestaande directory
 
 
 
@@ -679,11 +682,12 @@ Dit is de werkwijze die je best volgt als je een nieuw project wilt starten en e
 - Open het project dat je wenst te synchroniseren met RStudio
 - Ga terug naar je browser en klik linksboven op `Clone`. Selecteer `HTTP` en kopiëer de URL die je daar vindt. Deze heeft de vorm [https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git](https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git)
 - Ga naar de `shell` en voer het commando `git remote add origin STASHURL` uit. Hierbij moet je `STASHURL` vervangen door de URL die je op de Stash website gekopieerd hebt.
-- `git push origin --all` en geef je JIRA wachtwoord wanneer daarom gevraagd wordt.
+- `git push origin -u --all` en geef je JIRA wachtwoord wanneer daarom gevraagd wordt.
     - Nu worden al je lokale _branches_ naar Stash _gepusht_.
     - Je kan ook selectief _branches_ _pushen_. Dat doe je dan _branch_ per _branch_
-    - `git push origin master`
-    - `git push origin develop`
+    - `git push origin -u master`
+    - `git push origin -u develop`
+- Vanaf dit moment worden in het `git` tabblad de knoppen `Pull` en `Push` actief.
 - Ga terug naar de browser en klik op "Refresh". Nu krijg je een overzicht van alle bestanden in de _repository_ op Stash.
 
 
@@ -707,6 +711,7 @@ Dit is de werkwijze die je best volgt als je een nieuw project wilt starten en e
 De andere _repositories_ wanneer een lokale _repository_ verbonden is noemen we de _remotes_. Een _remote_ wordt gedefinieerd door een naam en een URL. Meestal is er slechts één _remote_. De belangrijkste _remote_ krijgt klassiek de naam `origin`. Wanneer we de gegevens van de _remote_ gesynchoniseerd hebben, dan krijgen we ook de _branches_ van die _remote_ te zien. Bijvoorbeeld **origin/master** en **origin/develop** zijn de **master** en **origin** _branch_ op de _remote_ genaamd `origin`.
 
 - lokale wijzingen naar een _remote_ sturen, noemen we _pushen_.
+- van het `git` tabblad kan je op de `Push` knop duwen.
 - `git push naam_remote naam_branch` _pusht_ **naam_branch** naar `naam_remote`.
 - `git push origin master` _pusht_ bijgevolg **master** naar `origin`
 - `git push origin --all` _pusht_ alle lokale _branches_ naar `origin`
@@ -796,25 +801,15 @@ Werkwijze:
         - Daarom is het aan te raden eerst een nieuwe _branch_ te maken indien je aanpassingen wilt doen in een _fork_. Op dier manier blijft de automatische synchronisatie werken.
     - Klik op `Fork repository` om af te werken.
 - Nu opent Stash jouw kopie van de _repository_.
-    - Klik op `Clone` en kopieer de URL.
-- Open RStudio
-- Onder Windows
-    - Maak een nieuw project en kies voor versiebeheer en Git 
-    - Plak de URL die je in Stash kopieerde in het vak `Repository URL`
-    - RStudio zal automatisch de naam van de _repository_ voorstellen als projectnaam. Je kan dit, indien gewenst, aanpassen. De voorgestelde naam behouden heeft als voordeel dat je minder verwarring krijgt.
-    - Geef de gewenste map waarin het project moet komen en klik op `Create project`
-    - Jouw project wordt nu gesynchoniseerd met de _repository_ op Stash
-- Onder Linux
-    - Maak een project in een nieuwe directory. Kies een leeg project en vink Git aan. Geef het voor het gemak dezelfde naam als jouw _fork_ van de _repository_.
-    - Ga naar de `shell` en voer het commando `git remote add origin STASHURL` uit. Hierbij moet je `STASHURL` vervangen door de URL die je op de Stash website gekopieerd hebt.
-    - `git fetch origin`
+- Tenslotte moeten we nog een lokale kopie in een RStudio project maken. Hiervoor volg je deze instructies als een nieuw project op de Stash server plaatsen. Uiteraard gebruik je hierbij de _fork_ in plaats van een nieuwe _repository_ aan te maken.
 
 
-De laatste stap is het maken van de gewenste lokale _branches_. Hieronder de code voor de **master** _branch_ doe dat voor alle _branches_ waar je lokaal mee verder wilt werken.
-- `git checkout --track origin/master`
 
 
-Nu beschik je over een lokale kopie. De versie op Stash zal automatisch bijgewerkt worden als de bron _repository_ aangepast wordt. Die wijzingen worden echter niet automatisch naar jouw lokale versie doorgestuurd. Die wijzigingen moet je manueel binnenhalen met `git fetch origin`
+
+
+
+
 
 
 
@@ -888,7 +883,11 @@ Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te sc
   ~ maakt een nieuwe _branch_ vanaf de _commit_ die op dit ogenblik _uitgechecked_ is.
 `git branch -d naam`
   ~ verwijder de _branch_ **naam**
-
+`git push origin -u --all`
+  ~ update alle _branches_ naar `origin`. Maak _branches_ aan als ze niet op `origin` bestaan. De -u optie linkt de lokale _branch_ aan deze met de overeenkomstige naam op `origin`.
+`git push origin -u master`
+  ~ stuur updates van **master** naar **origin/master**
+  
 
 
 
