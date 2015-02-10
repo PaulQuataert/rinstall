@@ -811,21 +811,53 @@ ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()</code></pre>
 </div>
 <div id="extra" class="section level1">
 <h1>Extra</h1>
-<p><code>git config --global credential.helper cache</code></p>
+<div id="handige-dingen-om-eenmalig-in-te-stellen" class="section level2">
+<h2>Handige dingen om eenmalig in te stellen</h2>
+<dl>
+<dt><code>git config --global credential.helper cache</code></dt>
+<dd>onthoudt je wachtwoord tijdelijk. Vooral handig als je frequent <em>pullt</em> of <em>pushed</em>
+</dd>
+<dt><code>git config --global user.name &quot;John Doe&quot;</code></dt>
+<dd>zet je standaard gebruikersnaam
+</dd>
+<dt><code>git config --global user.email &quot;johndoe@company.com&quot;</code></dt>
+<dd>zet je standaard e-mailadres
+</dd>
+</dl>
+</div>
 <div id="een-specifieke-commit-terug-zetten" class="section level2">
 <h2>Een specifieke commit terug zetten</h2>
-</div>
-<div id="tags" class="section level2">
-<h2>Tags</h2>
-</div>
-<div id="staged-and-unstaged-modified" class="section level2">
-<h2><em>staged and unstaged modified</em></h2>
 <ul>
-<li>Twee keer “M” bij <code>Status</code></li>
+<li><code>git checkout commitSHA1 .</code></li>
+<li>Let op de punt achteraan het commando!</li>
+<li><code>commitSHA1</code> is de SHA1 hash van de <em>commit</em>. Deze wordt als unieke key gebruikt. Deze hash is 40 hexadecimale tekens lang (20 byte). Je hoeft ze niet allemaal op te geven. Meestal zijn de 7 eerste ruim voldoende om uniek te zijn.</li>
+<li>Je vindt de SHA1 van de <em>commit</em> via de <em>history</em> van je <em>repository</em></li>
+<li>Voorbeeld bruikbaar in <code>gitdemo_lessenreeeks</code>: <code>git checkout 7c9f .</code></li>
+<li>Vergeet niet dat je vervolgens eerst een nieuwe branch moet maken, voordat je kan verder werken.</li>
 </ul>
 </div>
-<div id="ssh" class="section level2">
-<h2>SSH</h2>
+<div id="tags" class="section level2">
+<h2><em>Tags</em></h2>
+<ul>
+<li><em>Tags</em> markeren een specifieke <em>commit</em> met een eenvoudigere naam.
+<ul>
+<li>Het wordt hoofdzakelijk gebruikt om te verwijzen naar een bepaalde (stabiele) versie.</li>
+<li>Op basis van <em>tags</em> is het eenvoudig om een <em>checkout</em> te doen van een specifieke versie</li>
+</ul></li>
+<li><em>tag</em> maken op de huidige <em>commit</em>
+<ul>
+<li><code>git tag -a v0.2</code></li>
+</ul></li>
+<li><em>tag</em> maken op een specifieke <em>commit</em>. Hiervoor heb je de SHA1 van de <em>commit</em> nodig.
+<ul>
+<li><code>git tag -a v0.2 9fceb02</code></li>
+</ul></li>
+<li>de <code>-m</code> vlag laat je toe om een boodschap aan de <em>tag</em> te hangen
+<ul>
+<li><code>git tag -a v0.2 -m 'Hier komt een beknopte mededeling over de versie' 9fceb02</code></li>
+</ul></li>
+<li>gebruik <code>git push origin --tags</code> om de <em>tags</em> naar Stash door te sturen.</li>
+</ul>
 <div class="references">
 <h1>Referenties</h1>
 <p>Boswell, Dustin, and Trevor Foucher. 2011. <em>The Art of Readable Code. Simple and Practical Techniques for Writing Better Code</em>. Edited by Treseler. Sebastopol: O’Reilly.</p>

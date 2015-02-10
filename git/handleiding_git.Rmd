@@ -992,16 +992,38 @@ Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te sc
 
 # Extra
 
+## Handige dingen om eenmalig in te stellen
+
 `git config --global credential.helper cache`
+  ~ onthoudt je wachtwoord tijdelijk. Vooral handig als je frequent _pullt_ of _pushed_
+`git config --global user.name "John Doe"`
+  ~ zet je standaard gebruikersnaam
+`git config --global user.email "johndoe@company.com"`
+  ~ zet je standaard e-mailadres
 
 ## Een specifieke commit terug zetten
 
-## Tags
+- `git checkout commitSHA1 .`
+  - Let op de punt achteraan het commando!
+- `commitSHA1` is de SHA1 hash van de _commit_. Deze wordt als unieke key gebruikt. Deze hash is 40 hexadecimale tekens lang (20 byte). Je hoeft ze niet allemaal op te geven. Meestal zijn de 7 eerste ruim voldoende om uniek te zijn.
+- Je vindt de SHA1 van de _commit_ via de _history_ van je _repository_
+- Voorbeeld bruikbaar in `gitdemo_lessenreeeks`: `git checkout 7c9f .`
+- Vergeet niet dat je vervolgens eerst een nieuwe branch moet maken, voordat je kan verder werken.
 
-## _staged and unstaged modified_
+## _Tags_
 
-- Twee keer "M" bij `Status`
+- _Tags_ markeren een specifieke _commit_ met een eenvoudigere naam.
+    - Het wordt hoofdzakelijk gebruikt om te verwijzen naar een bepaalde (stabiele) versie.
+    - Op basis van _tags_ is het eenvoudig om een _checkout_ te doen van een specifieke versie
+- _tag_ maken op de huidige _commit_
+    - `git tag -a v0.2`
+- _tag_ maken op een specifieke _commit_. Hiervoor heb je de SHA1 van de _commit_ nodig.
+    - `git tag -a v0.2 9fceb02`
+- de `-m` vlag laat je toe om een boodschap aan de _tag_ te hangen
+    - `git tag -a v0.2 -m 'Hier komt een beknopte mededeling over de versie' 9fceb02`
+- gebruik `git push origin --tags` om de _tags_ naar Stash door te sturen.
 
-## SSH
+
+
 
 # Referenties
