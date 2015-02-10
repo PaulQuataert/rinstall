@@ -4,7 +4,12 @@ author: "Thierry Onkelinx"
 date: "03-02-2015"
 output: 
   INBOmd::inbo_rapport:
-    cover: git_logo.png
+    cover: gitlogo.png
+    cover_offset: 70mm
+    year: 2015
+    keep_tex: false
+  html_document:
+  word_document:
 bibliography: ~/local_tex/bibtex/bib/git.bib
 ---
 
@@ -49,16 +54,16 @@ Een lokaal project staat enkel op jouw computer. Je hebt dus geen servers of and
     - Vul de gewenste naam van het project in en de gewenste directory waarin het project moet komen.
     - Vink `create a git repository` aan.
     - Klik  `Create repository`
-    - Het nieuwe project wordt nu geopent
+    - Het nieuwe project wordt nu geopend
 - RStudio voegt een tabblad `Git` toe aan de editor. In dit tabblad doe je alle bewerkingen gerelateerd aan het versiebeheer
     - Je vindt er steeds een overzicht van de status van alle bestanden m.b.t. versiebeheer
     - Op dit moment zal je er twee bestanden vinden: `.gitignore` en `jouw_project.Rproj`
     - In de kolom `Status` zie je twee keer een vraagteken in een geel veld. Dat wijst op een _untracked_ bestand. Dergelijke bestanden worden genegeerd door het versiebeheer. Merk op dat geen enkel bestand automatisch wordt opgenomen in het versiebeheer.
-- Klik rechts op `jouw_project.Rproj` en kies `ignore`. Nu open een beknopte editor met de inhoud van `.gitignore`. Hier geef je de namen van de bestanden of mappen weer die git standaard moet genegeren. Een _ignored_ bestand wordt, net zoals een _untracked_ bestand niet opgenomen in het versiebeheer. Het verschil tussen beide is dat _ignored_ bestanden niet zichtbaar zullen zijn in het `Git` tabblad.
+- Klik rechts op `jouw_project.Rproj` en kies `ignore`. Nu open een beknopte editor met de inhoud van `.gitignore`. Hier geef je de namen van de bestanden of mappen weer die git standaard moet negeren. Een _ignored_ bestand wordt, net zoals een _untracked_ bestand niet opgenomen in het versiebeheer. Het verschil tussen beide is dat _ignored_ bestanden niet zichtbaar zullen zijn in het `Git` tabblad.
     - Wijzig `jouw_project.Rproj` in `*.Proj` en klik op `Save` Vanaf nu zullen alle bestanden die eindigen met `.Proj` de _ignored_ status krijgen. Merk op dat `jouw_project.Rproj` nu uit het `Git` tabblad verdwenen is.
     - Regel uit `.gitignore` wissen = _ignore_ ongedaan maken.
 - Wanneer _ignore_ gebruiken
-    - Vuistregel: telkens je het bestand in kwestie makkelijk kan aanmaken met de gegevens in de repository
+    - Vuistregel: telkens je het bestand in kwestie makkelijk kan aanmaken met de gegevens in de _repository_
     - Bijvoorbeeld: figuren, pdf, md en tex bestanden die ontstaan na het compileren van een RMarkdown (.Rmd) bestand
     - RStudio vult standaard `.Rproj.user`, `.Rhistory` en `.RData`. `.Rproj.user` is de map met alle tijdelijke bestanden van het project. `.Rhistory` bevat een lijst van alle commando's die je uitvoert. `.RData` zijn de objecten in de workspace. Deze bestanden zijn niet relevant om onder versiebeheer te plaatsen.
     - Best ook `*.Rproj`. Je krijgt anders problemen wanneer het project vanop meerdere computers gebruikt wordt.
@@ -71,7 +76,7 @@ Een lokaal project staat enkel op jouw computer. Je hebt dus geen servers of and
     - Je krijgt een venster met de betrokken bestanden. Hier kan je nog wijzigingen aanbrengen zoals in het `Git tabblad` (_stage_, _unstage_, _ignore_)
     - Onderaan krijg je de _diff_ te zien van het bestand. Groene regels zijn toegevoegd, rode regels zijn gewist, witte regels zijn ongewijzigd.
         - In de _diff_ worden standaard enkel de 5 ongewijzigde regels voor en naar een wijziging getoond. Ook een enkel wijziging aan het einde van een lang bestand zie je op die manier dadelijk.
-        - De hoeveelheid context kan je aanpassen via de dropdrop `Context` (5, 10, 25, 50 of alle lijnen)
+        - De hoeveelheid context kan je aanpassen via de drop-down `Context` (5, 10, 25, 50 of alle lijnen)
         - De _Diff_ is deze van het geselecteerd bestand. Klik op de bestandsnaam om een ander bestand te selecteren.
         - Een _Diff_ werkt enkel bij bestanden met platte tekst. Niet met binaire bestanden (pdf, docx, jpg, Rdata, ...)
     - Naast de lijst met bestanden staat een tekstveld `Commit message`. Hierin moet je een tekst schrijven. Deze tekst beschrijft de wijzigingen in deze _commit_.
@@ -83,7 +88,7 @@ Een lokaal project staat enkel op jouw computer. Je hebt dus geen servers of and
 - Maak bovenstaand RStudio project
 - Plak onderstaande code in `script1.R`
 
-```{r script1}
+```{r script1, out.extra = ""}
 library(ggplot2)
 ggplot(mtcars, aes(wt, mpg)) + geom_point()
 ```
@@ -127,9 +132,9 @@ summary(lm.D9)
 
 - Van zodra een bestand na een commit gewijzigd wordt, zal git het terug automatisch in het `Git` tabblad tonen.
     - De status van dergelijke bestanden is _unstaged modified_ aangegeven door een "M" op een blauw veld in de rechter kolom van `Status`.
-- Wanneer we nu een snapshot willen maken van de de huidige versie, moeten we de gewijzigde bestanden opnieuw _stagen_.
+- Wanneer we nu een snapshot willen maken van de huidige versie, moeten we de gewijzigde bestanden opnieuw _stagen_.
     - Behalve het vinkje in `Staged` zal ook de "M" in `Status` verplaatsen naar de linker kolom (_staged modified_).
-    - Het bestand is nu gewijzigd én de wijzigingen zijn klaar voor een _commit_. OOk nu worden de wijzigingen past toegevoegd aan het versiebeheer na een _commit_!
+    - Het bestand is nu gewijzigd én de wijzigingen zijn klaar voor een _commit_. Ook nu worden de wijzigingen past toegevoegd aan het versiebeheer na een _commit_!
 
 - Wijzig `script1.R` naar
 
@@ -246,10 +251,10 @@ ggsave(p, file = "script1.png")
 
 ## _Branches_
 
-- In een eenvoudige git repository staan alle _commits_ achter elkaar in een lange rij.
+- In een eenvoudige git _repository_ staan alle _commits_ achter elkaar in een lange rij.
 - git laat toe om op een eenvoudige manier met meerdere _branches_ te werken. Een _branch_ is een vertakking vanaf een bepaald _commit_. Beide _branches_ hebben tot de _commit_ waar ze vertakken dezelfde voorgeschiedenis. Na deze _commit_ kunnen ze elk een andere weg op gaan.
-    - Ze gaan elk aan een eigen 'snelheid' verder gaan.
-    - Ze zullen een andere inhoud hebben.
+    - Ze gaan elk aan een eigen 'snelheid' verder.
+    - Ze kunnen een andere inhoud hebben.
     
 
 
@@ -275,11 +280,11 @@ ggsave(p, file = "script1.png")
 - Standaard is er enkel een **master** _branch_.
 - Een vaak gebruikte tweede _branch_ is **develop**.
 - In dergelijke configuratie bevat **master** de laatste 'officiële' versie.
-    - een rapport onder de vorm dat het naar de stuugroep gaat
+    - een rapport onder de vorm dat het naar de stuurgroep gaat
     - documenten van een les zoals het naar de cursisten gaat
     - een bepaalde versie van een R package
 - **develop** bevat dan de versie waar je effectief in werkt.
-    - Wanneer de versie in **develop** voldoende uitgekristaliseerd is zullen we die terug invoegen in **master**.
+    - Wanneer de versie in **develop** voldoende uitgekristalliseerd is zullen we die terug invoegen in **master**.
 - git laat toe om vlot om te schakelen tussen _branches_.
     - Bij het overschakelen tussen _branches_ worden alle bestanden van de huidige _branch_ vervangen door de bestanden van de (laatste _commit_ van de) nieuwe _branch_.
     - _untracked_ en _ignored_ bestanden blijven behouden.
@@ -292,20 +297,20 @@ ggsave(p, file = "script1.png")
     - De actieve _branch_ staat rechtsboven aan het `Git` tabblad
 - Voeg onderstaande code toe onderaan `script2.R`
 
-```{r script2_1}
+```{r script2_1, out.extra = ""}
 library(ggplot2)
 ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()
 ```
 
-- (_Stage_ en ) _commit_ de wijzigingen aan `script2.R`
+- (_Stage_ en) _commit_ de wijzigingen aan `script2.R`
 - _checkout_ **master**
     - ofwel: in de git shell `git checkout master`
-    - ofwel: in het `Git` tabblad klikken op de naam van het huidige _branch_. Kies vervolgens de **master** _brnach_ uit de dropdown lijst
+    - ofwel: in het `Git` tabblad klikken op de naam van het huidige _branch_. Kies vervolgens de **master** _brnach_ uit de drop-down lijst
     - Merk op dat de inhoud van `script2.R` terug de vorige versie bevat.
 - Ga terug naar de **develop** _branch_
 - Voeg in `script2.R` de onderstaande regel toe
 
-```{r script2_2}
+```{r script2_2, out.extra = ""}
 ggplot(lm.D9, aes(sample = .stdresid)) + stat_qq() + geom_abline()
 ```
 
@@ -316,12 +321,12 @@ ggplot(lm.D9, aes(sample = .stdresid)) + stat_qq() + geom_abline()
         - `git checkout master`
     - _Merge_ **develop** naar **master** zonder _fast-forward_
         - `git merge --no-ff develop`
-    - Je krijgt een editor venster waarin je een aangepaste _commit message_ schrijft. Hier beschijft je beknopt de belangrijkste wijzigingen sinds de vorige merge tussen **master** en **develop**
+    - Je krijgt een editor venster waarin je een aangepaste _commit message_ schrijft. Hier beschijf je beknopt de belangrijkste wijzigingen sinds de vorige _merge_ tussen **master** en **develop**
         - Daarom kijk je best EERST naar de _history_ van de **develop** _branch_
 - Klik op het uurwerk icoon in het `Git` tabblad. Dit geeft een overzicht van de _history_ van de _repository_.
     - Het bovenste deel toont alle _commits_
         - Je ziet enkel de _commit message_. Vandaar dat het belangrijk is dat de _commit message_ reeds een ruw idee geeft van wat er aangepast is.
-        - Tip:  Vaak _committen_ heeft als voordeel dat een beknoptere _commit messages_ volstaat op de wijzigingen te beschrijven.
+        - Tip:  Vaak _committen_ heeft als voordeel dat beknopte _commit messages_ volstaan om de wijzigingen te beschrijven.
         - Bij elke _commit_ zie je ook de auteur, date en SHA. Deze laatste is de id van de _commit_
     - Het verband tussen de _commits_ wordt grafisch voorgesteld. 
         - De cirkels zijn de _commits_
@@ -353,7 +358,7 @@ ggplot(lm.D9, aes(sample = .stdresid)) + stat_qq() + geom_abline()
 
 ### Meer uitgebreid _branching_ model
 
-Het eenvoudige _branching_ model zorgt er voor dat de **master** behoorlijk clean blijft. **develop** bevat echter alle sequentele wijzigingen. Dat is prima voor een beperkt project waar slechts een persoon aan werkt. Voor complexere projecten waar je met meerdere mensen aan werkt of dat uit verschillende facetten bestaat, is dat minder praktisch. In dergelijke situaties is het handig om zogenaamde **feature** _branches_ te maken.
+Het eenvoudige _branching_ model zorgt er voor dat de **master** behoorlijk clean blijft. **develop** bevat echter alle sequentiële wijzigingen. Dat is prima voor een beperkt project waar slechts één persoon aan werkt. Voor complexere projecten waar je met meerdere mensen aan werkt of dat uit verschillende facetten bestaat, is dat minder praktisch. In dergelijke situaties is het handig om zogenaamde **feature** _branches_ te maken.
 
 
 
@@ -418,7 +423,7 @@ Praktisch voorbeeld:
 - Kijk nu naar de _history_ van de _repository_ (klik op het uurwerk icoon in het `Git` tabblad)
     - Standaard krijgen we enkel de _commits_ van de actieve _branch_ te zien. In dit geval **les2**.
     - De _history_ van **les2** is zeer clean. Ze bevat enkel _commits_ die betrekking hebben op **les2**.
-    - Om de _history_ van een andere _branch_ te zien, moet je op de dropbox lijst rechts van de `history` knop klikken. Doe dit en selecteer **les1**. 
+    - Om de _history_ van een andere _branch_ te zien, moet je op de drop-down lijst rechts van de `history` knop klikken. Doe dit en selecteer **les1**. 
         - De _history_ van **les1** is even clean als deze van **les2**. Uiteraard bevat ze allemaal andere _commits_. Enkel de allereerste _commit_ waarmee we de _repository_ gestart hebben is gemeenschappelijk (tussen alle _branches_).
     - Kijk nu naar de _history_ van **develop**.
         - Deze _history_ is complexer omdat we op een aantal momenten **les1** en **les2** toegevoegd hebben.
@@ -637,7 +642,7 @@ Dit is de werkwijze die je best volgt als je een nieuw project wilt starten en e
 
 - Maak de _repository_ op Stash
     - Login op [https://git.milieuinfo.be](https://git.milieuinfo.be)
-    - Rechtsbovenaan vind je een dropbox lijst. Kies `View profile`
+    - Rechts bovenaan vind je een drop-down lijst. Kies `View profile`
     - Nu krijg je een overzicht van al jouw _repositories_
     - Klik op `Create repository`
     - Geef de gewenste naam en klik op `Create repository`
@@ -646,13 +651,13 @@ Dit is de werkwijze die je best volgt als je een nieuw project wilt starten en e
 - Werkwijze voor Windows: 
     - Open RStudio
     - Maak een nieuw project. Kies nu dadelijk voor `Version control` en vervolgens voor `Git`. 
-    - Ga terug naar je browser en klik linksboven op `Clone`. Selecteer `HTTP` en kopiëer de URL die je daar vindt. Deze heeft de vorm [https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git](https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git)
+    - Ga terug naar je browser en klik linksboven op `Clone`. Selecteer `HTTP` en kopieer de URL die je daar vindt. Deze heeft de vorm [https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git](https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git)
     - Plak deze URL in het vak `Repository URL`
     - RStudio zal automatisch de naam van de _repository_ voorstellen als projectnaam. Je kan dit, indien gewenst, aanpassen. De voorgestelde naam behouden heeft als voordeel dat je minder verwarring krijgt.
     - Geef de gewenste map waarin het project moet komen en klik op `Create project`
-    - Jouw project wordt nu gesynchoniseerd met de (lege) _repository_ op Stash
+    - Jouw project wordt nu gesynchroniseerd met de (lege) _repository_ op Stash
 - Werkwijze voor Linux (wegens bug in RStudio):
-    - Ga terug naar je browser en klik linksboven op `Clone`. Selecteer `HTTP` en kopiëer de URL die je daar vindt, we noemen deze `STASHURL`. Deze heeft de vorm [https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git](https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git)
+    - Ga terug naar je browser en klik linksboven op `Clone`. Selecteer `HTTP` en kopieer de URL die je daar vindt, we noemen deze `STASHURL`. Deze heeft de vorm [https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git](https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git)
     - Ga in de terminal naar de locatie waar je je project wilt bewaren
     - `git clone STASHURL`
     - Open RStudio
@@ -682,7 +687,7 @@ Dit is de werkwijze die je best volgt als je een nieuw project wilt starten en e
 
 - Maak een nieuwe _repository_ op Stash zoals hierboven beschreven
 - Open het project dat je wenst te synchroniseren met RStudio
-- Ga terug naar je browser en klik linksboven op `Clone`. Selecteer `HTTP` en kopiëer de URL die je daar vindt. Deze heeft de vorm [https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git](https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git)
+- Ga terug naar je browser en klik linksboven op `Clone`. Selecteer `HTTP` en kopieer de URL die je daar vindt. Deze heeft de vorm [https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git](https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git)
 - Ga naar de `shell` en voer het commando `git remote add origin STASHURL` uit. Hierbij moet je `STASHURL` vervangen door de URL die je op de Stash website gekopieerd hebt.
 - `git push origin -u --all` en geef je JIRA wachtwoord wanneer daarom gevraagd wordt.
     - Nu worden al je lokale _branches_ naar Stash _gepusht_.
@@ -710,7 +715,7 @@ Dit is de werkwijze die je best volgt als je een nieuw project wilt starten en e
 
 ## Wijziging in lokaal project uploaden naar de Stash server
 
-De andere _repositories_ wanneer een lokale _repository_ verbonden is noemen we de _remotes_. Een _remote_ wordt gedefinieerd door een naam en een URL. Meestal is er slechts één _remote_. De belangrijkste _remote_ krijgt klassiek de naam `origin`. Wanneer we de gegevens van de _remote_ gesynchoniseerd hebben, dan krijgen we ook de _branches_ van die _remote_ te zien. Bijvoorbeeld **origin/master** en **origin/develop** zijn de **master** en **origin** _branch_ op de _remote_ genaamd `origin`.
+De andere _repositories_ wanneer een lokale _repository_ verbonden is noemen we de _remotes_. Een _remote_ wordt gedefinieerd door een naam en een URL. Meestal is er slechts één _remote_. De belangrijkste _remote_ krijgt klassiek de naam `origin`. Wanneer we de gegevens van de _remote_ gesynchroniseerd hebben, dan krijgen we ook de _branches_ van die _remote_ te zien. Bijvoorbeeld **origin/master** en **origin/develop** zijn de **master** en **develop** _branch_ op de _remote_ genaamd `origin`.
 
 - lokale wijzingen naar een _remote_ sturen, noemen we _pushen_.
 - van het `git` tabblad kan je op de `Push` knop duwen.
@@ -744,8 +749,8 @@ De andere _repositories_ wanneer een lokale _repository_ verbonden is noemen we 
 
 - Log in op [Stash](https://git.milieuinfo.be)
 - Ga naar de _repository_ die je wenst te delen.
-    - Dropdown lijst rechts boven en dan `View profile`
-    - Via dropdown lijst `Repositories` linksboven, vind je de _repositories_ die je recent gebruikt hebt
+    - drop-down lijst rechts boven en dan `View profile`
+    - Via drop-down lijst `Repositories` linksboven, vind je de _repositories_ die je recent gebruikt hebt
 - Kies `Settings` in de linkerbalk
 - Nu krijg je een overzicht van de _repository_
     - Je kan hier de naam wijzigingen. Dat is af te raden omdat iedereen die werkt met deze _repository_ dan de nodige instellingen moeten aanpassen.
@@ -793,13 +798,13 @@ Een _fork_ is een flexibele en proper manier om samen te werken. Flexibel in de 
 Werkwijze:
 
 - Log in op [Stash](https://git.milieuinfo.be)
-- Zoek de _repository_ van de collega via het zoekveld rechtsbovenaan. Je moet de naam van de _repository_ kennen en je moet leestoegang hebben.
+- Zoek de _repository_ van de collega via het zoekveld rechts bovenaan. Je moet de naam van de _repository_ kennen en je moet leestoegang hebben.
 - Selecteer de gewenste _repository_
 - Klik in het linkermenu op `Fork`
     - Nu geeft je de naam van jouw kopie van deze _repository_. Standaard wordt de naam van de bron overgenomen.
-    - `Enable fork syncing geactivieerd` is standaard geactivieerd. Hiermee blijft jouw kopie op Stash automatisch gesynchroniseerd met de bron.
+    - `Enable fork syncing geactiveerd` is standaard geactiveerd. Hiermee blijft jouw kopie op Stash automatisch gesynchroniseerd met de bron.
         - _branches_ waarin jij geen wijzigingen aanbracht worden automatisch bijgewerkt naar de laatste versie van de bron
-        - _branches_ waarin zowel jij als de bron wijzigingen aanbracht moeten manueel worden gesynchoniseerd
+        - _branches_ waarin zowel jij als de bron wijzigingen aanbracht moeten manueel worden gesynchroniseerd
         - Daarom is het aan te raden eerst een nieuwe _branch_ te maken indien je aanpassingen wilt doen in een _fork_. Op dier manier blijft de automatische synchronisatie werken.
     - Klik op `Fork repository` om af te werken.
 - Nu opent Stash jouw kopie van de _repository_.
@@ -826,9 +831,10 @@ Werkwijze:
 
 ## Een _pull request_ maken
 
-Om de inhoud van andersmans _repository_ te wijzigen maken we een _pull request_. Eerst en vooral moeten we uiteraard een aantal wijzigingen aanbrengen in onze eigen _fork_. Om de automatische _fork syncing_ te behouden, werken we best in een nieuwe _branch_.
+Om de inhoud van andermans _repository_ te wijzigen maken we een _pull request_. Eerst en vooral moeten we uiteraard een aantal wijzigingen aanbrengen in onze eigen _fork_. Om de automatische _fork syncing_ te behouden, werken we best in een nieuwe _branch_.
 
 Voorbeeld:
+
 - Log in op [Stash](https://git.milieuinfo.be)
 - Ga op zoek naar de _repository_ `gitdemo_lessenreeks` van Thierry Onkelinx.
     - Deze _repository_ heeft de structuur zoals hoger beschreven onder het meer uitgebreid _branching_ model met permanent scheidbare features.
@@ -853,7 +859,7 @@ Voorbeeld:
     - Als je tevreden bent met de keuze, klik je op `Continue`
     - Nu krijg je een venster waarin je een titel en een beschrijving van je _pull request_ doet. De standaard titel is de naam van de _branch_ vanaf waar je een _pull request_ doet. De beschrijving bestaat standaard uit de _commit messages_ van alle betrokken _commits_. 
         - Hou in het achterhoofd dat de ontvanger van de _pull request_ zich hoofdzakelijk op deze informatie zal baseren om de _pull request_ als dan niet om te zetten in een effectieve _pull_. 
-    - Optioneel kan je reviewers opgeven. Deze personen kunnen dan hun goedgekeuring geven over de _pull request_.
+    - Optioneel kan je reviewers opgeven. Deze personen kunnen dan hun goedkeuring geven over de _pull request_.
     - Klik tenslotte op `Create` om de _pull request_ te versturen.
 
 
@@ -883,7 +889,7 @@ Voorbeeld:
     - Het `Overview` tabblad biedt de mogelijkheid om te discussiëren over de _pull request_
     - Het `Diff` tabblad geeft de wijzigingen weer die de _pull request_ zal uitvoeren
     - Het `Commits` tabblad geeft alle betrokken _commits_.
-- De `Edit` knop rechtsboven laat je toe om de doel_branch_, titel en beschrijving aan te passen. Je kan eventueel de lijst van reviewers bijwerken.
+- De `Edit` knop rechtsboven laat je toe om de _branch_, titel en beschrijving aan te passen. Je kan eventueel de lijst van reviewers bijwerken.
 - Met `Decline` kan je de _pull request_ afsluiten zonder de wijzigingen te verwerken.
     - Ze blijven beschikbaar in het tabblad `Declined` van de _pull requests_ en kunnen heropend worden.
 - Met `Merge` wordt de _pull request_ effectief doorgevoerd.
@@ -919,7 +925,7 @@ Voorbeeld:
 
 @Gunther2014 schreef een beknopt boek dat de basis van git op een beknopte manier uitlegt. Het is beschikbaar via de INBO account op Kindle.
 
-@Cottle2014 bied een handige oneline tool om _branching_ onder de knie te kijken. Het is een interactieve website waar je zelf met git commando's aan de slag gaat en dadelijk ziet wat het effect van de commando's op de structuur van de repository is. Elk stapje start met een beknopte uitleg gevolg door een oefening. Er staan veel oefeningen. De website detecteert wanneer je de oefening correct opgelost hebt. Je krijgt dan te zien hoeveel commando's je nodig had en hoeveel commando's hadden kunnen volstaan. Je kan de oefeningen meermaals opnieuw proberen. Als je vastloopt kan je de oplossing vragen. De website is een aanrader als je een beperkte voorkennis hebt. Daarom best eerst @Gunther2014 lezen of de git cursus volgen. Reken op 2 à 3 uur om de volledige set oefeningen te doorlopen. Je hoeft de oefeningen niet in een sessie te maken.
+@Cottle2014 bied een handige online tool om _branching_ onder de knie te kijken. Het is een interactieve website waar je zelf met git commando's aan de slag gaat en dadelijk ziet wat het effect van de commando's op de structuur van de repository is. Elk stapje start met een beknopte uitleg gevolg door een oefening. Er staan veel oefeningen. De website detecteert wanneer je de oefening correct opgelost hebt. Je krijgt dan te zien hoeveel commando's je nodig had en hoeveel commando's hadden kunnen volstaan. Je kan de oefeningen meermaals opnieuw proberen. Als je vastloopt kan je de oplossing vragen. De website is een aanrader als je een beperkte voorkennis hebt. Daarom best eerst @Gunther2014 lezen of de git cursus volgen. Reken op 2 à 3 uur om de volledige set oefeningen te doorlopen. Je hoeft de oefeningen niet in een sessie te maken.
 
 Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te schrijven. Op dat vlak is @Boswell2011 verplichte lectuur. Hoewel geschreven vanuit een C achtergrond, is het prima toepasbaar op R. Ook dit boek is beschikbaar via de INBO account op Kindle.
 
@@ -997,7 +1003,7 @@ Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te sc
 ## Handige dingen om eenmalig in te stellen
 
 `git config --global credential.helper cache`
-  ~ onthoudt je wachtwoord tijdelijk. Vooral handig als je frequent _pullt_ of _pushed_
+  ~ onthoudt je wachtwoord tijdelijk. Vooral handig als je frequent _pullt_ of _pusht_
 `git config --global user.name "John Doe"`
   ~ zet je standaard gebruikersnaam
 `git config --global user.email "johndoe@company.com"`
@@ -1009,7 +1015,7 @@ Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te sc
   - Let op de punt achteraan het commando!
 - `commitSHA1` is de SHA1 hash van de _commit_. Deze wordt als unieke key gebruikt. Deze hash is 40 hexadecimale tekens lang (20 byte). Je hoeft ze niet allemaal op te geven. Meestal zijn de 7 eerste ruim voldoende om uniek te zijn.
 - Je vindt de SHA1 van de _commit_ via de _history_ van je _repository_
-- Voorbeeld bruikbaar in `gitdemo_lessenreeeks`: `git checkout 7c9f .`
+- Voorbeeld bruikbaar in `gitdemo_lessenreeks`: `git checkout 7c9f .`
 - Vergeet niet dat je vervolgens eerst een nieuwe branch moet maken, voordat je kan verder werken.
 
 ## _Tags_
@@ -1026,6 +1032,10 @@ Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te sc
 - gebruik `git push origin --tags` om de _tags_ naar Stash door te sturen.
 
 
+## Gerelateerde _repositories_ op Stash
 
+- `Rinstall`: bevat o.a. de bron van deze tekst. Opmerkingen, verbeteringen en aanvullingen kunne dus via een _pull request_ ;-)
+- `gitdemo_lessenreeks`: de _repository_ uit het voorbeeld met permanent gescheiden features
+- `gitdemo_dummypackage`: de _repository_ uit het voorbeeld met onderling verweven features
 
 # Referenties
