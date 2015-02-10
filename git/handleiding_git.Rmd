@@ -2,8 +2,10 @@
 title: "Starten met git"
 author: "Thierry Onkelinx"
 date: "03-02-2015"
-bibliography: "~/local_tex/bibtex/bib/git.bib"
-output: html_document
+output: 
+  INBOmd::inbo_rapport:
+    cover: git_logo.png
+bibliography: ~/local_tex/bibtex/bib/git.bib
 ---
 
 # Starten met git
