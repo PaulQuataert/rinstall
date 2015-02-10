@@ -802,6 +802,7 @@ Werkwijze:
     - Klik op `Fork repository` om af te werken.
 - Nu opent Stash jouw kopie van de _repository_.
 - Tenslotte moeten we nog een lokale kopie in een RStudio project maken. Hiervoor volg je deze instructies als een nieuw project op de Stash server plaatsen. Uiteraard gebruik je hierbij de _fork_ in plaats van een nieuwe _repository_ aan te maken.
+- Wanneer bepaalde _branches_ nog niet lokaal beschikbaar zouden zijn, moet je een specifieke _checkout_ doen opdat `git` weet dat de lokale _branch_ gekoppeld moet zijn aan die op `origin`. Voor de **develop** _branch_ doe je dat in de shell met het commando `git checkout --track origin/develop`
 
 
 
@@ -822,6 +823,51 @@ Werkwijze:
 
 
 ## Een _pull request_ maken
+
+Om de inhoud van andersmans _repository_ te wijzigen maken we een _pull request_. Eerst en vooral moeten we uiteraard een aantal wijzigingen aanbrengen in onze eigen _fork_. Om de automatische _fork syncing_ te behouden, werken we best in een nieuwe _branch_.
+
+Voorbeeld:
+- Log in op [Stash](https://git.milieuinfo.be)
+- Ga op zoek naar de _repository_ `gitdemo_lessenreeks` van Thierry Onkelinx.
+    - Deze _repository_ heeft de structuur zoals hoger beschreven onder het meer uitgebreid _branching_ model met permanent scheidbare features.
+- Maak hiervan jouw eigen _fork_
+- Stel dat we een aanpassing willen doen aan **les2**
+    - Ga na of **les2** bestaat. Zoniet `git checkout --track origin/les2`
+    - We doen eerst een _checkout_ van **les2**
+    - Vervolgens maken we vanaf **les2** een nieuwe _branch_ **les2_aanpassing**
+    - Dan kunnen we een _checkout_ doen van **les2_aanpassing**
+    - Nu zijn we in onze eigen _branch_ aan het werken en kunnen dus naar hartelust wijzigingen aanbrengen, _stagen_ en _committen_ zonder dat we _fork syncing_ verliezen.
+    - Doe een paar _commits_ in deze _branch_.
+- Nu kunnen we onze nieuwe _branch_ _pushen_ naar je eigen _fork_
+    - `git push -u origin les2_aanpassing`
+- Log in op [Stash](https://git.milieuinfo.be) en ga naar je _fork_.
+    - Ga na of de nieuwe _branch_ **les2_aanpassing** beschikbaar is. Zo niet moet je nakijken welke van bovenstaande stappen je overgeslaan hebt.
+- Klik in het linkermenu op `Pull requests` 
+    - Klik op `Create pull request`
+    - Bovenaan kies je de bron vanaf waar je een _pull request_ wilt sturen. Standaard is dat jouw _fork_. Je hoeft dus enkel nog de juiste _branch_ te kiezen. In dit geval **les2_aanpassing**.
+    - Daaronder kies je de andere _repository_ waarnaar je de _pull request_ wenst te sturen. Merk op dat dat dus niet enkel naar de bron _repository_ kan sturen, maar ook naar een _fork_ die iemand anders gemaakt heeft.
+    - Van zodra je zowel bij de oorsprong als het doel een _branch_ geselecteerd hebt, verschijnen de _commits_ die nodig zijn om van de ene toestand naar de andere te gaan.
+    - In het tabblad `Diff` kan je kijken naar de wijzigingen die veroorzaakt worden door de _pull request_.
+    - Als je tevreden bent met de keuze, klik je op `Continue`
+    - Nu krijg je een venster waarin je een titel en een beschrijving van je _pull request_ doet. De standaard titel is de naam van de _branch_ vanaf waar je een _pull request_ doet. De beschrijving bestaat standaard uit de _commit messages_ van alle betrokken _commits_. 
+        - Hou in het achterhoofd dat de ontvanger van de _pull request_ zich hoofdzakelijk op deze informatie zal baseren om de _pull request_ als dan niet om te zetten in een effectieve _pull_. 
+    - Optioneel kan je reviewers opgeven. Deze personen kunnen dan hun goedgekeuring geven over de _pull request_.
+    - Klik tenslotte op `Create` om de _pull request_ te versturen.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Verplichte lectuur
 
@@ -879,6 +925,8 @@ Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te sc
     - 'naam' is een _commit_. Gebruik deze _commit_
     - 'naam' is een _branch_. Gebruik de laatste _commit_ van deze _branch_.
     - 'naam' is een _tag_. Gebruik de _commit_ waarnaar de _tag_ verwijst.
+`git checkout --track origin/naam`
+  ~ maakt de _branch_ **naam** van `origin` beschikbaar als een lokale _branch_ die gekoppeld is aan de _branch_ op `origin`
 `git branch naam`
   ~ maakt een nieuwe _branch_ vanaf de _commit_ die op dit ogenblik _uitgechecked_ is.
 `git branch -d naam`
@@ -901,6 +949,8 @@ Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te sc
 
 
 # Extra
+
+`git config --global credential.helper cache`
 
 ## Een specifieke commit terug zetten
 

@@ -713,10 +713,13 @@ ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()</code></pre>
 </ul></li>
 <li>Nu opent Stash jouw kopie van de <em>repository</em>.</li>
 <li>Tenslotte moeten we nog een lokale kopie in een RStudio project maken. Hiervoor volg je deze instructies als een nieuw project op de Stash server plaatsen. Uiteraard gebruik je hierbij de <em>fork</em> in plaats van een nieuwe <em>repository</em> aan te maken.</li>
+<li>Wanneer bepaalde <em>branches</em> nog niet lokaal beschikbaar zouden zijn, moet je een specifieke <em>checkout</em> doen opdat <code>git</code> weet dat de lokale <em>branch</em> gekoppeld moet zijn aan die op <code>origin</code>. Voor de <strong>develop</strong> <em>branch</em> doe je dat in de shell met het commando <code>git checkout --track origin/develop</code></li>
 </ul>
 </div>
 <div id="een-pull-request-maken" class="section level2">
 <h2>Een <em>pull request</em> maken</h2>
+<p>Om de inhoud van andersmans <em>repository</em> te wijzigen maken we een <em>pull request</em>. Eerst en vooral moeten we uiteraard een aantal wijzigingen aanbrengen in onze eigen <em>fork</em>. Om de automatische <em>fork syncing</em> te behouden, werken we best in een nieuwe <em>branch</em>.</p>
+<p>Voorbeeld: - Log in op <a href="https://git.milieuinfo.be">Stash</a> - Ga op zoek naar de <em>repository</em> <code>gitdemo_lessenreeks</code> van Thierry Onkelinx. - Deze <em>repository</em> heeft de structuur zoals hoger beschreven onder het meer uitgebreid <em>branching</em> model met permanent scheidbare features. - Maak hiervan jouw eigen <em>fork</em> - Stel dat we een aanpassing willen doen aan <strong>les2</strong> - Ga na of <strong>les2</strong> bestaat. Zoniet <code>git checkout --track origin/les2</code> - We doen eerst een <em>checkout</em> van <strong>les2</strong> - Vervolgens maken we vanaf <strong>les2</strong> een nieuwe <em>branch</em> <strong>les2_aanpassing</strong> - Dan kunnen we een <em>checkout</em> doen van <strong>les2_aanpassing</strong> - Nu zijn we in onze eigen <em>branch</em> aan het werken en kunnen dus naar hartelust wijzigingen aanbrengen, <em>stagen</em> en <em>committen</em> zonder dat we <em>fork syncing</em> verliezen. - Doe een paar <em>commits</em> in deze <em>branch</em>. - Nu kunnen we onze nieuwe <em>branch</em> <em>pushen</em> naar je eigen <em>fork</em> - <code>git push -u origin les2_aanpassing</code> - Log in op <a href="https://git.milieuinfo.be">Stash</a> en ga naar je <em>fork</em>. - Ga na of de nieuwe <em>branch</em> <strong>les2_aanpassing</strong> beschikbaar is. Zo niet moet je nakijken welke van bovenstaande stappen je overgeslaan hebt. - Klik in het linkermenu op <code>Pull requests</code> - Klik op <code>Create pull request</code> - Bovenaan kies je de bron vanaf waar je een <em>pull request</em> wilt sturen. Standaard is dat jouw <em>fork</em>. Je hoeft dus enkel nog de juiste <em>branch</em> te kiezen. In dit geval <strong>les2_aanpassing</strong>. - Daaronder kies je de andere <em>repository</em> waarnaar je de <em>pull request</em> wenst te sturen. Merk op dat dat dus niet enkel naar de bron <em>repository</em> kan sturen, maar ook naar een <em>fork</em> die iemand anders gemaakt heeft. - Van zodra je zowel bij de oorsprong als het doel een <em>branch</em> geselecteerd hebt, verschijnen de <em>commits</em> die nodig zijn om van de ene toestand naar de andere te gaan. - In het tabblad <code>Diff</code> kan je kijken naar de wijzigingen die veroorzaakt worden door de <em>pull request</em>. - Als je tevreden bent met de keuze, klik je op <code>Continue</code> - Nu krijg je een venster waarin je een titel en een beschrijving van je <em>pull request</em> doet. De standaard titel is de naam van de <em>branch</em> vanaf waar je een <em>pull request</em> doet. De beschrijving bestaat standaard uit de <em>commit messages</em> van alle betrokken <em>commits</em>. - Hou in het achterhoofd dat de ontvanger van de <em>pull request</em> zich hoofdzakelijk op deze informatie zal baseren om de <em>pull request</em> als dan niet om te zetten in een effectieve <em>pull</em>. - Optioneel kan je reviewers opgeven. Deze personen kunnen dan hun goedgekeuring geven over de <em>pull request</em>. - Klik tenslotte op <code>Create</code> om de <em>pull request</em> te versturen.</p>
 </div>
 </div>
 <div id="verplichte-lectuur" class="section level1">
@@ -766,6 +769,9 @@ ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()</code></pre>
 <dt><code>git checkout naam</code></dt>
 <dd>zet de inhoud van de huidige werking directory naar de toestand van ‘naam’ - ‘naam’ is een <em>commit</em>. Gebruik deze <em>commit</em> - ‘naam’ is een <em>branch</em>. Gebruik de laatste <em>commit</em> van deze <em>branch</em>. - ‘naam’ is een <em>tag</em>. Gebruik de <em>commit</em> waarnaar de <em>tag</em> verwijst.
 </dd>
+<dt><code>git checkout --track origin/naam</code></dt>
+<dd>maakt de <em>branch</em> <strong>naam</strong> van <code>origin</code> beschikbaar als een lokale <em>branch</em> die gekoppeld is aan de <em>branch</em> op <code>origin</code>
+</dd>
 <dt><code>git branch naam</code></dt>
 <dd>maakt een nieuwe <em>branch</em> vanaf de <em>commit</em> die op dit ogenblik <em>uitgechecked</em> is.
 </dd>
@@ -782,6 +788,7 @@ ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()</code></pre>
 </div>
 <div id="extra" class="section level1">
 <h1>Extra</h1>
+<p><code>git config --global credential.helper cache</code></p>
 <div id="een-specifieke-commit-terug-zetten" class="section level2">
 <h2>Een specifieke commit terug zetten</h2>
 </div>
