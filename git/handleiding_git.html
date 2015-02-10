@@ -721,6 +721,29 @@ ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()</code></pre>
 <p>Om de inhoud van andersmans <em>repository</em> te wijzigen maken we een <em>pull request</em>. Eerst en vooral moeten we uiteraard een aantal wijzigingen aanbrengen in onze eigen <em>fork</em>. Om de automatische <em>fork syncing</em> te behouden, werken we best in een nieuwe <em>branch</em>.</p>
 <p>Voorbeeld: - Log in op <a href="https://git.milieuinfo.be">Stash</a> - Ga op zoek naar de <em>repository</em> <code>gitdemo_lessenreeks</code> van Thierry Onkelinx. - Deze <em>repository</em> heeft de structuur zoals hoger beschreven onder het meer uitgebreid <em>branching</em> model met permanent scheidbare features. - Maak hiervan jouw eigen <em>fork</em> - Stel dat we een aanpassing willen doen aan <strong>les2</strong> - Ga na of <strong>les2</strong> bestaat. Zoniet <code>git checkout --track origin/les2</code> - We doen eerst een <em>checkout</em> van <strong>les2</strong> - Vervolgens maken we vanaf <strong>les2</strong> een nieuwe <em>branch</em> <strong>les2_aanpassing</strong> - Dan kunnen we een <em>checkout</em> doen van <strong>les2_aanpassing</strong> - Nu zijn we in onze eigen <em>branch</em> aan het werken en kunnen dus naar hartelust wijzigingen aanbrengen, <em>stagen</em> en <em>committen</em> zonder dat we <em>fork syncing</em> verliezen. - Doe een paar <em>commits</em> in deze <em>branch</em>. - Nu kunnen we onze nieuwe <em>branch</em> <em>pushen</em> naar je eigen <em>fork</em> - <code>git push -u origin les2_aanpassing</code> - Log in op <a href="https://git.milieuinfo.be">Stash</a> en ga naar je <em>fork</em>. - Ga na of de nieuwe <em>branch</em> <strong>les2_aanpassing</strong> beschikbaar is. Zo niet moet je nakijken welke van bovenstaande stappen je overgeslaan hebt. - Klik in het linkermenu op <code>Pull requests</code> - Klik op <code>Create pull request</code> - Bovenaan kies je de bron vanaf waar je een <em>pull request</em> wilt sturen. Standaard is dat jouw <em>fork</em>. Je hoeft dus enkel nog de juiste <em>branch</em> te kiezen. In dit geval <strong>les2_aanpassing</strong>. - Daaronder kies je de andere <em>repository</em> waarnaar je de <em>pull request</em> wenst te sturen. Merk op dat dat dus niet enkel naar de bron <em>repository</em> kan sturen, maar ook naar een <em>fork</em> die iemand anders gemaakt heeft. - Van zodra je zowel bij de oorsprong als het doel een <em>branch</em> geselecteerd hebt, verschijnen de <em>commits</em> die nodig zijn om van de ene toestand naar de andere te gaan. - In het tabblad <code>Diff</code> kan je kijken naar de wijzigingen die veroorzaakt worden door de <em>pull request</em>. - Als je tevreden bent met de keuze, klik je op <code>Continue</code> - Nu krijg je een venster waarin je een titel en een beschrijving van je <em>pull request</em> doet. De standaard titel is de naam van de <em>branch</em> vanaf waar je een <em>pull request</em> doet. De beschrijving bestaat standaard uit de <em>commit messages</em> van alle betrokken <em>commits</em>. - Hou in het achterhoofd dat de ontvanger van de <em>pull request</em> zich hoofdzakelijk op deze informatie zal baseren om de <em>pull request</em> als dan niet om te zetten in een effectieve <em>pull</em>. - Optioneel kan je reviewers opgeven. Deze personen kunnen dan hun goedgekeuring geven over de <em>pull request</em>. - Klik tenslotte op <code>Create</code> om de <em>pull request</em> te versturen.</p>
 </div>
+<div id="een-pull-request-ontvangen" class="section level2">
+<h2>Een <em>pull request</em> ontvangen</h2>
+<ul>
+<li>Je wordt via mail verwittigd dat je een <em>pull request</em> ontvangen hebt.</li>
+<li>Log in op <a href="https://git.milieuinfo.be">Stash</a> en ga naar de betrokken <em>repository</em></li>
+<li>In het linkermenu zal nu je achter <code>Pull requests</code> een nummer zien staan. Klik op <code>Pull requests</code> om het overzicht te zien. Het tabblad <code>Open</code> geeft alle onbehandelde <em>pull requests</em>.</li>
+<li>Klik op de <em>pull request</em> die je wilt bekijken.
+<ul>
+<li>Het <code>Overview</code> tabblad biedt de mogelijkheid om te discussiëren over de <em>pull request</em></li>
+<li>Het <code>Diff</code> tabblad geeft de wijzigingen weer die de <em>pull request</em> zal uitvoeren</li>
+<li>Het <code>Commits</code> tabblad geeft alle betrokken <em>commits</em>.</li>
+</ul></li>
+<li>De <code>Edit</code> knop rechtsboven laat je toe om de doel_branch_, titel en beschrijving aan te passen. Je kan eventueel de lijst van reviewers bijwerken.</li>
+<li>Met <code>Decline</code> kan je de <em>pull request</em> afsluiten zonder de wijzigingen te verwerken.
+<ul>
+<li>Ze blijven beschikbaar in het tabblad <code>Declined</code> van de <em>pull requests</em> en kunnen heropend worden.</li>
+</ul></li>
+<li>Met <code>Merge</code> wordt de <em>pull request</em> effectief doorgevoerd.
+<ul>
+<li>De historiek blijft beschikbaar via het tabblad <code>Merged</code> van de <em>pull requests</em></li>
+</ul></li>
+</ul>
+</div>
 </div>
 <div id="verplichte-lectuur" class="section level1">
 <h1>Verplichte lectuur</h1>
@@ -778,10 +801,10 @@ ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()</code></pre>
 <dt><code>git branch -d naam</code></dt>
 <dd>verwijder de <em>branch</em> <strong>naam</strong>
 </dd>
-<dt><code>git push origin -u --all</code></dt>
+<dt><code>git push -u origin --all</code></dt>
 <dd>update alle <em>branches</em> naar <code>origin</code>. Maak <em>branches</em> aan als ze niet op <code>origin</code> bestaan. De -u optie linkt de lokale <em>branch</em> aan deze met de overeenkomstige naam op <code>origin</code>.
 </dd>
-<dt><code>git push origin -u master</code></dt>
+<dt><code>git push -u origin master</code></dt>
 <dd>stuur updates van <strong>master</strong> naar <strong>origin/master</strong>
 </dd>
 </dl>

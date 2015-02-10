@@ -869,6 +869,48 @@ Voorbeeld:
 
 
 
+
+
+
+## Een _pull request_ ontvangen
+
+- Je wordt via mail verwittigd dat je een _pull request_ ontvangen hebt.
+- Log in op [Stash](https://git.milieuinfo.be) en ga naar de betrokken _repository_
+- In het linkermenu zal nu je achter `Pull requests` een nummer zien staan. Klik op `Pull requests` om het overzicht te zien. Het tabblad `Open` geeft alle onbehandelde _pull requests_.
+- Klik op de _pull request_ die je wilt bekijken.
+    - Het `Overview` tabblad biedt de mogelijkheid om te discussiëren over de _pull request_
+    - Het `Diff` tabblad geeft de wijzigingen weer die de _pull request_ zal uitvoeren
+    - Het `Commits` tabblad geeft alle betrokken _commits_.
+- De `Edit` knop rechtsboven laat je toe om de doel_branch_, titel en beschrijving aan te passen. Je kan eventueel de lijst van reviewers bijwerken.
+- Met `Decline` kan je de _pull request_ afsluiten zonder de wijzigingen te verwerken.
+    - Ze blijven beschikbaar in het tabblad `Declined` van de _pull requests_ en kunnen heropend worden.
+- Met `Merge` wordt de _pull request_ effectief doorgevoerd.
+    - De historiek blijft beschikbaar via het tabblad `Merged` van de _pull requests_
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Verplichte lectuur
 
 @Driesen2014 schreef een goede blog post die dieper in gaat over _branches_.
@@ -931,9 +973,9 @@ Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te sc
   ~ maakt een nieuwe _branch_ vanaf de _commit_ die op dit ogenblik _uitgechecked_ is.
 `git branch -d naam`
   ~ verwijder de _branch_ **naam**
-`git push origin -u --all`
+`git push -u origin --all`
   ~ update alle _branches_ naar `origin`. Maak _branches_ aan als ze niet op `origin` bestaan. De -u optie linkt de lokale _branch_ aan deze met de overeenkomstige naam op `origin`.
-`git push origin -u master`
+`git push -u origin master`
   ~ stuur updates van **master** naar **origin/master**
   
 
