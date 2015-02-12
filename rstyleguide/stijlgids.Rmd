@@ -1,0 +1,55 @@
+---
+title: "Stijlgids voor R code"
+author: "Thierry Onkelinx en Pieter Verschelde"
+date: "Thursday, February 12, 2015"
+output: pdf_document
+---
+
+# Inleiding
+
+Doel van deze stijlgids is een stijl voor R gerelateerde code vast te leggen. Deze dient te worden nageleefd in het geval van generieke R projecten die door meerdere mensen worden onderhouden. Het is aanbevolen om deze stijlgids steeds te volgen.
+
+De stijlgids is gebaseerd op een aantal online beschikbare stijlgidsen zoals http://adv-r.had.co.nz/Style.html, https://google-styleguide.googlecode.com/svn/trunk/Rguide.xml en http://stat405.had.co.nz/r-style.html
+
+# Naamgeving
+
+- vlag moet de lading dekken
+- probeer beknopt te blijven
+
+## Objecten
+
+## Functies
+
+## Variabelen
+
+## Bestandsnamen
+
+# Lay-out
+
+- opdelen in functies
+- witruimte: nieuwe regels, spaties, inspringen
+- operatoren
+- haakjes (, [, {
+- regel lengte
+
+# R Package
+
+- NAMESPACE (import en export)
+- globale variabelen --> verboden. Alternatieven: sysdata.rda en environments
+- attach()
+- R CMD --as-cran
+- doorgeven van functieargumenten
+
+# Documentatie
+
+- R Package
+- Taal
+- Roxygen2
+- examples
+- vignettes
+- unit tests
+
+# Versiebeheer
+
+- git
+- forks en branches
