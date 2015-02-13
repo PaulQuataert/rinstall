@@ -1,15 +1,16 @@
 ---
-title: "Stijlgids voor R code"
+title: "Kwaliteitshandboek voor R code"
 author: "Thierry Onkelinx en Pieter Verschelde"
 date: "Thursday, February 12, 2015"
+bibliography: "~/local_tex/bibtex/bib/kwaliteitshandboek.bib"
 output: pdf_document
 ---
 
 # Inleiding
 
-Doel van deze stijlgids is een stijl voor R gerelateerde code vast te leggen. Deze dient te worden nageleefd in het geval van generieke R projecten die door meerdere mensen worden onderhouden. Het is aanbevolen om deze stijlgids steeds te volgen.
+Doel van dit kwaliteitshandboek is het vastleggen van minimumeisen voor R gerelateerde code. Deze dienen te worden nageleefd in het geval van generieke R projecten die door meerdere mensen worden onderhouden. Het is aanbevolen om dit kwaliteitshandboek ook in andere omstandigheden steeds te volgen.
 
-De stijlgids is gebaseerd op een aantal online beschikbare stijlgidsen zoals http://adv-r.had.co.nz/Style.html, https://google-styleguide.googlecode.com/svn/trunk/Rguide.xml en http://stat405.had.co.nz/r-style.html
+Het kwaliteitshandboek is gebaseerd op @Wickham2014, @Ano2015 en @Boswell2011
 
 # Naamgeving
 
@@ -53,3 +54,5 @@ De stijlgids is gebaseerd op een aantal online beschikbare stijlgidsen zoals htt
 
 - git
 - forks en branches
+
+# Referenties
