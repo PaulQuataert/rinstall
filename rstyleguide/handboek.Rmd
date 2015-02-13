@@ -89,6 +89,37 @@ lm(HoogteM ~ OmtrekCm, boom)
 lm(data = boom, HoogteM ~ OmtrekCm)
 ```
 
+# Documentatie
+
+## Generiek
+
+We documenteren de generieke werking van elke functie met behulp van `roxygen`. Alle details staan beschreven in het `Roxygen2` package. De `roxygen` documentatie wordt vlak voor de bijhorende functie geplaatst. Op die manier is het eenvoudig om de documentatie bij te werken van zodra de code gewijzigd wordt.
+
+Volgende onderdelen van de `roxygen` documentatie zijn verplicht voor elke functie:
+
+title
+  ~ de titel van de functie. Deze geeft reeds een beknopte indicatie van de werking van de functie.
+decription
+  ~ de volledige beschrijving van de generieke werking van de functie. Dus wat de functie doet en niet hoe de functie dat doet. Hoe iets exact werkt moet duidelijk worden in de code zelf.
+param
+  ~ elke argument van de functie wordt beschreven. Wat doet het argument? Welke types zijn toegelaten? Is het verplicht? Wat is de standaardwaarde?
+return
+  ~ welke output geeft de functie terug?
+seealso
+  ~ indien de hoofdfunctie gebruikt maakt van subfunctie, verwijs je hiermee naar de relevante subfuncties. Relevante subfuncties zijn de functies die nodig zijn om de globale werking van de hoofdfunctie te begrijpen.
+  ~ je kan hier eveneens verwijzingen opnemen naar andere verwachte functies.
+examples
+  ~ een kort reproduceerbaar voorbeeld van het gebruik van de functie.
+  ~ plaats code die lang duurt om uit te voeren of een foutmelding geeft in een `\dontrun{}`.
+
+## Specifiek
+
+Specifieke commentaar slaat op een klein stukje code of een enkele regel code. Gebruik commentaar om een blokje code van een 'titel' te voorzien.
+
+Het is niet nodig om elke regel van commentaar te voorzien. Gebruik liever duidelijke namen voor functies, objecten en variabelen in plaats van onduidelijke namen uit te leggen aan de hand van commentaar. Code die zichzelf voldoende verklaart, hoeft geen verdere commentaar.
+
+Het is nuttige om in de code informatie op te nemen over het waarom je een probleem op die manier opgelost hebt. Of wat de nadelen en randvoorwaarden van die oplossing zijn. 
+
 
 # R Package
 
