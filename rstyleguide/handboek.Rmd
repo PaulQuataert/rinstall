@@ -10,20 +10,34 @@ output: pdf_document
 
 Doel van dit kwaliteitshandboek is het vastleggen van minimumeisen voor R gerelateerde code. Deze dienen te worden nageleefd in het geval van generieke R projecten die door meerdere mensen worden onderhouden. Het is aanbevolen om dit kwaliteitshandboek ook in andere omstandigheden steeds te volgen.
 
-Het kwaliteitshandboek is gebaseerd op @Wickham2014, @Ano2015 en @Boswell2011
+Het kwaliteitshandboek is gebaseerd op @Boswell2011, @Baath2012, @Baath2012, @Wickham2014 en @Ano2015.
 
 # Naamgeving
 
-- vlag moet de lading dekken
-- probeer beknopt te blijven
+Zorg er voor dat de naam reeds een goed beeld geeft van de inhoud. Vermijdt namen zonder betekenis als `tmp`. Probeer namen zo concreet mogelijk te maken. `data` is prima als naam voor een dataset in een generieke functie. `boom` is een betere naam als het gaat over een dataset met gegevens van verschillende bomen. Indien de eenheden van belang zijn, kan je ze best in de naam van de variabelen verwerken. Vergelijk `volume <- function(omtrek, hoogte)` met `werkhout_volume_m3 <- function(omtrek.cm, hoogte.m)`
 
-## Objecten
+Maak een goede afweging tussen een lange naam met die veel informatie bevat en een korte naam. Een korte naam is ok als iemand anders de naam ondubbelzinnig kan interpreteren. Vermijdt namen met een ambigue betekenis. 
 
-## Functies
+## Formatering van namen
 
-## Variabelen
-
-## Bestandsnamen
+functie
+  ~ underscore separated lowercase
+  ~ allemaal kleine letters, underscore (`_`) om woorden te scheiden
+  ~ `mean()`, `werkhout_volume_m3()`
+object
+  ~ point separated lowercase
+  ~ allemaal kleine letters, woorden worden door punten gescheiden
+  ~ `boom`, `omtrek.cm`
+variabele
+  ~ kolomnamen in matrices en dataframes, namen in lijsten en vectoren
+  ~ upper camelcase
+  ~ eerste letter van elk woord in hoofdletters, de rest in kleine letters
+  ~ `Aantal`, `SoortNl`, `OmtrekCm`, `HoogteM`
+bestandsnaam script met functie
+  ~ extensie `.R`
+  ~ identiek aan de naam van de (hoofd)functie indien het script de defintie van een functie bevat
+overige bestandsnamen
+  ~ naam die een beknopte concrete beschrijving van de inhoud
 
 # Lay-out
 
