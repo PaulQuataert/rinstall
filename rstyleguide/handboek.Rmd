@@ -41,11 +41,54 @@ overige bestandsnamen
 
 # Lay-out
 
-- opdelen in functies
-- witruimte: nieuwe regels, spaties, inspringen
-- operatoren
-- haakjes (, [, {
-- regel lengte
+## Witruimte
+
+In principe scheiden we alles in een regel met één spatie. Uitzonderingen hierop zijn:
+
+haakjes
+  ~ geen spaties voor en na een haakje ´()´, `[]` of `{}`
+komma
+  ~ geen spatie voor en één spatie na een komma
+`:`, `::` en `:::`
+  ~ geen spaties voor en na
+leesbaarheid
+  ~ extra spaties zijn toegelaten indien ze de leesbaarheid verhogen. Bijvoorbeeld indien hierdoor meerdere regels beter t.o.v. elkaar uitgelijnd worden.
+
+Lange regels splits je best handmatig over meerdere regels. Hou hierbij logische dingen samen. Een voorbeeld hiervan zijn argumenten van een functie en hun waarde. Laat code die op meerdere regels staat twee spaties inspringen. Je kan RStudio instelling dat een tab automatisch naar twee spaties wordt omgezet (via `Tools`, `Global options`, `Code editing`). Laat code eveneens inspringen binnen elke blok tussen `{` en `}`. Gebruik altijd `{` en `}` ook als het niet strikt noodzakelijk is.
+
+```{r voorbeeld_witruimte, eval = FALSE}
+# Goed
+lange_functie_naam <- function(
+  a = "argument a", b = "waarde b"
+){
+  samenvoegen <- paste(a, b)
+  return(samenvoegen)
+}
+# slecht
+lange_functie_naam =function(a="argument a", b = 
+"waarde b")paste(a,b)
+```
+
+## Opsplitsen van functionaliteit
+
+We gebruiken geen ellenlange scripts. In plaats daarvan splitsen we de analyse op in zinvolle stappen. Elke stap is gedefinieerd als een afzonderlijke functie en kan op zijn beurt weer uit meerdere subfuncties bestaan. Je moet de volledige werking van een functie in een paar zinnen kunnen uitleggen.  Indien je subfuncties gebruikt, hoe je bij de uitleg van de hoofdfunctie enkel te verwijzen naar de gebruikte subfuncties zonder de werking van die subfuncties in detail uit te leggen. De uitleg van de werking van een subfunctie staat bij de subfunctie zelf.
+
+Indien een functie uit verschillende onderdelen bestaat die niet de moeite zijn om als aparte subfuncties uit te werken, dan zet je de verschillende blokken samen in "paragrafen" die gescheiden zijn door een witregel en een regel commentaar.
+
+Gebruik steeds de consistente volgorde van de argumenten van een functie. Gebruik steeds expliciet de naam van de argumenten wanneer het gaat om zelfgedefinieerde functies. In het geval van functies uit de standaard `R` packages hoef je de standaard argumenten niet te benoemen als dat geen negatieve invloed heeft op de leesbaarheid.
+
+```{r, eval = FALSE}
+# goed
+mean(x = 1:10, na.rm = TRUE)
+mean(1:10, na.rm = TRUE)
+lm(HoogteM ~ OmtrekCm, data = boom)
+lm(formula = HoogteM ~ OmtrekCm, data = boom)
+# slecht
+mean(na.rm = F, 1:10)
+lm(HoogteM ~ OmtrekCm, boom)
+lm(data = boom, HoogteM ~ OmtrekCm)
+```
+
 
 # R Package
 
