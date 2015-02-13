@@ -16,7 +16,7 @@ Het kwaliteitshandboek is gebaseerd op @Boswell2011, @Baath2012, @Baath2012, @Wi
 
 Zorg er voor dat de naam reeds een goed beeld geeft van de inhoud. Vermijdt namen zonder betekenis als `tmp`. Probeer namen zo concreet mogelijk te maken. `data` is prima als naam voor een dataset in een generieke functie. `boom` is een betere naam als het gaat over een dataset met gegevens van verschillende bomen. Indien de eenheden van belang zijn, kan je ze best in de naam van de variabelen verwerken. Vergelijk `volume <- function(omtrek, hoogte)` met `werkhout_volume_m3 <- function(omtrek.cm, hoogte.m)`
 
-Maak een goede afweging tussen een lange naam met die veel informatie bevat en een korte naam. Een korte naam is ok als iemand anders de naam ondubbelzinnig kan interpreteren. Vermijdt namen met een ambigue betekenis. 
+Maak een goede afweging tussen een lange naam met die veel informatie bevat en een korte naam. Een korte naam is ok als iemand anders de naam ondubbelzinnig kan interpreteren. Vermijdt namen met een ambigue betekenis. Gebruik `TRUE` en `FALSE` steeds voluit. Voor toewijzingen gebruiken we enkel `<-`. Voor het doorgeven van argumenten aan een functie enkel `=`.
 
 ## Formatering van namen
 
