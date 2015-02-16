@@ -19,7 +19,7 @@ bibliography: ~/local_tex/bibtex/bib/git.bib
 - Ga na op git geconfigureerd is in RStudio. 
     - Ga naar `Tools` -> `Global options`
     - Open het tabblad `Git/SVN`
-    - Zorg dat hier verwijzing naar de git executable correct staat
+    - Zorg dat hier verwijzing naar de git executable correct staat. Bij een installatie volgens BMK richtlijnen in dat `c:\R\git\git.exe` 
 - Typografie
     - `RStudio namen, knoppen, opties, items in menubalken, ...`
     - `shell commando's of bestandsnamen`
@@ -44,13 +44,13 @@ bibliography: ~/local_tex/bibtex/bib/git.bib
 
 # Lokale projecten
 
-Een lokaal project staat enkel op jouw computer. Je hebt dus geen servers of andere computers nodig om versiebeheer te gebruiken! Een eigen lokaal project is prima om te leren werken met git. Je kan alle doen, behalve de stappen die verband houden met het synchroniseren tussen computers / servers.
+Een lokaal project staat enkel op jouw computer. Je hebt dus geen servers of andere computers nodig om versiebeheer te gebruiken! Een eigen lokaal project is prima om te leren werken met git. Je kan alles doen, behalve de stappen die verband houden met het synchroniseren tussen computers / servers.
 
 ## Eenvoudig nieuw project
 
 ### Een project starten
 
-- Kies in RStudio voor `File` -> `New project` -> `Empty project`.
+- Kies in RStudio voor `File` -> `New project` -> `New directory` -> `Empty project`.
     - Vul de gewenste naam van het project in en de gewenste directory waarin het project moet komen.
     - Vink `create a git repository` aan.
     - Klik  `Create repository`
@@ -59,11 +59,11 @@ Een lokaal project staat enkel op jouw computer. Je hebt dus geen servers of and
     - Je vindt er steeds een overzicht van de status van alle bestanden m.b.t. versiebeheer
     - Op dit moment zal je er twee bestanden vinden: `.gitignore` en `jouw_project.Rproj`
     - In de kolom `Status` zie je twee keer een vraagteken in een geel veld. Dat wijst op een _untracked_ bestand. Dergelijke bestanden worden genegeerd door het versiebeheer. Merk op dat geen enkel bestand automatisch wordt opgenomen in het versiebeheer.
-- Klik rechts op `jouw_project.Rproj` en kies `ignore`. Nu open een beknopte editor met de inhoud van `.gitignore`. Hier geef je de namen van de bestanden of mappen weer die git standaard moet negeren. Een _ignored_ bestand wordt, net zoals een _untracked_ bestand niet opgenomen in het versiebeheer. Het verschil tussen beide is dat _ignored_ bestanden niet zichtbaar zullen zijn in het `Git` tabblad.
+- Klik rechts op `jouw_project.Rproj` en kies `ignore`. Nu opent een beknopte editor met de inhoud van `.gitignore`. Hier geef je de namen van de bestanden of mappen weer die git standaard moet negeren. Een _ignored_ bestand wordt, net zoals een _untracked_ bestand niet opgenomen in het versiebeheer. Het verschil tussen beide is dat _ignored_ bestanden niet zichtbaar zullen zijn in het `Git` tabblad.
     - Wijzig `jouw_project.Rproj` in `*.Proj` en klik op `Save` Vanaf nu zullen alle bestanden die eindigen met `.Proj` de _ignored_ status krijgen. Merk op dat `jouw_project.Rproj` nu uit het `Git` tabblad verdwenen is.
     - Regel uit `.gitignore` wissen = _ignore_ ongedaan maken.
 - Wanneer _ignore_ gebruiken
-    - Vuistregel: telkens je het bestand in kwestie makkelijk kan aanmaken met de gegevens in de _repository_
+    - Vuistregel: alle bestanden die je makkelijk kan aanmaken met de gegevens in de _repository_
     - Bijvoorbeeld: figuren, pdf, md en tex bestanden die ontstaan na het compileren van een RMarkdown (.Rmd) bestand
     - RStudio vult standaard `.Rproj.user`, `.Rhistory` en `.RData`. `.Rproj.user` is de map met alle tijdelijke bestanden van het project. `.Rhistory` bevat een lijst van alle commando's die je uitvoert. `.RData` zijn de objecten in de workspace. Deze bestanden zijn niet relevant om onder versiebeheer te plaatsen.
     - Best ook `*.Rproj`. Je krijgt anders problemen wanneer het project vanop meerdere computers gebruikt wordt.
@@ -85,17 +85,18 @@ Een lokaal project staat enkel op jouw computer. Je hebt dus geen servers of and
     - Als je klaar bent (= alle gewenste bestanden _gestaged_ en een goede _commit message_ geschreven), dan kan je op `Commit` klikken. Je krijgt dan een nieuw venster met een beknopt overzicht van de wijzigingen. Klik op `Close` om het af te sluiten. Je kan vervolgens het `Commit` venster sluiten.
     - De _gestagede_ bestanden zijn nu verdwenen uit het `Git` tabblad.
 
+
 - Maak bovenstaand RStudio project
 - Plak onderstaande code in `script1.R`
 
-```{r script1, out.extra = ""}
+```{r script1, eval = FALSE}
 library(ggplot2)
 ggplot(mtcars, aes(wt, mpg)) + geom_point()
 ```
 
 - Plak onderstaande code in `script2.R`
 
-```{r script2}
+```{r script2, eval = FALSE}
 ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
 trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
 group <- gl(2, 10, 20, labels = c("Ctl","Trt"))
@@ -130,7 +131,7 @@ summary(lm.D9)
 
 ### Bestaande bestanden wijzigen
 
-- Van zodra een bestand na een commit gewijzigd wordt, zal git het terug automatisch in het `Git` tabblad tonen.
+- Van zodra een bestand na een commit gewijzigd wordt (en je die wijziging bewaard), zal git het terug automatisch in het `Git` tabblad tonen.
     - De status van dergelijke bestanden is _unstaged modified_ aangegeven door een "M" op een blauw veld in de rechter kolom van `Status`.
 - Wanneer we nu een snapshot willen maken van de huidige versie, moeten we de gewijzigde bestanden opnieuw _stagen_.
     - Behalve het vinkje in `Staged` zal ook de "M" in `Status` verplaatsen naar de linker kolom (_staged modified_).
@@ -194,8 +195,8 @@ ggsave(p, file = "script1.png")
 ```
 
 - Zowel `script1.R` als `script1.png` zijn nu _unstaged modified_
-- Stel dat we `script1.png` niet langer onder versiebeheer wensen.
-    - Wis `script1.R` van de harde schijf
+- `script1.png` is makkelijk uit `script1.R` af te leiden. Stel dat we daarom `script1.png` niet langer onder versiebeheer wensen.
+    - Wis `script1.R` van de harde schijf. We maken hier doelbewust een vergissing door `script1.R` te wissen in plaats van `script1.png`.
     - `script1.R` blijft staan in het `Git` tabblad. De `Status` is nu _unstaged deleted_, aangezien door "D" in een rood veld in de rechter kolom van `Status`.
     - Oeps, we wensten `script1.png` te wissen in plaats van `script1.R`
     - Rechts klik op `script1.R` in het `Git` tabblad en klik op `Revert`. Je krijgt nu een waarschuwing dat eventuele wijzingen verloren gaan. Klik op `Yes`. Git zal nu de versie van `script1.R` uit de laatste commit terug plaatsen. Alle wijzigingen sinds de laatste commit zijn verloren.
@@ -221,9 +222,9 @@ ggsave(p, file = "script1.png")
 
 
 
-## Een bestaand project onder enkel lokaal onder versiebeheer plaatsen
+## Een bestaand project enkel lokaal onder versiebeheer plaatsen
 
-- Open het project in RStudio
+- Open het bestaande project in RStudio
 - Ga in het menu naar `Tools` -> `Project options`
 - Kies het tabblad `Git/SVN`
 - Kies `Git` bij `Version control system`
@@ -255,7 +256,8 @@ ggsave(p, file = "script1.png")
 - git laat toe om op een eenvoudige manier met meerdere _branches_ te werken. Een _branch_ is een vertakking vanaf een bepaald _commit_. Beide _branches_ hebben tot de _commit_ waar ze vertakken dezelfde voorgeschiedenis. Na deze _commit_ kunnen ze elk een andere weg op gaan.
     - Ze gaan elk aan een eigen 'snelheid' verder.
     - Ze kunnen een andere inhoud hebben.
-    
+
+In git zijn meerdere strategieën om met _branches_ te werken. Beginnende gebruikers kunnen voor een klein eigen project kiezen om geen bijkomende _branches_ aan te maken. In dat geval is er enkel de **master** _branch_. Vervolgens kunnen ze overstappen naar een eenvoudig _branching model_ met een **master** en een **develop** _branche_. Wie daarmee voldoende vertrouwd is, kan overstappen naar een meer uitgebreidde _branching model_. Zowel het eenvoudige als meer uitgebreidde _branching model_ worden hieronder beschreven.
 
 
 
@@ -287,6 +289,9 @@ ggsave(p, file = "script1.png")
     - Wanneer de versie in **develop** voldoende uitgekristalliseerd is zullen we die terug invoegen in **master**.
 - git laat toe om vlot om te schakelen tussen _branches_.
     - Bij het overschakelen tussen _branches_ worden alle bestanden van de huidige _branch_ vervangen door de bestanden van de (laatste _commit_ van de) nieuwe _branch_.
+    - bestanden uit de oude _branch_ die niet bestaan in de nieuwe _branch_ zullen gewist worden.
+        - uiteraard verdwijnen ze enkel uit de _working directory_! Niet uit git! Je krijgt ze automatisch terug wanneer je terug naar de oude _branch_ overschakelt.
+        - wanneer dergelijke bestanden in RStudio open staan, zal je de melding krijgen dat ze niet meer bestaan en de suggestie om ze te sluiten. Dit kan je best bevestigen.
     - _untracked_ en _ignored_ bestanden blijven behouden.
 - je kan met de GUI in het `Git` tabblad enkel wisselen tussen _branches_. Andere bewerking moet je vanaf de command line doen. Klik op het tandwiel icoontje in het `Git` tabblad en kies `Shell...`. Dan krijg je een command line waar je `git` commando's kan ingeven. Alle `git` commando's beginen met `git`.
 - We maken een **develop** _branch_ vanaf de huidige _commit_ met `git branch develop`
@@ -297,7 +302,7 @@ ggsave(p, file = "script1.png")
     - De actieve _branch_ staat rechtsboven aan het `Git` tabblad
 - Voeg onderstaande code toe onderaan `script2.R`
 
-```{r script2_1, out.extra = ""}
+```{r script2_1, eval = FALSE}
 library(ggplot2)
 ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()
 ```
@@ -305,12 +310,12 @@ ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()
 - (_Stage_ en) _commit_ de wijzigingen aan `script2.R`
 - _checkout_ **master**
     - ofwel: in de git shell `git checkout master`
-    - ofwel: in het `Git` tabblad klikken op de naam van het huidige _branch_. Kies vervolgens de **master** _brnach_ uit de drop-down lijst
+    - ofwel: in het `Git` tabblad klikken op de naam van het huidige _branch_. Kies vervolgens de **master** _branch_ uit de drop-down lijst
     - Merk op dat de inhoud van `script2.R` terug de vorige versie bevat.
 - Ga terug naar de **develop** _branch_
 - Voeg in `script2.R` de onderstaande regel toe
 
-```{r script2_2, out.extra = ""}
+```{r script2_2, eval = FALSE}
 ggplot(lm.D9, aes(sample = .stdresid)) + stat_qq() + geom_abline()
 ```
 
@@ -321,6 +326,7 @@ ggplot(lm.D9, aes(sample = .stdresid)) + stat_qq() + geom_abline()
         - `git checkout master`
     - _Merge_ **develop** naar **master** zonder _fast-forward_
         - `git merge --no-ff develop`
+        - `--no-ff` geeft aan dat we _mergen_ zonder _fast-forward_. Dat impliceert dat de _merge_ als onder de vorm van een nieuwe _commit_ zal gebeuren. @Driesen2014 raadt aan om op deze manier te werken.
     - Je krijgt een editor venster waarin je een aangepaste _commit message_ schrijft. Hier beschijf je beknopt de belangrijkste wijzigingen sinds de vorige _merge_ tussen **master** en **develop**
         - Daarom kijk je best EERST naar de _history_ van de **develop** _branch_
 - Klik op het uurwerk icoon in het `Git` tabblad. Dit geeft een overzicht van de _history_ van de _repository_.
@@ -358,7 +364,9 @@ ggplot(lm.D9, aes(sample = .stdresid)) + stat_qq() + geom_abline()
 
 ### Meer uitgebreid _branching_ model
 
-Het eenvoudige _branching_ model zorgt er voor dat de **master** behoorlijk clean blijft. **develop** bevat echter alle sequentiële wijzigingen. Dat is prima voor een beperkt project waar slechts één persoon aan werkt. Voor complexere projecten waar je met meerdere mensen aan werkt of dat uit verschillende facetten bestaat, is dat minder praktisch. In dergelijke situaties is het handig om zogenaamde **feature** _branches_ te maken.
+Het eenvoudige _branching_ model zorgt er voor dat de **master** behoorlijk clean blijft. **develop** bevat echter alle sequentiële wijzigingen. Dat is prima voor een beperkt project waar slechts één persoon aan werkt. Voor complexere projecten waar je met meerdere mensen aan werkt of dat uit verschillende facetten bestaat, is dat minder praktisch. In dergelijke situaties is het handig om zogenaamde **feature** _branches_ te maken. 
+
+We blijven echter zowel **master** als **develop** gebruiken. In **master** bewaren we enkel de 'officiële' versies. **develop** is dan de verzameling van **features** die voldoende afgewerkt zijn.
 
 
 
@@ -387,6 +395,8 @@ Praktisch voorbeeld:
 - Maak een nieuw project "Lessenreeks" met git versie controle
 - _Ignore_ `*.Rproj`, _stage_ `.gitignore` en _commit_
 - Maak een **develop** _branch_ en doe een _checkout_ van **develop**
+    - `git branch develop`
+    - `git checkout develop`
 - Maak een **les1** _branch_ en een **les2** _branch_
 - _Checkout_ **les1**
 - Maak een bestand, _stage_ en _commit_ het
@@ -407,7 +417,7 @@ Praktisch voorbeeld:
 - De draft van **les2** is nu eveneens klaar en we kunnen **les2** toevoegen aan **develop**
     - _Checkout_ **develop**
     - _Merge_ **les2** naar **develop** met `git merge --no-ff les2`
-- We krijgen feedback. **les2** is in orde,  **les1** vergt een aantal aanpassingen
+- We krijgen feedback van de rest van het team. **les2** is in orde,  **les1** vergt een aantal aanpassingen
     - _Checkout_ **les1**
     - Pas een bestand aan, _stage_ en _commit_ het
     - Stuur de aanpassingen terug naar **develop**
@@ -480,7 +490,7 @@ Praktisch voorbeeld:
           mean(readData(n))
         }
         ```
-- **featureA** is nu klaar. We _merge_ het terug in **develop**
+- **featureA** is nu klaar. We _mergen_ het terug in **develop**
     - _checkout_ **develop**
     - `git merge --no-ff featureA`
     - we wissen **featureA** met `git branch -d featureA`
@@ -510,7 +520,7 @@ Praktisch voorbeeld:
         }
         ```
 
-- We werken we eerst **featureC** uit
+- We werken eerst **featureC** uit
     - _checkout_ **featureC**
     - Pas `readData.R` aan zoals hieronder en _stage_
         ```{r readDataC}
@@ -557,15 +567,16 @@ Praktisch voorbeeld:
     - Op de plaats van het conflict zie je dat beide versies worden weergegeven. Eerst die van de _HEAD_ (_HEAD_ = de huidige _checkout_). Dan de versie van de _branch_ die we probeerden te mergen.
     - **_Waarschuwing_**: als we dit nu zouden _stagen_ dan zal `git` de _merge conflicten_ overnemen as is.
     - We moeten dus manueel de conflicten oplossen in de code. Vervolgens kunnen we _stagen_, _committen_ en **featureC** wissen.
-    - Negeren even de wijzigen van de huidige onafgewerkte _merge_ met `git reset --hard`. Dit command zet **_alle_** wijzigingen terug naar de toestand van de laatste _commit_. `featureC.R` zat nog niet in **develop** en wordt daarom _untracked_.
+    - We negeren even de wijzigen van de huidige onafgewerkte _merge_ met `git reset --hard`. Dit command zet **_alle_** wijzigingen terug naar de toestand van de laatste _commit_. `featureC.R` zat nog niet in **develop** en wordt daarom _untracked_.
 - Veiligere manier om met _merge conflicten_ om te gaan:
     1. _Merge_ de wijzigingen van **develop** in **featureC**
     1. Los de _merge conflicten_ op in **featureC** (in plaats van in **develop**)
     1. _Merge_ de wijzigingen van **featureC** in **develop**. Dit geeft geen problemen omdat we de _merge conflicten_ reeds opgelost hebben in **featureC**.
 - Werkwijze
     - _Checkout_ **featureC**
-        - Dit kan nu een foutmelding geven omdat `featureC.R` als _untracked_ bestaat én als _tracked_ in **featureC.R**. Oplossingen: de _untracked_ `featureC.R` wissen, hernoemen of _stagen_ en _commiten_
-        - We kiezen in dit geval voor wissen omdat het een restant is van de mislukte _merge_.
+        - Dit kan nu een foutmelding geven omdat `featureC.R` als _untracked_ bestaat én als _tracked_ in **featureC.R**. Oplossingen: de _untracked_ `featureC.R` wissen, hernoemen of _stagen_ en _commiten_.
+        - Indien je hier geen foutmelding krijgt, dan je heb je vermoedelijk een van bovenstaande stappen overgeslaan.
+        - We kiezen in dit geval voor wissen omdat de _untracked_ `featureC.R` een restant is van de mislukte _merge_.
     - `git merge --no-ff develop`
     - Pas `readData.R` aan naar
         ```{r readData_merge}
@@ -638,7 +649,7 @@ Persoonlijke _repositories_ kan je vrij en onbeperkt zelf aanmaken. Meer generie
 
 ## Een nieuw project op de Stash server plaatsen
 
-Dit is de werkwijze die je best volgt als je een nieuw project wilt starten en er dadelijk ook een kopie van op Stash wenst. Dat is handig als je de optie wilt hebben om de inhoud vlot te delen met anderen. Dit is overigens geen verplichting!
+Dit is de werkwijze die je best volgt als je een nieuw project wilt starten en er dadelijk ook een kopie van op Stash wenst. Dat is handig als je de optie wilt hebben om de inhoud vlot te delen met anderen. Het delen is overigens geen verplichting!
 
 - Maak de _repository_ op Stash
     - Login op [https://git.milieuinfo.be](https://git.milieuinfo.be)
@@ -655,6 +666,7 @@ Dit is de werkwijze die je best volgt als je een nieuw project wilt starten en e
     - Plak deze URL in het vak `Repository URL`
     - RStudio zal automatisch de naam van de _repository_ voorstellen als projectnaam. Je kan dit, indien gewenst, aanpassen. De voorgestelde naam behouden heeft als voordeel dat je minder verwarring krijgt.
     - Geef de gewenste map waarin het project moet komen en klik op `Create project`
+    - RStudio zal je wachtwoord voor Stash vragen (= JIRA account).
     - Jouw project wordt nu gesynchroniseerd met de (lege) _repository_ op Stash
 - Werkwijze voor Linux (wegens bug in RStudio):
     - Ga terug naar je browser en klik linksboven op `Clone`. Selecteer `HTTP` en kopieer de URL die je daar vindt, we noemen deze `STASHURL`. Deze heeft de vorm [https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git](https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git)
@@ -683,7 +695,7 @@ Dit is de werkwijze die je best volgt als je een nieuw project wilt starten en e
 
 
 
-## Een bestaand lokaal project op de Stash server plaatsen
+## Een bestaand lokaal RStudio project op de Stash server plaatsen
 
 - Maak een nieuwe _repository_ op Stash zoals hierboven beschreven
 - Open het project dat je wenst te synchroniseren met RStudio
@@ -713,7 +725,7 @@ Dit is de werkwijze die je best volgt als je een nieuw project wilt starten en e
 
 
 
-## Wijziging in lokaal project uploaden naar de Stash server
+## Wijziging in lokaal RStudio project uploaden naar de Stash server
 
 De andere _repositories_ wanneer een lokale _repository_ verbonden is noemen we de _remotes_. Een _remote_ wordt gedefinieerd door een naam en een URL. Meestal is er slechts één _remote_. De belangrijkste _remote_ krijgt klassiek de naam `origin`. Wanneer we de gegevens van de _remote_ gesynchroniseerd hebben, dan krijgen we ook de _branches_ van die _remote_ te zien. Bijvoorbeeld **origin/master** en **origin/develop** zijn de **master** en **develop** _branch_ op de _remote_ genaamd `origin`.
 
