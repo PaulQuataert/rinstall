@@ -607,7 +607,10 @@ Praktisch voorbeeld:
     - `git merge --no-ff featureC`
     - `git branch -d featureC`
 
-
+\begin{figure}
+  \includegraphics[width = \textwidth, keepaspectratio]{branchingmodel.pdf}
+  \caption{Een voorbeeld van een uitgebreid \textit{branching model}.}
+\end{figure}
 
 
 
