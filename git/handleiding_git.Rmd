@@ -1049,7 +1049,7 @@ Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te sc
 
 ## Gerelateerde _repositories_ op Stash
 
-- `Rinstall`: bevat o.a. de bron van deze tekst. Opmerkingen, verbeteringen en aanvullingen kunne dus via een _pull request_ ;-)
+- `Rinstall`: bevat o.a. de bron van deze tekst. Opmerkingen, verbeteringen en aanvullingen kunnen dus via een _pull request_ ;-)
 - `gitdemo_lessenreeks`: de _repository_ uit het voorbeeld met permanent gescheiden features
 - `gitdemo_dummypackage`: de _repository_ uit het voorbeeld met onderling verweven features
 
