@@ -10,7 +10,7 @@ output:
     keep_tex: false
   html_document:
   word_document:
-bibliography: ~/local_tex/bibtex/bib/git.bib
+bibliography: ~/local_tex/bibtex/bib/INBO-BMK-git.bib
 ---
 
 # Starten met git
@@ -944,7 +944,7 @@ Voorbeeld:
 
 Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te schrijven. Op dat vlak is @Boswell2011 verplichte lectuur. Hoewel geschreven vanuit een C achtergrond, is het prima toepasbaar op R. Ook dit boek is beschikbaar via de INBO account op Kindle.
 
-
+@RStudioInc2015 heeft een webminar over het gebruik van git, github en RStudio online geplaatst. Hadley Wickham geeft vooral uitleg over waarom je best versiebeheer gebruikt en illustreert dit aan de hand van projecten in RStudio.
 
 
 
