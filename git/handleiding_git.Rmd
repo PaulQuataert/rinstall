@@ -1,11 +1,13 @@
 ---
 title: "Starten met git"
-author: "Thierry Onkelinx"
+author: "Thierry Onkelinx, Pieter Verschelde, Toon Van Daele"
 date: "03-02-2015"
 output: 
   INBOmd::inbo_rapport:
     cover: gitlogo.png
-    cover_offset: 70mm
+    cover_offset: 150mm
+    shortauthor: "Onkelinx T., Verschelde P. \\& Van Daele T."
+    email: "thierry.onkelinx@inbo.be"
     year: 2015
     keep_tex: false
   html_document:
@@ -15,19 +17,60 @@ bibliography: ~/local_tex/bibtex/bib/INBO-BMK-git.bib
 
 # Starten met git
 
+## Wat is git en waarom het gebruiken
+
+Git is een tool om een project onder versiebeheer te plaatsen. Veel mensen gebruiken een eenvoudige manier van versiebeheer: een kopie maken van het bestand onder een andere naam. Dat heeft een aantal nadelen:
+
+- Wat is de laatste versie?
+- Wat is er gewijzigd tussen de versies?
+- Hoe meer bestanden, hoe lastiger. Zeker wanneer de bestanden met een verschillende snelheid worden bijgewerkt.
+- Omdat een nieuwe versie bewaren behoorlijk wat werk is, doen we dat enkel na belangrijke wijzigingen.
+
+Versiebeheer met Git biedt de volgende mogelijkheden:
+
+- Frequent nieuwe versies maken.
+- Nakijken wat gewijzigd is tussen versies.
+- Beschrijven waarom bepaalde wijzigingen gebeurden.
+- Projecten met veel bestanden op een efficiënte manier beheren.
+- Simultaan en offline met meerdere mensen aan een zelfde project werken en achteraf alles weer samenbrengen.
+
+Je haalt de maximale mogelijkheden uit Git wanneer je werkt met tekstbestanden zoals txt of csv datasets, R scripts, HTML pagina's, LaTeX bestanden, Markdown bestanden, C code, ... Binaire bestanden zijn eveneens onder versiebeheer te plaatsen. Dat kan echter minder efficiënt en het is daarbij niet mogelijk om versies onderling te vergelijken. Voorbeelden van binaire bestanden zijn Office documenten, pdf, jpg, png, exe, ...
+
+Git biedt vooral meerwaarde aan mensen die vaak code gebruiken. Hierbij denken we in de eerste plaats aan IDC en BMK. Ook voor wetenschappers die vaak R gebruiken, kan het een meerwaarde zijn. Hadley Wickham stelt: "Git leren is behoorlijk frusterend in het begin, maar het geeft je onmiddellijk veiligheid. Doordat je steeds terug kan naar een iets oudere versie, kan je je meer fouten permiteren. Hierdoor kan je meer uitproberen en sneller vooruit gaan." [@RStudioInc2015].
+
+## Software vereisten en instellingen
+
+- Ga na of RStudio geïnstalleerd is.
 - Ga na of git geïnstalleerd is. Volgens de BMK instructies moet dat in `c:\R\git`
 - Ga na op git geconfigureerd is in RStudio. 
     - Ga naar `Tools` -> `Global options`
     - Open het tabblad `Git/SVN`
     - Zorg dat hier verwijzing naar de git executable correct staat. Bij een installatie volgens BMK richtlijnen in dat `c:\R\git\git.exe` 
-- Typografie
-    - `RStudio namen, knoppen, opties, items in menubalken, ...`
-    - `shell commando's of bestandsnamen`
-    - _git gerelateerde termen_
-    - **namen van git branches**
 
+## Typografische conventies in dit document
 
+Om een aantal dingen duidelijker te maken, zullen we specifieke lettertypes gebruiken voor specifieke topics in de tekst. Hieronder geven we het overzicht, telkens in het bijhorende lettertype.
 
+- `RStudio namen, knoppen, opties, items in menubalken, ...`
+- `shell commando's of bestandsnamen`
+- _git gerelateerde termen_
+- **namen van git branches**
+
+## Basisworkflow
+
+- Opstart
+    - Je plaatst een bepaalde map onder versiebeheer
+    - Je geeft aan welke bestanden onder versiebeheer moeten staan (_stagen_).
+    - Je maakt een snapshot van de huidige versie van die bestanden (_committen_).
+    
+- Werken met bestanden
+    - Je past bestanden aan, maakt nieuwe bestanden of wist bestanden.
+    - Je geeft aan welke wijzigingen opgenomen moeten worden in een nieuwe versie (_stagen_).
+    - Je maakt een snapshot van de huidige versie van die bestanden (_committen_).
+
+- Optioneel: synchronisatie met andere _repositories_ (bijvoorbeeld een server)
+    - Jouw historiek naar de server sturen (_pushen_).
+    - De historiek van de server binnenhalen (_pullen_).
 
 
 
@@ -44,7 +87,7 @@ bibliography: ~/local_tex/bibtex/bib/INBO-BMK-git.bib
 
 # Lokale projecten
 
-Een lokaal project staat enkel op jouw computer. Je hebt dus geen servers of andere computers nodig om versiebeheer te gebruiken! Een eigen lokaal project is prima om te leren werken met git. Je kan alles doen, behalve de stappen die verband houden met het synchroniseren tussen computers / servers.
+Een lokaal project staat enkel op jouw computer. Je hebt dus geen servers of andere computers nodig om versiebeheer te gebruiken! Een eigen lokaal project is prima om te leren werken met git. Je kan alles doen, behalve de stappen die verband houden met het synchroniseren tussen verschillende computers of met servers.
 
 ## Eenvoudig nieuw project
 
@@ -55,7 +98,7 @@ Een lokaal project staat enkel op jouw computer. Je hebt dus geen servers of and
     - Vink `create a git repository` aan.
     - Klik  `Create repository`
     - Het nieuwe project wordt nu geopend
-- RStudio voegt een tabblad `Git` toe aan de editor. In dit tabblad doe je alle bewerkingen gerelateerd aan het versiebeheer
+- RStudio voegt een tabblad `Git` toe aan de editor. Dit tabblad staat standaard rechtsboven. In dit tabblad kan je alle bewerkingen doen gerelateerd aan het versiebeheer
     - Je vindt er steeds een overzicht van de status van alle bestanden m.b.t. versiebeheer
     - Op dit moment zal je er twee bestanden vinden: `.gitignore` en `jouw_project.Rproj`
     - In de kolom `Status` zie je twee keer een vraagteken in een geel veld. Dat wijst op een _untracked_ bestand. Dergelijke bestanden worden genegeerd door het versiebeheer. Merk op dat geen enkel bestand automatisch wordt opgenomen in het versiebeheer.
@@ -63,11 +106,11 @@ Een lokaal project staat enkel op jouw computer. Je hebt dus geen servers of and
     - Wijzig `jouw_project.Rproj` in `*.Proj` en klik op `Save` Vanaf nu zullen alle bestanden die eindigen met `.Proj` de _ignored_ status krijgen. Merk op dat `jouw_project.Rproj` nu uit het `Git` tabblad verdwenen is.
     - Regel uit `.gitignore` wissen = _ignore_ ongedaan maken.
 - Wanneer _ignore_ gebruiken
-    - Vuistregel: alle bestanden die je makkelijk kan aanmaken met de gegevens in de _repository_
-    - Bijvoorbeeld: figuren, pdf, md en tex bestanden die ontstaan na het compileren van een RMarkdown (.Rmd) bestand
-    - RStudio vult standaard `.Rproj.user`, `.Rhistory` en `.RData`. `.Rproj.user` is de map met alle tijdelijke bestanden van het project. `.Rhistory` bevat een lijst van alle commando's die je uitvoert. `.RData` zijn de objecten in de workspace. Deze bestanden zijn niet relevant om onder versiebeheer te plaatsen.
+    - Vuistregel: alle bestanden die je makkelijk kan aanmaken met de gegevens in de _repository_. Een voorbeeld hiervan zijn figuren die door een R script aangemaakt worden.
+    - RStudio gebruikt standaard `.Rproj.user`, `.Rhistory` en `.RData`. `.Rproj.user` is de map met alle tijdelijke bestanden van het project. `.Rhistory` bevat een lijst van alle commando's die je uitvoert. `.RData` zijn de objecten in de workspace. Deze bestanden zijn niet relevant om onder versiebeheer te plaatsen.
     - Best ook `*.Rproj`. Je krijgt anders problemen wanneer het project vanop meerdere computers gebruikt wordt.
-- `.gitignore` plaats je best onder versiebeheer. Op die manier zal iedereen dezelfde bestanden _ignoren_.
+    - Je kan `.gitignore` eveneens openen via het drop down menu `More` in het `Git` tabblad
+- `.gitignore` zelf plaats je best wel onder versiebeheer. Op die manier zal iedereen dezelfde bestanden _ignoren_.
 - Nu maken we een eerste _commit_. Een _commit_ is een snapshot van de versie van de bestanden op dat ogenblik. De eerste stap bij het maken van een _commit_ is bepalen welke gewijzigde bestanden relevant zijn om op te nemen in de _commit_. Merk op dat het niet noodzakelijk is om alle gewijzigde bestanden op te nemen in een _commit_.
     - Je moet eerst de gewenste bestanden _stagen_ = klaarzetten om op te nemen in de snapshot. Dat doe je door `Staged` aan te vinken voor de naam van het bestand. Doe dit met `.gitignore`. Door te _stagen_ verandert de status van _untracked_ bestanden naar _added_, aangegeven door een "A" op een turkoois veld in de linkerhelft van de `Status` kolom.
     - Door `Staged` terug uit te vinken herstel je de status van het bestand naar de vorige status.
@@ -75,17 +118,15 @@ Een lokaal project staat enkel op jouw computer. Je hebt dus geen servers of and
     - Nu opent een venster met heel wat informatie over de wijzigingen.
     - Je krijgt een venster met de betrokken bestanden. Hier kan je nog wijzigingen aanbrengen zoals in het `Git tabblad` (_stage_, _unstage_, _ignore_)
     - Onderaan krijg je de _diff_ te zien van het bestand. Groene regels zijn toegevoegd, rode regels zijn gewist, witte regels zijn ongewijzigd.
-        - In de _diff_ worden standaard enkel de 5 ongewijzigde regels voor en naar een wijziging getoond. Ook een enkel wijziging aan het einde van een lang bestand zie je op die manier dadelijk.
-        - De hoeveelheid context kan je aanpassen via de drop-down `Context` (5, 10, 25, 50 of alle lijnen)
+        - In de _diff_ worden standaard enkel de 5 ongewijzigde regels voor en naar een wijziging getoond. Ook een enkele wijziging aan het einde van een lang bestand zie je op die manier dadelijk.
+        - De hoeveelheid context die je wenst te zien, kan je aanpassen via de drop-down `Context` (5, 10, 25, 50 of alle lijnen)
         - De _Diff_ is deze van het geselecteerd bestand. Klik op de bestandsnaam om een ander bestand te selecteren.
         - Een _Diff_ werkt enkel bij bestanden met platte tekst. Niet met binaire bestanden (pdf, docx, jpg, Rdata, ...)
     - Naast de lijst met bestanden staat een tekstveld `Commit message`. Hierin moet je een tekst schrijven. Deze tekst beschrijft de wijzigingen in deze _commit_.
         - Een goede _commit message_ is cruciaal. Het is de enige manier om later te weten waarom je een bepaalde wijzigingen aanbracht.
-    - `Amend previous commit` kan je gebruiken indien je een bestand vergeten te _stagen_ en je wilt het alsnog toevoegen aan de vorige _commit_.
+    - Met `Amend previous commit` kan je de vorige _commit_ wijzigen in plaats van een nieuwe _commit_ te maken. Dat gebruik je best enkel als je bij de vorige _commit_ bepaalde bestanden was  vergeten te _stagen_.
     - Als je klaar bent (= alle gewenste bestanden _gestaged_ en een goede _commit message_ geschreven), dan kan je op `Commit` klikken. Je krijgt dan een nieuw venster met een beknopt overzicht van de wijzigingen. Klik op `Close` om het af te sluiten. Je kan vervolgens het `Commit` venster sluiten.
     - De _gestagede_ bestanden zijn nu verdwenen uit het `Git` tabblad.
-
-
 - Maak bovenstaand RStudio project
 - Plak onderstaande code in `script1.R`
 
@@ -132,10 +173,10 @@ summary(lm.D9)
 ### Bestaande bestanden wijzigen
 
 - Van zodra een bestand na een commit gewijzigd wordt (en je die wijziging bewaard), zal git het terug automatisch in het `Git` tabblad tonen.
-    - De status van dergelijke bestanden is _unstaged modified_ aangegeven door een "M" op een blauw veld in de rechter kolom van `Status`.
+    - De status van dergelijke bestanden is _unstaged modified_ aangegeven door een "M" op een blauw veld in de rechterkant van de `Status` kolom .
 - Wanneer we nu een snapshot willen maken van de huidige versie, moeten we de gewijzigde bestanden opnieuw _stagen_.
-    - Behalve het vinkje in `Staged` zal ook de "M" in `Status` verplaatsen naar de linker kolom (_staged modified_).
-    - Het bestand is nu gewijzigd én de wijzigingen zijn klaar voor een _commit_. Ook nu worden de wijzigingen past toegevoegd aan het versiebeheer na een _commit_!
+    - Behalve het vinkje in `Staged` zal ook de "M" in `Status` verplaatsen naar de linkerkant van de `Status` kolom (_staged modified_).
+    - Het bestand is nu gewijzigd én de wijzigingen zijn klaar voor een _commit_. Ook nu worden de wijzigingen pas toegevoegd aan het versiebeheer na een _commit_!
 
 - Wijzig `script1.R` naar
 
@@ -250,7 +291,7 @@ ggsave(p, file = "script1.png")
 
 
 
-## _Branches_
+# _Branches_
 
 - In een eenvoudige git _repository_ staan alle _commits_ achter elkaar in een lange rij.
 - git laat toe om op een eenvoudige manier met meerdere _branches_ te werken. Een _branch_ is een vertakking vanaf een bepaald _commit_. Beide _branches_ hebben tot de _commit_ waar ze vertakken dezelfde voorgeschiedenis. Na deze _commit_ kunnen ze elk een andere weg op gaan.
@@ -277,13 +318,13 @@ In git zijn meerdere strategieën om met _branches_ te werken. Beginnende gebrui
 
 
 
-### Eenvoudig _branching_ model
+## Eenvoudig _branching_ model
 
-- Standaard is er enkel een **master** _branch_.
+- Standaard is er enkel een **master** _branch_. Deze wordt automatisch aangemaakt na de eerste _commit_.
 - Een vaak gebruikte tweede _branch_ is **develop**.
-- In dergelijke configuratie bevat **master** de laatste 'officiële' versie.
+- In dergelijke configuratie bevat **master** de laatste 'officiële' versie. Bijvoorbeeld:
     - een rapport onder de vorm dat het naar de stuurgroep gaat
-    - documenten van een les zoals het naar de cursisten gaat
+    - documenten van een les zoals ze naar de cursisten gaan
     - een bepaalde versie van een R package
 - **develop** bevat dan de versie waar je effectief in werkt.
     - Wanneer de versie in **develop** voldoende uitgekristalliseerd is zullen we die terug invoegen in **master**.
@@ -293,13 +334,17 @@ In git zijn meerdere strategieën om met _branches_ te werken. Beginnende gebrui
         - uiteraard verdwijnen ze enkel uit de _working directory_! Niet uit git! Je krijgt ze automatisch terug wanneer je terug naar de oude _branch_ overschakelt.
         - wanneer dergelijke bestanden in RStudio open staan, zal je de melding krijgen dat ze niet meer bestaan en de suggestie om ze te sluiten. Dit kan je best bevestigen.
     - _untracked_ en _ignored_ bestanden blijven behouden.
-- je kan met de GUI in het `Git` tabblad enkel wisselen tussen _branches_. Andere bewerking moet je vanaf de command line doen. Klik op het tandwiel icoontje in het `Git` tabblad en kies `Shell...`. Dan krijg je een command line waar je `git` commando's kan ingeven. Alle `git` commando's beginen met `git`.
+- je kan met de GUI in het `Git` tabblad enkel wisselen tussen _branches_. Alle andere bewerkingen op _branches_ moet je vanaf de command line doen. Klik op het tandwiel icoontje in het `Git` tabblad en kies `Shell...`. Dan krijg je een command line waar je `git` commando's kan ingeven. Alle `git` commando's beginen met `git`.
+
+### _Branch_ aanmaken
+
+- Belangrijk: voor dat je een nieuwe _branch_ aanmaakt moet je zorgen dat alle wijzigingen in openstaande bestanden bewaard zijn en alle wijzingigen _gecommit_ zijn.
 - We maken een **develop** _branch_ vanaf de huidige _commit_ met `git branch develop`
 - Vervolgens maken we **develop** actief met `git checkout develop`
 - Met `exit` sluiten we de shell terug.
 
 - Zorg dat de **develop** _branch_ actief is
-    - De actieve _branch_ staat rechtsboven aan het `Git` tabblad
+    - De actieve _branch_ staat rechtsboven aan het `Git` tabblad. 
 - Voeg onderstaande code toe onderaan `script2.R`
 
 ```{r script2_1, eval = FALSE}
@@ -308,6 +353,10 @@ ggplot(lm.D9, aes(x = group, y = .resid)) + geom_boxplot()
 ```
 
 - (_Stage_ en) _commit_ de wijzigingen aan `script2.R`
+
+### Wisselen van _branch_
+
+- Belangrijk: voor dat je wijzigt naar een andere actieve _branch_, moet je zorgen dat alle wijzigingen in openstaande bestanden bewaard zijn en alle wijzingigen _gecommit_ zijn. Git zal anders weigeren om naar een andere _branch_ over te stappen.
 - _checkout_ **master**
     - ofwel: in de git shell `git checkout master`
     - ofwel: in het `Git` tabblad klikken op de naam van het huidige _branch_. Kies vervolgens de **master** _branch_ uit de drop-down lijst
@@ -320,6 +369,9 @@ ggplot(lm.D9, aes(sample = .stdresid)) + stat_qq() + geom_abline()
 ```
 
 - _Commit_ deze wijzigingen
+
+### _Branches_ _mergen_
+
 - Nu gaan we de wijzigingen in **develop** als een blok toepassen op **master**
     - Ga naar de git shell
     - _Checkout_ de _branch_ naar waar je wenst te _mergen_
@@ -340,9 +392,9 @@ ggplot(lm.D9, aes(sample = .stdresid)) + stat_qq() + geom_abline()
         - De oudste _commits_ staan onderaan
         - _Commits_ waaruit twee (of meer) lijnen naar boven vertrekken geven aan dat daar twee _branches_ splitsen.
         - _Commits_ waarin twee lijnen samenkomen geven aan dat de twee _branches_ daar weer _gemerged_ werden.
-        - De lijnen en nodes van elke _branch_wordt met een andere kleur weergegeven.
+        - De lijnen en nodes van elke _branch_ worden met een andere kleur weergegeven.
     - Voor sommige _commit messages_ staat de naam van een _branch_. Hiermee wordt de laatste _commit_ van elke _branch_ aangegeven. _HEAD_ is geen _branch_ maar geeft aan welke _commit_ op dit ogenblik actief is. Dit valt in principe samen met de actieve _branch_.
-    - Het onderste deel van het scherm geeft aan welke bestanden gewijzigd zijn en wat de _diffs_ weer van de geselecteerde _commit_ ten opzichte van zijn voorgaande _commit_ (de _parent commit_).
+    - Het onderste deel van het scherm geeft aan welke bestanden gewijzigd zijn en wat de _diffs_ zijn van de geselecteerde _commit_ ten opzichte van zijn voorgaande _commit_ (de _parent commit_).
 
 
 
@@ -362,7 +414,7 @@ ggplot(lm.D9, aes(sample = .stdresid)) + stat_qq() + geom_abline()
 
 
 
-### Meer uitgebreid _branching_ model
+## Meer uitgebreid _branching_ model
 
 Het eenvoudige _branching_ model zorgt er voor dat de **master** behoorlijk clean blijft. **develop** bevat echter alle sequentiële wijzigingen. Dat is prima voor een beperkt project waar slechts één persoon aan werkt. Voor complexere projecten waar je met meerdere mensen aan werkt of dat uit verschillende facetten bestaat, is dat minder praktisch. In dergelijke situaties is het handig om zogenaamde **feature** _branches_ te maken. 
 
@@ -386,8 +438,8 @@ We blijven echter zowel **master** als **develop** gebruiken. In **master** bewa
 
 
 
-#### Project met permanent scheidbare features
-
+### Project met permanent scheidbare onderdelen
+ 
 Voorbeeld: een project van een lessenreeks die uit verschillende lessen bestaat. Elke les heeft zijn eigen broncode en datasets.
 
 Praktisch voorbeeld:
@@ -407,6 +459,7 @@ Praktisch voorbeeld:
 - Pas een bestand aan, _stage_ en _commit_ het
 
 - Op dit ogenblik hebben we vier _branches_: **master**, **develop**, **les1** en **les2**. **master** en **develop** staan nog aan het beginpunt, **les1** en **les2** zijn onafhankelijk van elkaar gegroeid.
+    - Je kan dat visualeren in de _history_ als je bovenaan `all branches` selecteert.
 - Veronderstel dat de draft van **les1** nu klaar is. Dat is een goed moment om **les1** aan **develop** toe te voegen.
     - _Checkout_ **develop**
     - _Merge_ **les1** naar **develop** met `git merge --no-ff les1`
@@ -464,9 +517,9 @@ Hoewel dit _branching model_ complexer is, heeft het als grote voordeel dat de v
 
 
 
-#### Project met onderling verweven features
+### Project met onderling verweven onderdelen
 
-In veel gevallen zal een project uit verschillende features bestaat die van elkaar afhankelijk zijn. In dat geval is het bovenstaande _branching model_ niet meer mogelijk en moeten we het aanpassen. In dergelijk geval zullen we een nieuwe _branch_ maken als we aan een nieuw feature beginnen. Eens het feature afgewerkt is, _merge_ we het terug in **develop**. Op dat ogenblik hebben we de **feature** _branch_ niet meer nodig en kunnen we die wissen.
+In veel gevallen zal een project uit verschillende onderdelen (features) bestaan die van elkaar afhankelijk zijn. In dat geval is het bovenstaande _branching model_ niet meer mogelijk en moeten we het aanpassen. In dergelijk geval zullen we een nieuwe _branch_ maken als we aan een nieuw feature beginnen. Eens de feature afgewerkt is, _mergen_ we het terug in **develop**. Op dat ogenblik hebben we de **feature** _branch_ niet meer nodig en kunnen we die wissen.
 
 Laat ons het voorbeeld nemen van een R package met drie features A, B en C. We werken eerst A uit, nadien B en C parallel. Zowel in B als C zullen we een aanpassing doen van eenzelfde element uit A.
 
@@ -477,8 +530,9 @@ Praktisch voorbeeld:
     - Maak een **develop** _branch_ en doe een _checkout_ van **develop**
 - We werken eerst aan het inlezen van de gegevens
     - Maak een **featureA** _branch_
+        - **develop** is de actieve _branch_, dus is **featureA** een vertakking vanaf de huidige _commit_ van **develop**
     - _Checkout_ **featureA**
-    - Zet onderstaande code een bestand `readData.R`, _stage_ en _commit_ het
+    - Zet onderstaande code in een bestand `readData.R`, _stage_ en _commit_ het
         ```{r readData}
         readData <- function(n = 10){
           rnorm(n)
@@ -522,6 +576,7 @@ Praktisch voorbeeld:
 
 - We werken eerst **featureC** uit
     - _checkout_ **featureC**
+        - We hadden **featureC** samen met **featureB** aangemaakt.
     - Pas `readData.R` aan zoals hieronder en _stage_
         ```{r readDataC}
         readData <- function(n = 10, mean = 0){
@@ -565,47 +620,52 @@ Praktisch voorbeeld:
         }
         ```
     - Op de plaats van het conflict zie je dat beide versies worden weergegeven. Eerst die van de _HEAD_ (_HEAD_ = de huidige _checkout_). Dan de versie van de _branch_ die we probeerden te mergen.
-    - **_Waarschuwing_**: als we dit nu zouden _stagen_ dan zal `git` de _merge conflicten_ overnemen as is.
-    - We moeten dus manueel de conflicten oplossen in de code. Vervolgens kunnen we _stagen_, _committen_ en **featureC** wissen.
-    - We negeren even de wijzigen van de huidige onafgewerkte _merge_ met `git reset --hard`. Dit command zet **_alle_** wijzigingen terug naar de toestand van de laatste _commit_. `featureC.R` zat nog niet in **develop** en wordt daarom _untracked_.
-- Veiligere manier om met _merge conflicten_ om te gaan:
-    1. _Merge_ de wijzigingen van **develop** in **featureC**
-    1. Los de _merge conflicten_ op in **featureC** (in plaats van in **develop**)
-    1. _Merge_ de wijzigingen van **featureC** in **develop**. Dit geeft geen problemen omdat we de _merge conflicten_ reeds opgelost hebben in **featureC**.
-- Werkwijze
-    - _Checkout_ **featureC**
-        - Dit kan nu een foutmelding geven omdat `featureC.R` als _untracked_ bestaat én als _tracked_ in **featureC.R**. Oplossingen: de _untracked_ `featureC.R` wissen, hernoemen of _stagen_ en _commiten_.
-        - Indien je hier geen foutmelding krijgt, dan je heb je vermoedelijk een van bovenstaande stappen overgeslaan.
-        - We kiezen in dit geval voor wissen omdat de _untracked_ `featureC.R` een restant is van de mislukte _merge_.
-    - `git merge --no-ff develop`
-    - Pas `readData.R` aan naar
-        ```{r readData_merge}
-        readData <- function(n = 10, mean = 0, sd = 1){
-          rnorm(n = n, mean = mean, sd = sd)
-        }
-        ```
-    - Pas `featureA.R` aan naar
-        ```{r featureA_merge}
-        featureA <- function(n = 20){
-          mean(readData(n = n, mean = 0, sd = 1))
-        }
-        ```
-    - Hoewel `featureB.R` geeft _merge conflict_ geeft, wordt het wel beïnvloed door de wijzigingen in `readData.R`. Pas `featureB.R` aan naar
-        ```{r featureB_merge}
-        featureB <- function(n = 20, sd = 5){
-          max(readData(n = n, mean = 1, sd = sd))
-        }
-        ```
-    - Idem voor `featureC.R`. Pas `featureC.R` aan naar
-        ```{r featurec_merge}
-        featureC <- function(n = 20, mean = 10){
-          min(readData(n = n, mean = mean, sd = 0))
-        }
-        ```
-    - _Stage_ en _commit_ alle wijzigingen
-    - _Checkout_ **develop**
-    - `git merge --no-ff featureC`
-    - `git branch -d featureC`
+    - **_Waarschuwing_**: als we dit nu zouden _stagen_ dan zal `git` de _merge conflicten_ overnemen as is. In het geval van een R script zo dat foutmeldingen opleveren bij het uitvoeren van de code.
+    - We moeten dus manueel de conflicten oplossen in de code. Vervolgens kunnen we _stagen_, _committen_ en **featureC** wissen. Dit doen we niet omdat we in een volgende stap op een veiligere manier de wijzigingen zullen _mergen_.
+    - Eerst moeten we de wijzigen van de huidige onafgewerkte _merge_ negeren met `git reset --hard`. Dit command zet **_alle_** wijzigingen terug naar de toestand van de laatste _commit_. `featureC.R` zat nog niet in **develop** en wordt daarom _untracked_.
+
+### Veilige manier om met _merge conflicten_ om te gaan
+
+1. _Merge_ de wijzigingen van **develop** in **featureC**
+1. Los de _merge conflicten_ op in **featureC** (in plaats van in **develop**)
+1. _Commit_ de wijzigingen die nodig zijn om de _merge conflicten_ op te lossen.
+1. _Merge_ de wijzigingen van **featureC** in **develop**. Dit geeft geen problemen omdat we de _merge conflicten_ reeds opgelost hebben in **featureC**.
+
+Concrete werkwijze
+
+- _Checkout_ **featureC**
+    - Dit kan nu een foutmelding geven omdat `featureC.R` als _untracked_ bestaat én als _tracked_ in **featureC.R**. Oplossingen: de _untracked_ `featureC.R` wissen, hernoemen of _stagen_ en _commiten_.
+    - Indien je hier geen foutmelding krijgt, dan je heb je vermoedelijk een van bovenstaande stappen overgeslaan.
+    - We kiezen in dit geval voor wissen omdat de _untracked_ `featureC.R` een restant is van de mislukte _merge_.
+- `git merge --no-ff develop`
+- Pas `readData.R` aan naar
+    ```{r readData_merge}
+    readData <- function(n = 10, mean = 0, sd = 1){
+      rnorm(n = n, mean = mean, sd = sd)
+    }
+    ```
+- Pas `featureA.R` aan naar
+    ```{r featureA_merge}
+    featureA <- function(n = 20){
+      mean(readData(n = n, mean = 0, sd = 1))
+    }
+    ```
+- Hoewel `featureB.R` geeft _merge conflict_ geeft, wordt het wel beïnvloed door de wijzigingen in `readData.R`. Pas `featureB.R` aan naar
+    ```{r featureB_merge}
+    featureB <- function(n = 20, sd = 5){
+      max(readData(n = n, mean = 1, sd = sd))
+    }
+    ```
+- Idem voor `featureC.R`. Pas `featureC.R` aan naar
+    ```{r featurec_merge}
+    featureC <- function(n = 20, mean = 10){
+      min(readData(n = n, mean = mean, sd = 0))
+    }
+    ```
+- _Stage_ en _commit_ alle wijzigingen
+- _Checkout_ **develop**
+- `git merge --no-ff featureC`
+- `git branch -d featureC`
 
 \begin{figure}
   \includegraphics[width = \textwidth, keepaspectratio]{branchingmodel.pdf}
@@ -630,7 +690,7 @@ Praktisch voorbeeld:
 
 Via ACD heeft het INBO een Stash server ter beschikking. Je vindt deze server via [https://git.milieuinfo.be](https://git.milieuinfo.be). Inloggen doe je met behulp van je JIRA gebruikersnaam en wachtwoord. De toegang is niet automatisch. Je moet ze aanvragen via IDC (Kevin Azijn). 
 
-Persoonlijke _repositories_ kan je vrij en onbeperkt zelf aanmaken. Meer generieke projecten dienen door IDC (Kevin Azijn) aangemaakt te worden.
+Persoonlijke _repositories_ kan je vrij en onbeperkt zelf aanmaken. Naast persoonlijke _repositories_ kunnen ook projecten aangemaakt worden. Een project kan meerdere _repositories_ bevatten en deze zijn niet meer gelinkt aan een bepaalde persoon. De persoonlijke _repositories_ kan je vergelijken met de U-schijf, Stash projecten met de Q-schijf. Enkel IDC kan projecten op Stash aanmaken.
 
 
 
@@ -652,7 +712,7 @@ Persoonlijke _repositories_ kan je vrij en onbeperkt zelf aanmaken. Meer generie
 
 ## Een nieuw project op de Stash server plaatsen
 
-Dit is de werkwijze die je best volgt als je een nieuw project wilt starten en er dadelijk ook een kopie van op Stash wenst. Dat is handig als je de optie wilt hebben om de inhoud vlot te delen met anderen. Het delen is overigens geen verplichting!
+Dit is de werkwijze die je best volgt als je een nieuw project wilt starten en dadelijk een kopie op Stash wenst. Dat is handig als je de optie wilt hebben om de inhoud vlot te delen met anderen. Het delen is overigens geen verplichting!
 
 - Maak de _repository_ op Stash
     - Login op [https://git.milieuinfo.be](https://git.milieuinfo.be)
@@ -664,13 +724,15 @@ Dit is de werkwijze die je best volgt als je een nieuw project wilt starten en e
     - Hou dit venster in de browser open.
 - Werkwijze voor Windows: 
     - Open RStudio
-    - Maak een nieuw project. Kies nu dadelijk voor `Version control` en vervolgens voor `Git`. 
+    - Maak een nieuw project. Omdat we reeds beschikken over een _repository_ op de server, kiezen we dadelijk voor `Version control` en vervolgens voor `Git`. 
     - Ga terug naar je browser en klik linksboven op `Clone`. Selecteer `HTTP` en kopieer de URL die je daar vindt. Deze heeft de vorm [https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git](https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git)
-    - Plak deze URL in het vak `Repository URL`
+        - Mogelijk zie je `Clone` niet staan in Stash indien het linkermenu geminimaliseerd is. In dat geval heb je twee mogelijkheden. 1) Klik in de deel van het linkermenu zonder knoppen. Nu zal de menubalk gemaximaliseerd worden. 2) Klik op de `...` knop onder de profielfoto linksboven. 
+        - `git clone` downloadt de volledige informatie van een _repository_ naar jouw computer. Je krijgt bijgevolg de volledige geschiedenis ter beschikking en niet enkel de recenste versie.
+    - Plak deze URL in het vak `Repository URL` van RStudio
     - RStudio zal automatisch de naam van de _repository_ voorstellen als projectnaam. Je kan dit, indien gewenst, aanpassen. De voorgestelde naam behouden heeft als voordeel dat je minder verwarring krijgt.
     - Geef de gewenste map waarin het project moet komen en klik op `Create project`
-    - RStudio zal je wachtwoord voor Stash vragen (= JIRA account).
-    - Jouw project wordt nu gesynchroniseerd met de (lege) _repository_ op Stash
+    - In principe zal RStudio nu je wachtwoord voor Stash vragen (= JIRA account). In een aantal speciale gevallen zal dat niet nodig zijn. Deze gevallen uitleggen zou ons hier te ver leiden.
+    - Jouw project wordt nu gesynchroniseerd met de (nog lege) _repository_ op Stash
 - Werkwijze voor Linux (wegens bug in RStudio):
     - Ga terug naar je browser en klik linksboven op `Clone`. Selecteer `HTTP` en kopieer de URL die je daar vindt, we noemen deze `STASHURL`. Deze heeft de vorm [https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git](https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git)
     - Ga in de terminal naar de locatie waar je je project wilt bewaren
@@ -701,9 +763,13 @@ Dit is de werkwijze die je best volgt als je een nieuw project wilt starten en e
 ## Een bestaand lokaal RStudio project op de Stash server plaatsen
 
 - Maak een nieuwe _repository_ op Stash zoals hierboven beschreven
-- Open het project dat je wenst te synchroniseren met RStudio
+- Open het RStudio project dat je wenst te synchroniseren met RStudio
 - Ga terug naar je browser en klik linksboven op `Clone`. Selecteer `HTTP` en kopieer de URL die je daar vindt. Deze heeft de vorm [https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git](https://gebruikersnaam@git.milieuinfo.be/scm/~gebruikersnaam/repositorynaam.git)
 - Ga naar de `shell` en voer het commando `git remote add origin STASHURL` uit. Hierbij moet je `STASHURL` vervangen door de URL die je op de Stash website gekopieerd hebt.
+    - `STASHURL` is GEEN variabele maar effectief de URL.
+    - Een realistisch commando is `git remote add origin https://thierry_onkelinx@git.milieuinfo.be/scm/~thierry_onkelinx/rinstall.git`
+    - Dit commando stelt de _repository_ op de Stash server in als 'bron' (origin) van deze _repository_. Zie ook verder.
+    - Op dit moment zal de 'origin' nog achter lopen jouw lokale versie. Op Stash staat nog geen enkele geschiedenis, terwijl je lokaal reeds _commits_ aangemaakt hebt. Dat passen we aan in de volgende stap.
 - `git push origin -u --all` en geef je JIRA wachtwoord wanneer daarom gevraagd wordt.
     - Nu worden al je lokale _branches_ naar Stash _gepusht_.
     - Je kan ook selectief _branches_ _pushen_. Dat doe je dan _branch_ per _branch_
@@ -730,7 +796,7 @@ Dit is de werkwijze die je best volgt als je een nieuw project wilt starten en e
 
 ## Wijziging in lokaal RStudio project uploaden naar de Stash server
 
-De andere _repositories_ wanneer een lokale _repository_ verbonden is noemen we de _remotes_. Een _remote_ wordt gedefinieerd door een naam en een URL. Meestal is er slechts één _remote_. De belangrijkste _remote_ krijgt klassiek de naam `origin`. Wanneer we de gegevens van de _remote_ gesynchroniseerd hebben, dan krijgen we ook de _branches_ van die _remote_ te zien. Bijvoorbeeld **origin/master** en **origin/develop** zijn de **master** en **develop** _branch_ op de _remote_ genaamd `origin`.
+De andere _repositories_ waarmee een lokale _repository_ verbonden is noemen we de _remotes_. Een _remote_ wordt gedefinieerd door een naam en een URL. Meestal is er slechts één _remote_. De belangrijkste _remote_ krijgt klassiek de naam `origin`. Wanneer we de gegevens van de _remote_ gesynchroniseerd hebben, dan krijgen we ook de _branches_ van die _remote_ te zien. Bijvoorbeeld **origin/master** en **origin/develop** zijn de **master** en **develop** _branch_ op de _remote_ genaamd `origin`.
 
 - lokale wijzingen naar een _remote_ sturen, noemen we _pushen_.
 - van het `git` tabblad kan je op de `Push` knop duwen.
@@ -780,7 +846,7 @@ De andere _repositories_ wanneer een lokale _repository_ verbonden is noemen we 
     User access
       ~ Hier kan je per gebruiker toegangsrechten bepalen.
       ~ Van zodra je een naam tikt, krijg je suggesties
-      ~ Werkt dus enkel de voorgedefinieerde accounts. Nog na te vragen of die personen ook toegang tot Stash moeten hebben.
+      ~ Werkt dus enkel met de voorgedefinieerde accounts. Alle JIRA accounts zijn gedefinieerd. Let op: het is niet omdat een account gedefinieerd is, dat deze ook effectief toegang heeft tot Stash. Op het ogenblik van dit schrijven hebben enkel de leden van IDC en BMK toegang tot Stash.
       ~ Na het selecteren van de naam moet je rechts de toegangsrechten kiezen (`Read`, `Write` of `Admin`). Vervolgens klik je op `Add`
     Group access
       ~ Werkt zoals User acces, maar dan voor groepen.
@@ -808,23 +874,24 @@ De andere _repositories_ wanneer een lokale _repository_ verbonden is noemen we 
 
 ## Een project van de Stash server _forken_
 
-Een _fork_ is een flexibele en proper manier om samen te werken. Flexibel in de zin dat iedereen de volledige vrijheid heeft binnen zijn _fork_ van de _repository_. Je kan onbeperkt wijzigen, _branches_ maken, _mergen_, ... Proper in de zin dat die wijzigingen geen rechtstreekse invloed hebben op de bron van de _fork_ of andere _forks_ van dezelfde bron. Hoe kan je samenwerken als je geen rechtstreekse invloed kan hebben? Door onrechtstreekse invloed uit te oefenen. In plaats van rechtstreeks andermans _repository_ aan te passen, stuur je een _pull request_: het verzoek om wijzigingen die jij aangebracht hebt over te nemen. Hierover later meer.
+Een _fork_ is een flexibele en propere manier om samen te werken. Flexibel in de zin dat iedereen de volledige vrijheid heeft binnen zijn _fork_ van de _repository_. Je kan onbeperkt wijzigen, _branches_ maken, _mergen_, ... Proper in de zin dat die wijzigingen geen rechtstreekse invloed hebben op de bron van de _fork_ of andere _forks_ van dezelfde bron. Hoe kan je samenwerken als je geen rechtstreekse invloed kan hebben? Door onrechtstreekse invloed uit te oefenen. In plaats van rechtstreeks andermans _repository_ aan te passen, stuur je een _pull request_: het verzoek om wijzigingen die jij aangebracht hebt over te nemen. Hierover later meer.
 
 Werkwijze:
 
 - Log in op [Stash](https://git.milieuinfo.be)
 - Zoek de _repository_ van de collega via het zoekveld rechts bovenaan. Je moet de naam van de _repository_ kennen en je moet leestoegang hebben.
 - Selecteer de gewenste _repository_
-- Klik in het linkermenu op `Fork`
+- Klik in het linkermenu op `Fork`. Als je `Fork` niet ziet, dan zit het verborgen achter de knop `...`
     - Nu geeft je de naam van jouw kopie van deze _repository_. Standaard wordt de naam van de bron overgenomen.
-    - `Enable fork syncing geactiveerd` is standaard geactiveerd. Hiermee blijft jouw kopie op Stash automatisch gesynchroniseerd met de bron.
+    - `Enable fork syncing` is standaard geactiveerd. Hiermee blijft jouw kopie op Stash automatisch gesynchroniseerd met de bron.
         - _branches_ waarin jij geen wijzigingen aanbracht worden automatisch bijgewerkt naar de laatste versie van de bron
         - _branches_ waarin zowel jij als de bron wijzigingen aanbracht moeten manueel worden gesynchroniseerd
-        - Daarom is het aan te raden eerst een nieuwe _branch_ te maken indien je aanpassingen wilt doen in een _fork_. Op dier manier blijft de automatische synchronisatie werken.
+        - Daarom is het aan te raden eerst een nieuwe _branch_ te maken indien je aanpassingen wilt doen in een _fork_. Op die manier blijft de automatische synchronisatie werken.
     - Klik op `Fork repository` om af te werken.
 - Nu opent Stash jouw kopie van de _repository_.
-- Tenslotte moeten we nog een lokale kopie in een RStudio project maken. Hiervoor volg je deze instructies als een nieuw project op de Stash server plaatsen. Uiteraard gebruik je hierbij de _fork_ in plaats van een nieuwe _repository_ aan te maken.
+- Tenslotte moeten we nog een lokale kopie in een RStudio project maken. Hiervoor volg je het RStudio gedeelte van de instructies om een nieuw project op de Stash server plaatsen. Wanneer deze instructies het over de nieuwe _repository_ hebben, gebruik je natuurlijk de _fork_.
 - Wanneer bepaalde _branches_ nog niet lokaal beschikbaar zouden zijn, moet je een specifieke _checkout_ doen opdat `git` weet dat de lokale _branch_ gekoppeld moet zijn aan die op `origin`. Voor de **develop** _branch_ doe je dat in de shell met het commando `git checkout --track origin/develop`
+    - Enkel de standaard _branch_ van de _repository_ wordt automatisch lokaal beschikbaar gesteld. Voor alle andere _branches_, inclusief nieuwe _branches_ die in de toekomst aangemaakt worden, moet je dit manueel uitvoeren.
 
 
 
@@ -854,21 +921,24 @@ Voorbeeld:
 - Ga op zoek naar de _repository_ `gitdemo_lessenreeks` van Thierry Onkelinx.
     - Deze _repository_ heeft de structuur zoals hoger beschreven onder het meer uitgebreid _branching_ model met permanent scheidbare features.
 - Maak hiervan jouw eigen _fork_
-- Stel dat we een aanpassing willen doen aan **les2**
-    - Ga na of **les2** bestaat. Zoniet `git checkout --track origin/les2`
-    - We doen eerst een _checkout_ van **les2**
+- Stel dat we een aanpassing willen doen aan in de **les2** _branch_.
+    - Ga na of de **les2** _branch_ bestaat. Zoniet `git checkout --track origin/les2`
+    - We doen een _checkout_ van **les2**
     - Vervolgens maken we vanaf **les2** een nieuwe _branch_ **les2_aanpassing**
     - Dan kunnen we een _checkout_ doen van **les2_aanpassing**
     - Nu zijn we in onze eigen _branch_ aan het werken en kunnen dus naar hartelust wijzigingen aanbrengen, _stagen_ en _committen_ zonder dat we _fork syncing_ verliezen.
     - Doe een paar _commits_ in deze _branch_.
-- Nu kunnen we onze nieuwe _branch_ _pushen_ naar je eigen _fork_
+- Nu kunnen we onze nieuwe _branch_ **les2_aanpassing** _pushen_ naar je eigen _fork_
     - `git push -u origin les2_aanpassing`
+    - De `-u` optie zorgt er voor dat de _branch_ op de server aangemaakt wordt en gelinkt is aan de lokale _branch_.
 - Log in op [Stash](https://git.milieuinfo.be) en ga naar je _fork_.
     - Ga na of de nieuwe _branch_ **les2_aanpassing** beschikbaar is. Zo niet moet je nakijken welke van bovenstaande stappen je overgeslaan hebt.
 - Klik in het linkermenu op `Pull requests` 
     - Klik op `Create pull request`
     - Bovenaan kies je de bron vanaf waar je een _pull request_ wilt sturen. Standaard is dat jouw _fork_. Je hoeft dus enkel nog de juiste _branch_ te kiezen. In dit geval **les2_aanpassing**.
     - Daaronder kies je de andere _repository_ waarnaar je de _pull request_ wenst te sturen. Merk op dat dat dus niet enkel naar de bron _repository_ kan sturen, maar ook naar een _fork_ die iemand anders gemaakt heeft.
+        - Het is warm aanbevolen om dergelijk _push request_ effectief te sturen naar de `gitdemo_lessenreeks` _repository_ van Thierry Onkelinx. Die _repository_ is louter als demonstratie bedoeld. Je hoeft je bijgevolg die al te veel aan te trekken van de inhoud van jouw wijzigingen.
+    - Ook in de doelrepository moet je een _branch_ kiezen waarin je de wijzigingen wilt toevoegen. In dit geval is **les2** een logische keuze aangezien dat de oorsprong is van **les2_aanpassing**.
     - Van zodra je zowel bij de oorsprong als het doel een _branch_ geselecteerd hebt, verschijnen de _commits_ die nodig zijn om van de ene toestand naar de andere te gaan.
     - In het tabblad `Diff` kan je kijken naar de wijzigingen die veroorzaakt worden door de _pull request_.
     - Als je tevreden bent met de keuze, klik je op `Continue`
@@ -940,7 +1010,7 @@ Voorbeeld:
 
 @Gunther2014 schreef een beknopt boek dat de basis van git op een beknopte manier uitlegt. Het is beschikbaar via de INBO account op Kindle.
 
-@Cottle2014 bied een handige online tool om _branching_ onder de knie te kijken. Het is een interactieve website waar je zelf met git commando's aan de slag gaat en dadelijk ziet wat het effect van de commando's op de structuur van de repository is. Elk stapje start met een beknopte uitleg gevolg door een oefening. Er staan veel oefeningen. De website detecteert wanneer je de oefening correct opgelost hebt. Je krijgt dan te zien hoeveel commando's je nodig had en hoeveel commando's hadden kunnen volstaan. Je kan de oefeningen meermaals opnieuw proberen. Als je vastloopt kan je de oplossing vragen. De website is een aanrader als je een beperkte voorkennis hebt. Daarom best eerst @Gunther2014 lezen of de git cursus volgen. Reken op 2 à 3 uur om de volledige set oefeningen te doorlopen. Je hoeft de oefeningen niet in een sessie te maken.
+@Cottle2014 biedt een handige online tool om _branching_ onder de knie te kijken. Het is een interactieve website waar je zelf met git commando's aan de slag gaat en dadelijk ziet wat het effect van de commando's op de structuur van de repository is. Elk stapje start met een beknopte uitleg gevolgd door een oefening. Er staan veel oefeningen. De website detecteert wanneer je de oefening correct opgelost hebt. Je krijgt dan te zien hoeveel commando's je nodig had en hoeveel commando's hadden kunnen volstaan. Je kan de oefeningen meermaals opnieuw proberen. Als je vastloopt kan je de oplossing vragen. De website is een aanrader als je een beperkte voorkennis hebt. Daarom best eerst @Gunther2014 lezen of de git cursus volgen. Reken op 2 à 3 uur om de volledige set oefeningen te doorlopen. Je hoeft de oefeningen niet in een sessie te maken.
 
 Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te schrijven. Op dat vlak is @Boswell2011 verplichte lectuur. Hoewel geschreven vanuit een C achtergrond, is het prima toepasbaar op R. Ook dit boek is beschikbaar via de INBO account op Kindle.
 
@@ -964,42 +1034,42 @@ Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te sc
 
 # Beknopt overzicht git commando's
 
-`git add bestandsnaam`
-  ~ _stage_ `bestandsnaam`
-  ~ equivalent met het aanvinken van `bestandsnaam` in het `Git` tabblad van RStudio.
-`git add -all`
-  ~ _stage_ alle gewijzigde bestanden die door `Git` beheerd worden
-`git reset bestandsnaam`
-  ~ _unstagen_ `bestandsnaam`
-  ~ equivalent met het aanvinken van `bestandsnaam` in het `Git` tabblad van RStudio.
-`git reset`
-  ~ _unstagen_ van alle _gestagde_ bestanden. De wijzigingen blijven behouden.
-`git reset --hard`
-  ~ Terugzetten van alle bestanden naar de versie van laatste _commit_. Alle wijzigingen sinds de laatste _commit_ gaan onherroepelijk verloren!!!  
-`git rm bestandsnaam`
-  ~ wis `bestandsnaam` en _stage_  die wijziging
-  ~ equivalent met het wissen van `bestandsnaam` en vervolgens het aanvinken van `bestandsnaam` in het `Git` tabblad van RStudio.
-`git commit -m "Commit message"`
-  ~ _commit_ de _gestagede_ bestanden met als boodschap "Commit message"
-  ~ equivalent met het klikken op de `Commit` knop in het `Git` tabblad van RStudio.
-`git status`
-  ~ geeft een overzicht van de bestanden in de working directory
-  ~ equivalent met het overzicht in het `Git` tabblad van RStudio.
-`git checkout naam`
-  ~ zet de inhoud van de huidige werking directory naar de toestand van 'naam'
-    - 'naam' is een _commit_. Gebruik deze _commit_
-    - 'naam' is een _branch_. Gebruik de laatste _commit_ van deze _branch_.
-    - 'naam' is een _tag_. Gebruik de _commit_ waarnaar de _tag_ verwijst.
-`git checkout --track origin/naam`
-  ~ maakt de _branch_ **naam** van `origin` beschikbaar als een lokale _branch_ die gekoppeld is aan de _branch_ op `origin`
-`git branch naam`
-  ~ maakt een nieuwe _branch_ vanaf de _commit_ die op dit ogenblik _uitgechecked_ is.
-`git branch -d naam`
-  ~ verwijder de _branch_ **naam**
-`git push -u origin --all`
-  ~ update alle _branches_ naar `origin`. Maak _branches_ aan als ze niet op `origin` bestaan. De -u optie linkt de lokale _branch_ aan deze met de overeenkomstige naam op `origin`.
-`git push -u origin master`
-  ~ stuur updates van **master** naar **origin/master**
+- `git add bestandsnaam`
+    - _stage_ `bestandsnaam`
+    - equivalent met het aanvinken van `bestandsnaam` in het `Git` tabblad van RStudio.
+- `git add -all`
+    - _stage_ alle gewijzigde bestanden die door `Git` beheerd worden
+- `git reset bestandsnaam`
+    - _unstagen_ `bestandsnaam`
+    - equivalent met het uitvinken van `bestandsnaam` in het `Git` tabblad van RStudio.
+- `git reset`
+    - _unstagen_ van alle _gestagede_ bestanden. De wijzigingen blijven behouden.
+- `git reset --hard`
+    - Terugzetten van alle bestanden naar de versie van laatste _commit_. Alle wijzigingen sinds de laatste _commit_ gaan onherroepelijk verloren!!!  
+- `git rm bestandsnaam`
+    - wis `bestandsnaam` en _stage_  die wijziging
+    - equivalent met het wissen van `bestandsnaam` en vervolgens het aanvinken van `bestandsnaam` in het `Git` tabblad van RStudio.
+- `git commit -m "Commit message"`
+    - _commit_ de _gestagede_ bestanden met als boodschap "Commit message"
+    - equivalent met het klikken op de `Commit` knop in het `Git` tabblad van RStudio.
+- `git status`
+    - geeft een overzicht van de bestanden in de working directory
+    - equivalent met het overzicht in het `Git` tabblad van RStudio.
+- `git checkout naam`
+    - zet de inhoud van de huidige werking directory naar de toestand van 'naam'
+        - 'naam' is een _commit_. Gebruik deze _commit_
+        - 'naam' is een _branch_. Gebruik de laatste _commit_ van deze _branch_.
+        - 'naam' is een _tag_. Gebruik de _commit_ waarnaar de _tag_ verwijst.
+- `git checkout --track origin/naam`
+    - maakt de _branch_ **naam** van `origin` beschikbaar als een lokale _branch_ die gekoppeld is aan de _branch_ op `origin`
+- `git branch naam`
+    - maakt een nieuwe _branch_ vanaf de _commit_ die op dit ogenblik _uitgechecked_ is.
+- `git branch -d naam`
+    - verwijder de _branch_ **naam**
+- `git push -u origin --all`
+    - update alle _branches_ naar `origin`. Maak _branches_ aan als ze niet op `origin` bestaan. De -u optie linkt de lokale _branch_ aan deze met de overeenkomstige naam op `origin`.
+- `git push -u origin master`
+    - stuur updates van **master** naar **origin/master**
   
 
 
