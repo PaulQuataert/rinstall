@@ -392,9 +392,9 @@ ggplot(lm.D9, aes(sample = .stdresid)) + stat_qq() + geom_abline()
     - _Checkout_ de _branch_ naar waar je wenst te _mergen_
         - `git checkout master`
     - _Merge_ **develop** naar **master** zonder _fast-forward_
-        - `git merge --no-ff develop`
+        - `git merge --no-ff -e develop`
         - `--no-ff` geeft aan dat we _mergen_ zonder _fast-forward_. Dat impliceert dat de _merge_ als onder de vorm van een nieuwe _commit_ zal gebeuren. @Driesen2014 raadt aan om op deze manier te werken.
-    - Je krijgt een editor venster waarin je een aangepaste _commit message_ schrijft. Hier beschijf je beknopt de belangrijkste wijzigingen sinds de vorige _merge_ tussen **master** en **develop**
+        - `-e` opent een editor waarin je de _commit message_ van de _merge_ kan schrijven. Hier beschijf je beknopt de belangrijkste wijzigingen sinds de vorige _merge_ tussen **master** en **develop**
         - Daarom kijk je best EERST naar de _history_ van de **develop** _branch_
 - Klik op het uurwerk icoon in het `Git` tabblad. Dit geeft een overzicht van de _history_ van de _repository_.
     - Het bovenste deel toont alle _commits_
@@ -477,23 +477,23 @@ Praktisch voorbeeld:
     - Je kan dat visualeren in de _history_ als je bovenaan `all branches` selecteert.
 - Veronderstel dat de draft van **les1** nu klaar is. Dat is een goed moment om **les1** aan **develop** toe te voegen.
     - _Checkout_ **develop**
-    - _Merge_ **les1** naar **develop** met `git merge --no-ff les1`
+    - _Merge_ **les1** naar **develop** met `git merge --no-ff -e les1`
 - Vervolgens werken we verder aan **les2**
     - Voor de eenvoud zullen we voor zorgen dat de bestandsnamen tussen **les1** en **les2** verschillen. De eenvoudigste manier om dit te garanderen is elke les een andere subdirectory te plaatsen.
     - _Checkout_ **les2**
     - Pas een bestand aan, _stage_ en _commit_ het
 - De draft van **les2** is nu eveneens klaar en we kunnen **les2** toevoegen aan **develop**
     - _Checkout_ **develop**
-    - _Merge_ **les2** naar **develop** met `git merge --no-ff les2`
+    - _Merge_ **les2** naar **develop** met `git merge --no-ff -e les2`
 - We krijgen feedback van de rest van het team. **les2** is in orde,  **les1** vergt een aantal aanpassingen
     - _Checkout_ **les1**
     - Pas een bestand aan, _stage_ en _commit_ het
     - Stuur de aanpassingen terug naar **develop**
         - _Checkout_ **develop**
-        - _Merge_ **les1** naar **develop** met `git merge --no-ff les1`
+        - _Merge_ **les1** naar **develop** met `git merge --no-ff -e les1`
 - De lessen zijn nu klaar voor de studenten. Dus sturen we de wijzigingen van **develop** naar **master**
     - _Checkout_ **master**
-    - _Merge_ **develop** naar **master** met `git merge --no-ff develop`
+    - _Merge_ **develop** naar **master** met `git merge --no-ff -e develop`
 - Tijdens het geven van de les botsen we op een onduidelijkheid in **les2**. We plaatsen een reminder in de code.
     - _Checkout_ **les2**
     - Pas een bestand aan, _stage_ en _commit_ het
@@ -561,7 +561,7 @@ Praktisch voorbeeld:
         ```
 - **featureA** is nu klaar. We _mergen_ het terug in **develop**
     - _checkout_ **develop**
-    - `git merge --no-ff featureA`
+    - `git merge --no-ff -e featureA`
     - we wissen **featureA** met `git branch -d featureA`
     - Kijk nu naar de _history_. Er is geen _branch_ meer met de naam **featureA** maar het blijft zichtbaar als een 'zijsprong' van **develop**
 - We maken twee nieuwe _branches_ **featureB** en **featureC** vanaf **develop**
@@ -615,13 +615,13 @@ Praktisch voorbeeld:
 - Nu gaan we **featureB** en **featureC** _mergen_ in **develop**
 - Eerst **featureB**
     - _Checkout_ **develop**
-    - `git merge --no-ff featureB`
+    - `git merge --no-ff -e featureB`
     - `git branch -d featureB`
     - Kijk naar de _history_. Je kan zowel **featureA** als **featureB** nog onderscheiden, hoewel ze niet meer als _branch_ beschikbaar zijn.
 - Vervolgens **featureC**
     - Dit zal een _merge conflict_ opleveren. Immers `readData.R` en `featureA.R` zijn zowel in **featureB** als **featureC** gewijzigd.
     - We proberen eerst de naïeve manier.
-    - `git merge --no-ff featureC` geeft een foutmelding: "Automatic merge failed; fix conflicts and then commit the result."
+    - `git merge --no-ff -e featureC` geeft een foutmelding: "Automatic merge failed; fix conflicts and then commit the result."
     - De wijzigingen die geen probleem opleverden zijn reeds uitgevoerd en _gestaged_.
     - De bestanden met conflicteren wijzigingen (wijzigingen in dezelfde regel!) hebben de `status` _unmerged_. Dit wordt aangegeven voor een "U" op een oranje veld.
     - `featureA.R` ziet er nu als volgt uit:
@@ -652,7 +652,7 @@ Concrete werkwijze
     - Dit kan nu een foutmelding geven omdat `featureC.R` als _untracked_ bestaat én als _tracked_ in **featureC.R**. Oplossingen: de _untracked_ `featureC.R` wissen, hernoemen of _stagen_ en _commiten_.
     - Indien je hier geen foutmelding krijgt, dan je heb je vermoedelijk een van bovenstaande stappen overgeslaan.
     - We kiezen in dit geval voor wissen omdat de _untracked_ `featureC.R` een restant is van de mislukte _merge_.
-- `git merge --no-ff develop`
+- `git merge --no-ff -e develop`
 - Pas `readData.R` aan naar
     ```{r readData_merge}
     readData <- function(n = 10, mean = 0, sd = 1){
@@ -679,7 +679,7 @@ Concrete werkwijze
     ```
 - _Stage_ en _commit_ alle wijzigingen
 - _Checkout_ **develop**
-- `git merge --no-ff featureC`
+- `git merge --no-ff -e featureC`
 - `git branch -d featureC`
 
 \begin{figure}
