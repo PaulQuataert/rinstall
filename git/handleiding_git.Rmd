@@ -45,18 +45,19 @@ Git biedt vooral meerwaarde aan mensen die vaak code gebruiken. Hierbij denken w
 - Stel een aantal basiseigenschappen van `git` is
     1. Open een terminalvenster. Onder windows kan dat met de windows-R toetsencombinatie. In het dialoogvenster tik je 'cmd' en vervolgens enter.
     1. Ga naar de directory waar `git` geïnstalleerd is met `cd \R\git`
-    1. Voor de volgende commando's uit
-        `git config --global credential.helper cache`
-            ~ onthoudt je wachtwoord tijdelijk. Vooral handig als je frequent _pullt_ of _pusht_
-        `git config --global user.name "John Doe"`
-          ~ zet je standaard gebruikersnaam.
-          ~ vervang John Doe door je JIRA account
-        `git config --global user.email "johndoe@company.com"`
-          ~ zet je standaard e-mailadres
-          ~ vervang johndoe@company.com door jouw INBO adres
-        `git config --global core.editor notepad`
-          ~ gebruik notepad wanneer git een externe editor nodig heeft
-          ~ git gebruik standaard `vim`, een zeer krachtige editor. De complexiteit is echter evenredig met de kracht.
+    1. Voer onderstaande commando's uit
+    - `git config --global credential.helper cache`
+        - onthoudt je wachtwoord tijdelijk. Vooral handig als je frequent _pullt_ of _pusht_
+    - `git config --global user.name "John Doe"`
+        - zet je standaard gebruikersnaam.
+        - vervang John Doe door je JIRA account
+    - `git config --global user.email "johndoe@company.com"`
+        - zet je standaard e-mailadres
+        - vervang johndoe@company.com door jouw INBO adres
+    - `git config --global core.editor notepad`
+        - gebruik notepad wanneer git een externe editor nodig heeft
+        - git gebruik standaard `vim`, een zeer krachtige editor. De complexiteit is echter evenredig met de kracht.
+            
 - Ga na of git geconfigureerd is in RStudio. 
     - Ga naar `Tools` -> `Global options`
     - Open het tabblad `Git/SVN`
