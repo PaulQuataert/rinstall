@@ -123,18 +123,38 @@ Het is nuttige om in de code informatie op te nemen over het waarom je een probl
 
 # R Package
 
-- NAMESPACE (import en export)
-- globale variabelen --> verboden. Alternatieven: sysdata.rda en environments
-- attach()
-- R CMD --as-cran
+Een R package is een handige manier om functionaliteit te bundellen en te documenten. Dit hoeft niet noodzakelijk beperkt te blijven tot een set van functies waarmee een gebruiker aan de slag kan. Je kan het even goed gebruiken om een volledige analyse, inclusief rapport, te bewaren en te documenteren [Flight2014].
+
+We verwijzen naar @Wickham2015 als een goede handleiding om een R package te bouwen. We beperken ons hier tot het vastleggen van een aantal keuzes.
+
+## Gebruik van functies uit andere packages
+
+We maken maximaal gebruik van functionaliteit uit bestaande packages. Hierbij moeten we er voor waken dat er zo min mogelijk interferentie is tussen packages. Dat doen we door de externe functies die we nodig hebben in een functie te importen in plaats van het externe package te laden met `library()` of `require()`. Dan kan vlot via de `ìmportFrom` tag van `roxygen`.
+
+## Zichtbaar maken van functies
+
+Standaard zijn de functies in een package niet zichtbaar voor de eindgebruikers. We moeten expliciet aangeven welke functies zichtbaar zijn door de functie te exporteren. Dat kan eenvoudig door de `export` tag in de `roxygen` documentatie van de functie op te nemen.
+
+Niet alle functies hoeven noodzakelijk zichtbaar te zijn voor eindgebruikers. Bijvoorbeeld kleine functies die het bepaalde manipulaties iets makkelijker maken. Die functies zijn enkel relevant in het kader van het package zelf. In dergelijke gevallen is het niet nodig om de functie te exporteren.
+
+## Kwaliteitscontrole
+
+De functie `R CMD check` biedt de mogelijkheid om R package op een hele resem onderdelen te testen. De testen omvatten onder andere de controle van syntax, de aanwezigheid van documentatie, de structuur van de metadata, de werkzaamheid van voorbeelden, ... In plaats van een hele reeks gedetailleerde kwaliteitseisen op te stellen is het daarom eenvoudiger om te eisen dat een R package alles tests van `R CMD check --as-cran` moet doorstaan. De enige uitzonderingen hierop zijn:
+
+- `checking CRAN incoming feasibility ... NOTE`
+    - `New submission`
+    - `Non-FOSS package license`
+    - `Suggests or Enhances not in mainstream repositories`
+- `checking installed package size ... NOTE`
+
+
+
 - doorgeven van functieargumenten
 
 # Documentatie
 
 - R Package
 - Taal
-- Roxygen2
-- examples
 - vignettes
 - unit tests
 
