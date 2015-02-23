@@ -75,7 +75,7 @@ We gebruiken geen ellenlange scripts. In plaats daarvan splitsen we de analyse o
 
 Soms bestaat een functie uit verschillende onderdelen bestaat die niet de moeite zijn om als aparte subfuncties uit te werken. In dergelijk geval zet je de verschillende blokken samen in "paragrafen" die gescheiden zijn door een witregel en een regel commentaar.
 
-Gebruik steeds ren consistente volgorde van de argumenten van een functie. Gebruik steeds expliciet de naam van de argumenten wanneer het gaat om zelfgedefinieerde functies. In het geval van functies uit de standaard `R` packages hoef je de standaard argumenten niet te benoemen als dat geen negatieve invloed heeft op de leesbaarheid.
+Gebruik steeds een consistente volgorde van de argumenten van een functie. Gebruik steeds expliciet de naam van de argumenten wanneer het gaat om zelfgedefinieerde functies. In het geval van functies uit de standaard `R` packages hoef je de standaard argumenten niet te benoemen als dat geen negatieve invloed heeft op de leesbaarheid.
 
 ```{r, eval = FALSE}
 # goed
@@ -147,16 +147,124 @@ De functie `R CMD check` biedt de mogelijkheid om R package op een hele resem on
     - `Suggests or Enhances not in mainstream repositories`
 - `checking installed package size ... NOTE`
 
+Als een onderdeel van de kwaliteitscontrole gebruiken we zogenaamde 'unit-tests'. Elke 'unit-test' voert de functie uit met een specifieke set argumenten en vergelijkt de uitkomst met de verwachte uitkomst. Wanneer er geen overeenkomst is, geeft `R CMD check` een fout. De verwachte uitkomst kan allerlei vormen aannemen: een object, de klasse van een object, een waarschuwing, een foutmelding, tekstuele output, ...
+
+'Unit-tests' hebben als grote voordeel dat ze voortdurend testen of de functionaliteit bewaard blijft wanneer code aangepast wordt. Ze verkleinen daardoor de kans dat een aanpassing van de code voor de ene functionaliteit, andere functionaliteit verknoeit (foutmelding of nog veel gevaarlijker: verkeerd resultaat.)
+
+Het schrijven van 'unit-tests' is behoorlijk intensief. Voorbeeld: een bepaald functieargument moet een enkel strikt positief getal zijn. De functie moet een foutmelding geven als het argument:
+
+- niet van de klasse "integer" of "numeric" is
+- een lengte heeft verschillend van 1 
+- kleiner is dan 1
+- niet geheel is
+
+Naast de foutafhandeling in de functie zelf, hebben we voor elk van bovenstaande condities een 'unit-test' nodig. We kunnen de werklast van dergelijke foutafhandeling en bijhorende tests minimaliseren door ze in een generieke functie te zetten. Hieronder eerst het voorbeeld van zo een generieke functie. Vervolgens de bijhorende 'unit-tests' en tenslotte het gebruik in de foutafhandeling van een functie. We kunnen de 'unit-tests' in deze laatste functie beperken omdat deze gerelateerd aan de foutafhandeling van het argument waarde reeds gebeuren door de helper functie. Puriteinen kunnen deze 'unit-tests' als nog opnemen.
+
+```{r testPositief}
+# definitie van test_strikt_positief_geheel()
+#' Ga na of waarde een enkel strikt positief geheel getal is
+#' @param waarde Het te testen object
+#' @export
+#' @examples
+#' test_strikt_positief_geheel(10)
+test_strikt_positief_geheel <- function(waarde){
+  if(!class(waarde) %in% c("integer", "numeric")){
+    stop("waarde moet een getal zijn.")
+  }
+  if(length(waarde) != 1){
+    stop("waarde moet exact een enkel getal zijn.")
+  }
+  if(waarde <= 0){
+    stop("waarde moet strikt positief zijn.")
+  }
+  if(class(waarde) == "numeric" && abs(waarde - round(waarde)) > 1e-8){
+    stop("waarde is niet geheel.")
+  }
+  return(invisible(TRUE))
+}
+```
+
+```{r unittest1}
+# unit-tests voor test_strikt_positief_geheel()
+library(testthat)
+# 1L staat voor het integer getal 1
+# 1 is het getal 1 als numeric
+expect_that(
+  test_strikt_positief_geheel(1L),
+  is_true()
+)
+expect_that(
+  test_strikt_positief_geheel(1),
+  is_true()
+)
+# geen getal
+expect_that(
+  test_strikt_positief_geheel("a"),
+  throws_error("waarde moet een getal zijn.")
+)
+# lengte verschillend van 1
+expect_that(
+  test_strikt_positief_geheel(integer(0)),
+  throws_error("waarde moet exact een enkel getal zijn.")
+)
+expect_that(
+  test_strikt_positief_geheel(integer(2)),
+  throws_error("waarde moet exact een enkel getal zijn.")
+)
+# niet strikt positief
+expect_that(
+  test_strikt_positief_geheel(0L),
+  throws_error("waarde moet strikt positief zijn.")
+)
+expect_that(
+  test_strikt_positief_geheel(-0.5),
+  throws_error("waarde moet strikt positief zijn.")
+)
+# niet geheel
+expect_that(
+  test_strikt_positief_geheel(0.5),
+  throws_error("waarde is niet geheel.")
+)
+```
 
 
-- doorgeven van functieargumenten
+```{r printPositief}
+# definitie van print_strik_positief_geheel()
+#' Schrijft een strikt positieve waarde naar het scherm
+#' @param waarde
+#' @export
+#' @examples
+#' print_strikt_positief_geheel(10)
+print_strikt_positief_geheel <- function(waarde){
+  test_strikt_positief_geheel(waarde = waarde)
+  cat(waarde)
+  return(invisible(NULL))
+}
+```
+
+```{r unittest2}
+# unit-tests voor print_strikt_positief_geheel()
+library(testthat)
+expect_that(
+  print_strikt_positief_geheel(1L),
+  prints_text("^1$")
+)
+```
+
+Bovenstaande voorbeeld omvat relatief eenvoudige 'unit-tests'. Hoe eenvoudiger de functie, hoe makkelijker en beknopter 'unit-tests' te schrijven zijn. Dat is een bijkomend argument om functies te schrijven die slechts één taak uitvoeren. Wanneer we meerdere taken moeten combineren, kunnen we elke taak als een afzonderlijke functie schrijven, documenteren en testen.
+
+Een pragmatische keuze bij het uitwerken van 'unit-tests' is ons in de eerste plaats te beperken tot het testen van eenvoudige situaties zoals de minimum-eisen voor argumenten van een functie, het resultaat van een functie met eerdere eenvoudige functionaliteit, ... Meer complexe problemen pakken we enkel aan wanneer zich een bug in de code voordoet. Stappenplan om een bug aan te pakken:
+
+1. Zoek een MWE (minimal working example) dat de bug repliceert.
+1. Maak een 'unit-test' op basis van het MWE, hou hierbij rekening met het gewenste resultaat van de functie. M.a.w. de 'unit-test' falen wanneer toegepast op de huidige code (met de bug).
+1. Haal de bug uit de code. De code moet nu voldoen aan de 'unit-test'.
+
+Bovenstaande werkwijze heeft als voordeel dat we steeds de uitzonderingssituaties die in het verleden een bug opleverden steeds opnieuw blijven testen. Op die manier vermijden we dat deze bus in de toekomst terug geïntroduceerd kan worden.
 
 # Documentatie
 
-- R Package
 - Taal
 - vignettes
-- unit tests
 
 # Versiebeheer
 
