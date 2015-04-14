@@ -5,7 +5,7 @@ date: "03-02-2015"
 output: 
   INBOmd::inbo_rapport:
     cover: gitlogo.png
-    cover_offset: 70mm
+    cover_offset: 130mm
     year: 2015
     keep_tex: false
   html_document:
@@ -199,7 +199,7 @@ ggsave(p, file = "script1.png")
 
 
 
-### Bestanden wissen en terug zetten naar de laatste commit
+### Bestanden wissen en terug zetten naar de laatste _commit_
 
 - Voer `script1.R` opnieuw uit. Merk op dat er nu niets gebeurd in het `Git` tabblad. Hoewel `script1.png` gewijzigd is, is de inhoud dezelfde gebleven. Een nieuwe versie opslaan is daarom overbodig.
 - Wijzig `script1.R` naar onderstaande code, sla het op en voer opnieuw uit
@@ -1027,37 +1027,50 @@ Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te sc
 `git add bestandsnaam`
   ~ _stage_ `bestandsnaam`
   ~ equivalent met het aanvinken van `bestandsnaam` in het `Git` tabblad van RStudio.
+  
 `git add -all`
   ~ _stage_ alle gewijzigde bestanden die door `Git` beheerd worden
+  
 `git reset bestandsnaam`
   ~ _unstagen_ `bestandsnaam`
   ~ equivalent met het aanvinken van `bestandsnaam` in het `Git` tabblad van RStudio.
+  
 `git reset`
   ~ _unstagen_ van alle _gestagde_ bestanden. De wijzigingen blijven behouden.
+  
 `git reset --hard`
   ~ Terugzetten van alle bestanden naar de versie van laatste _commit_. Alle wijzigingen sinds de laatste _commit_ gaan onherroepelijk verloren!!!  
+  
 `git rm bestandsnaam`
   ~ wis `bestandsnaam` en _stage_  die wijziging
   ~ equivalent met het wissen van `bestandsnaam` en vervolgens het aanvinken van `bestandsnaam` in het `Git` tabblad van RStudio.
+  
 `git commit -m "Commit message"`
   ~ _commit_ de _gestagede_ bestanden met als boodschap "Commit message"
   ~ equivalent met het klikken op de `Commit` knop in het `Git` tabblad van RStudio.
+  
 `git status`
   ~ geeft een overzicht van de bestanden in de working directory
   ~ equivalent met het overzicht in het `Git` tabblad van RStudio.
+  
 `git checkout naam`
   ~ zet de inhoud van de huidige werking directory naar de toestand van 'naam'
     - 'naam' is een _commit_. Gebruik deze _commit_
     - 'naam' is een _branch_. Gebruik de laatste _commit_ van deze _branch_.
     - 'naam' is een _tag_. Gebruik de _commit_ waarnaar de _tag_ verwijst.
+    
 `git checkout --track origin/naam`
   ~ maakt de _branch_ **naam** van `origin` beschikbaar als een lokale _branch_ die gekoppeld is aan de _branch_ op `origin`
+  
 `git branch naam`
   ~ maakt een nieuwe _branch_ vanaf de _commit_ die op dit ogenblik _uitgechecked_ is.
+  
 `git branch -d naam`
   ~ verwijder de _branch_ **naam**
+  
 `git push -u origin --all`
   ~ update alle _branches_ naar `origin`. Maak _branches_ aan als ze niet op `origin` bestaan. De -u optie linkt de lokale _branch_ aan deze met de overeenkomstige naam op `origin`.
+  
 `git push -u origin master`
   ~ stuur updates van **master** naar **origin/master**
   
