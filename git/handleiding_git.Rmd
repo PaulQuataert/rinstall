@@ -237,6 +237,50 @@ ggsave(p, file = "script1.png")
 
 
 
+### Selectief wijzigingen _comitten_
+
+- Heb je toevallig al meer wijzingen aangebracht dan hetgeen in een _commit_ wou steken? Geen probleem. RStudio maakt het relatief eenvoudig om een gedeelte van een bestand te _stagen_
+- Wijzig `script2.R` naar onderstaande code
+
+```{r script2_bis, eval = FALSE}
+ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
+trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
+group <- gl(2, 10, 20, labels = c("Control","Treatment"))
+weight <- c(ctl, trt)
+lm.D9 <- lm(weight ~ group)
+
+anova(lm.D9)
+summary(lm.D9)
+
+plot(lm.D9)
+```
+
+- Klik op de _commit_ knop in het _git_ venster, zonder eerst de wijzigingen te _stagen_.
+- In het venster met de wijzigingen zal je rechtboven elke _chunk_ de knoppen '_Stage chunk_' en '_Discard chunk_' vinden.
+    - '_Stage chunk_' zal enkel de wijzigingen in de betrokken _chunk_ stagen. De rest van het bestand wordt niet _gestaged_.
+        - Je kan uiteraard meerdere _chunk_ uit een bestand _stagen_. Alle _chunks_ _stagen_ is hetzelfde als het volledige bestand _stagen_.
+    - 'Discard chunk' verwijdert de wijzigingen in deze _chunk_. **OPGELET** dit is permanent en onherroepelijk. Er wordt geen bevestiging gevraagd!
+    - Wat is een _chunk_: alle wijzigingen die een blok vormen waarbij het aantal ongewijzigde lijnen tussen twee wijzigingen bepalen wat de grens is. Zolang het aantal ongewijzigde lijnen kleiner is dan het aantal vermeld bij 'Context' (standaard 5 lijnen), behoren de wijzigingen tot eenzelfde chunk. Je kan dus de grootte van een chunk beïnvloeden door de 'Context' te wijzigen.
+- Nog fijnere controle
+    - Als je op een gewijzigde lijn klikt, verschijnen rechts twee nieuwe knoppen '_Stage line_' en '_Discard line_'. Hun werking is vergelijkbaar aan '_Stage chunk_' en '_Discard chunk_' maar dan enkel toegepast op de geselecteerde lijn.
+    - Door de 'Shift' toets in te drukken en een tweede lijn te selecteren, selecteer je alle wijzigingen tussen deze twee lijnen. Nu krijg je de knoppen _Stage selection_' en '_Discard selection_'.
+    - Door de 'Ctrl' toets in te drukken en op een lijn de klikken, voeg je die lijn toe aan de selectie of haal je ze weer uit de selectie.
+- Van zodra je een _chunk_ of een (selectie van) lijn(en) _staget_ en er zijn nog _unstaged_ wijzigingen, zal verdwijnen de _gestagede_ wijzigingen uit de viewer. Om te zien wat je juist _gestaged_ hebt, kan je op de radiobutton '_Staged_' klikken (links bovenaan de viewer). 
+    - Hier krijg je de mogelijkheden om de wijzigingen terug te _unstagen_.
+- _Stage_ een deel van de wijzigingen aan `script2.R` en _commit_.
+- _Stage_ en _commit_ vervolgens de rest van de wijzigingen aan `script2.R`.
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Een bestaand project enkel lokaal onder versiebeheer plaatsen
 
