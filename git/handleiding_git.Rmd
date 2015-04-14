@@ -1128,7 +1128,8 @@ Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te sc
   
 `git checkout naam`
   ~ zet de inhoud van de huidige werking directory naar de toestand van 'naam'
-    - 'naam' is een _commit_. Gebruik deze _commit_
+  
+    - 'naam' is een _commit_. Gebruik deze _commit_.
     - 'naam' is een _branch_. Gebruik de laatste _commit_ van deze _branch_.
     - 'naam' is een _tag_. Gebruik de _commit_ waarnaar de _tag_ verwijst.
     
