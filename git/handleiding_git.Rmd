@@ -26,7 +26,23 @@ bibliography: ~/local_tex/bibtex/bib/INBO-BMK-git.bib
     - _git gerelateerde termen_
     - **namen van git branches**
 
+## Handige dingen om eenmalig in te stellen
 
+`git config --global user.name "John Doe"`
+  ~ zet je standaard gebruikersnaam
+
+`git config --global user.email "johndoe@company.com"`
+  ~ zet je standaard e-mailadres
+
+`git config --global core.editor c:/R/RStudio/bin/rstudio.exe`
+  ~ gebruik RStudio als standaard editor
+  
+`git config --global core.editor notepad.exe`
+  ~ gebruik notepad als standaard editor
+  
+`git config --global credential.helper cache`
+  ~ onthoudt je wachtwoord tijdelijk. Vooral handig als je frequent _pullt_ of _pusht_
+  ~ als je liever hebt dat je wachtwoord permanent opgeslagen wordt, kan je de tool installeren van https://gitcredentialstore.codeplex.com/
 
 
 
@@ -1014,15 +1030,6 @@ Naast aandacht voor versiebeheer is het ook wenselijk om transparante code te sc
 
 
 # Extra
-
-## Handige dingen om eenmalig in te stellen
-
-`git config --global credential.helper cache`
-  ~ onthoudt je wachtwoord tijdelijk. Vooral handig als je frequent _pullt_ of _pusht_
-`git config --global user.name "John Doe"`
-  ~ zet je standaard gebruikersnaam
-`git config --global user.email "johndoe@company.com"`
-  ~ zet je standaard e-mailadres
 
 ## Een specifieke commit terug zetten
 
