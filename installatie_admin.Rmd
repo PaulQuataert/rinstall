@@ -218,6 +218,9 @@ De installatiebestanden zijn beschikbaar via http://cran.r-project.org/bin/windo
 1. Klik _Voltooien_.
 
 
+### Afwijkingen t.o.v. default installatie
+
+- Installeren naar `C:\R\Rtools` i.p.v. `C:\Rtools`
 
 
 
