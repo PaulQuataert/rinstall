@@ -179,6 +179,9 @@ RStudio upgraden doe je door de nieuwe versie te installeren over de oude.
 
 Test de configuratie door RStudio te starten als een **_gewone_** gebruiker.
 
+### Afwijkingen t.o.v. default installatie
+
+- Installeren naar `C:\R\RStudio` i.p.v. `C:\Program Files\R\RStudio`
 
 
 
