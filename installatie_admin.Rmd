@@ -4,17 +4,8 @@ author: "Thierry Onkelinx"
 output: 
   INBOmd::inbo_rapport:
     subtitle: "Versie voor personen met adminrechten"
-    cover: "useR-large.png"
-    reportnr: "7 mei 2015"
-    year: 2015
-    email: thierry.onkelinx@inbo.be
-    cover_offset: 150mm
-    cover_text: "Het R logo"
+    reportnr: "11 december 2015"
     keep_tex: false
-vignette: >
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{Installatierichtlijnen BMK software, versie voor administrators}
-  \usepackage[utf8]{inputenc}
 ---
 
 # Inleiding
