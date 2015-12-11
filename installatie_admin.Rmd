@@ -250,7 +250,6 @@ De installatiebestanden zijn beschikbaar via http://cran.r-project.org/bin/windo
 De installatiebestanden zijn beschikbaar via http://miktex.org/download
 
 
-1. Gebruik indien mogelijk de 64-bit installer.
 1. Start de installer en klik op _Uitvoeren_.
 1. Aanvaard de voorwaarden en klik op _Volgende_
 1. Selecteer _Anyone who uses this computer_ en klik op _volgende_.
@@ -264,6 +263,12 @@ De installatiebestanden zijn beschikbaar via http://miktex.org/download
 1. Selecteer _remote package repository_ en _nearest package repository_ en klik tenslotte op _Volgende_.
 1. Klik op _Volgende_.
 1. Klik op _Volgende_.
+
+### Afwijkingen t.o.v. default installatie
+
+- Installeren naar `C:\R\MikTex` i.p.v. `C:\Program Files\MikTex`
+- _Install missing packages on-the-fly_: `Yes`
+
 
 ## Upgrade
 
